@@ -1,0 +1,24 @@
+.Login-container {
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    border: solid 1px black;
+    background-color: rgba(0, 1, 3, 0.541);
+}
+.Login-container button {
+    margin-top: 15px;
+}
+
+.Login-container-container {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    align-items: center;
+    background: #110808 url('/src/assets/bg-image.png') repeat center;
+    background-size: cover;
+}
+

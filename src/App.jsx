@@ -1,9 +1,10 @@
+import LoginPage from "./login";
+
 function App() {
+
   return (
     <>
-      <h1 className="">
-        header
-      </h1>
+        <LoginPage> </LoginPage>
     </>
   );
 }

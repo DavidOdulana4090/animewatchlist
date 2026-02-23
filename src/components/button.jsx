@@ -1,13 +1,12 @@
-import '../styles/button.css' 
-import { useState } from 'react';
+import '../styles/button.css';
 
-function button() {
-    const []
-    return (
-        <button>
+function button(props) {
 
+	return (
+		<button className="comp_button">
+            {props.text}
         </button>
-      );
+	);
 }
 
 export default button;
