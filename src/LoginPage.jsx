@@ -1,14 +1,19 @@
-import "./styles/login.css"
-import Button from "./components/button";
-import InputField from "./components/input";
-import Label from "./components/label"
-import Heading1 from "./components/h1";
-import { useState } from 'react';
+import "./styles/Login.css"
+
+import Button from "./components/Button";
+import InputField from "./components/Input";
+import Label from "./components/Label"
+import Heading1 from "./components/H1";
+import { useRef, useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 
 function LoginPage() {
+    const [showpassword, Setshowpassword] = useState(false);
+    const passwordInput = useRef(null);
 
-    const showpassword = false;
+    function PasswordVisibilityToggle(){
+        Setshowpassword(!showpassword);
+    }
 
     return ( 
         <>
@@ -24,12 +29,14 @@ function LoginPage() {
                         <div className="input-container"> 
                             <Label htmlFor="password-field" text="Password"/>
                             <div className="input-password-wrapper">
-                                <InputField placeholder="Enter password.." type="password" id="password-field" className="password-input"/>
-                                {showpassword ? <Eye className="icon-eye-password"/> : <EyeOff className="icon-eye-password"/>}
+                                <InputField placeholder="Enter password.." type={showpassword ? "text" : "password"} id="password-field" className="password-input" ref="passowrdInput"/>
+                                {showpassword ? <Eye className="icon-eye-password" onClick={PasswordVisibilityToggle}/> : <EyeOff className="icon-eye-password" onClick={PasswordVisibilityToggle}/>}
                             </div>                 
                         </div>
                     <br></br><br></br>
                     <Button text="login"/>
+                    <br></br>
+                    <p className="no-account-p"> Don't have an account? <a href="./CreateAccount.jsx"> Sign up</a> </p>
                 </div>
             </div>
         </>

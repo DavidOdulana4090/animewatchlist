@@ -1,5 +1,4 @@
 .heading1 {
-    font-size: 800;
     align-self: flex-start;
     margin-left: 24%;
     color: var(--main-blue);
@@ -10,10 +9,12 @@
     justify-content: center;
     width: 40%;
     min-height: 70%;
+    font-size: 20px;
     flex-direction: column;
     align-items: center;
     border: solid 1px rgba(99, 186, 197, 0.575);
-    background-color: rgba(14, 14, 14, 0.349);
+    background-color: rgba(14, 14, 14, 0.233);
+    border-radius: 6px;
 }
 
 .Login-container-container {
@@ -62,4 +63,19 @@
     right: 0px;
     top: 20%;
     transform: translate(-50%);
+}
+
+.no-account-p {
+    color: var(--main-blue);
+        text-shadow: 
+        -1px -.9px 0 #000000,  
+         1px -.9px 0 #313131,
+        -1px  .9px 0 #000000,
+         1px  .9px 0 #313131;
+}
+
+.no-account-p a {
+    text-decoration: underline;
+    color: white;
+    font-size: .8em;
 }

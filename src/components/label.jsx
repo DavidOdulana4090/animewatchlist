@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import '../styles/label.css'
+import '../styles/Label.css'
 
 function comp_label(props) {
     return ( 

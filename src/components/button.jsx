@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import '../styles/button.css';
+import '../styles/Button.css';
 
 function button(props) {
 
