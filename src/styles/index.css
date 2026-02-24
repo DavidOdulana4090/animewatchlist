@@ -3,5 +3,11 @@
 @tailwind utilities;
 
 * {
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family:monospace;
+    
+}
+
+
+:root {
+    --main-blue: rgba(94, 235, 253, 0.548);
 }
