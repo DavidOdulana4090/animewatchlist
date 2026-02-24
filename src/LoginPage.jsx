@@ -4,15 +4,19 @@ import Button from "./components/Button";
 import InputField from "./components/Input";
 import Label from "./components/Label"
 import Heading1 from "./components/H1";
-import { useRef, useState } from 'react';
+import { Link } from "react-router-dom";
+import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 
-function LoginPage() {
+function LoginPage(props) {
     const [showpassword, Setshowpassword] = useState(false);
-    const passwordInput = useRef(null);
 
     function PasswordVisibilityToggle(){
         Setshowpassword(!showpassword);
+    }
+
+    function login() {
+        props.loginSuccess();
     }
 
     return ( 
@@ -29,14 +33,14 @@ function LoginPage() {
                         <div className="input-container"> 
                             <Label htmlFor="password-field" text="Password"/>
                             <div className="input-password-wrapper">
-                                <InputField placeholder="Enter password.." type={showpassword ? "text" : "password"} id="password-field" className="password-input" ref="passowrdInput"/>
+                                <InputField placeholder="Enter password.." type={showpassword ? "text" : "password"} id="password-field" className="password-input" />
                                 {showpassword ? <Eye className="icon-eye-password" onClick={PasswordVisibilityToggle}/> : <EyeOff className="icon-eye-password" onClick={PasswordVisibilityToggle}/>}
                             </div>                 
                         </div>
                     <br></br><br></br>
-                    <Button text="login"/>
+                    <Button text="login" onClick={login} />
                     <br></br>
-                    <p className="no-account-p"> Don't have an account? <a href="./CreateAccount.jsx"> Sign up</a> </p>
+                    <p className="no-account-p"> Don't have an account? <Link to={'./CreateAccount.jsx'}> sign up </Link> </p>
                 </div>
             </div>
         </>
