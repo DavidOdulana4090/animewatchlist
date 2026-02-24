@@ -1,16 +1,19 @@
 import '../styles/Input.css'
 import clsx from 'clsx';
-import { forwardRef } from 'react';
+import { forwardRef, useRef } from 'react';
 
-function InputField(props, ref) {
+const InputField = forwardRef((props, ref) => {
     return (
-    <input placeholder={props.placeholder} 
+        <input placeholder={props.placeholder}
             ref={ref}
-            className={clsx('input-field', props.className)} 
-            type={props.type} 
+            className={clsx('input-field', props.className)}
+            type={props.type}
+            name={props.name}
             id={props.id}>
+            
 
-    </input> 
-);}
+        </input>
+    );
+});
 
 export default InputField;

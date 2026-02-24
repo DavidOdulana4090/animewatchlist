@@ -8,7 +8,7 @@ function App() {
     const [isLoggedIn, SetIsLogstate] = useState(() => {
         const saved = localStorage.getItem('isLoggedIn');
         return saved === "false";
-});
+    });
 
     // Login
     const LoginRequest = () => {
@@ -28,11 +28,14 @@ function App() {
     return (
         <>
             <Routes>
-                <Route path="/" element={isLoggedIn ? <HomePage /> : <Navigate to={"/login"} />} />
+                // Whether to render login or home based on local storage State
+                <Route path="/" element={isLoggedIn ? <Navigate to={"/home"} /> : <Navigate to={"/login"} />} />
 
-                <Route  path="/login" element={isLoggedIn ? <Navigate to="/" /> : <LoginPage loginSuccess={LoginRequest} />} />
+                <Route  path="/login" element={isLoggedIn ? <Navigate to="/home" /> : <LoginPage loginSuccess={LoginRequest} />} />
                 
                 <Route path="/sign-up" element={<CreateAccountPage />} />
+
+                <Route path="/home" element={<HomePage />}  />
             </Routes>
         </>
     );}
