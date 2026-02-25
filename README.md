@@ -1,3 +1,4 @@
 # Anime / Movie tracker 
-# Tech Stack used - Frontend : React, tailwindcss
-#                   Backend : Java
+# In-Progress
+# Tech Stack used - Frontend : React JavaScript + Some TypeScript tailwindcss
+# Will Host when finished with backend
