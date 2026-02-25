@@ -1,5 +1,4 @@
 import './styles/CreateAcc.css'
-import { useState } from 'react';
 
 function CreateAccountPage() {
     return ( 

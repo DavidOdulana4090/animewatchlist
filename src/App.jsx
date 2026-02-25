@@ -1,5 +1,5 @@
 import LoginPage from "./LoginPage";
-import CreateAccountPage from "./Createaccount";
+import CreateAccountPage from "./CreateAccount";
 import HomePage from "./HomePage";
 import { useState } from "react";
 import { Routes, Route, Navigate } from 'react-router-dom';
