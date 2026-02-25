@@ -1,6 +1,6 @@
 import '../styles/Input.css'
 import clsx from 'clsx';
-import { forwardRef, useRef } from 'react';
+import { forwardRef } from 'react';
 
 const InputField = forwardRef((props, ref) => {
     return (

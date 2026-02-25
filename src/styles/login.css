@@ -38,13 +38,21 @@
     width: 50%;
 }
 
-.input-container input::placeholder {
+.input-container input,
+.input-password-wrapper input {
+    width: 100%;
+    
+}
+
+.input-container input::placeholder,
+.input-password-wrapper input::placeholder {
     font-size: smaller;
     
 }
 
-.input-container input {
-    color: white;
+.input-container input:focus,
+.input-password-wrapper input:focus {
+    background-color: white;
 }
 
 .input-password-wrapper {
@@ -53,16 +61,12 @@
     width: 100%;
 }
 
-.password-input {
-    width: 100%;
-    
-}
-
 .icon-eye-password {
     position: absolute;
     right: 0px;
     top: 20%;
     transform: translate(-50%);
+    color: rgba(255, 255, 255, 0.822);
 }
 
 .no-account-p {

@@ -7,13 +7,13 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 function App() {
     const [isLoggedIn, SetIsLogstate] = useState(() => {
         const saved = localStorage.getItem('isLoggedIn');
-        return saved === "false";
+        return saved === 'false';
     });
 
-    // Login
+    // isLoggedIn = ("true")  || ("false") Localstorage,stateforRendering
     const LoginRequest = () => {
         localStorage.setItem('isLoggedIn', 'true');
-        SetIsLogstate(true);
+        SetIsLogstate('true');
     };
 
     const Errorlogin = () => {
@@ -22,14 +22,14 @@ function App() {
 
     const LogoutRequest = () => {
         localStorage.removeItem('isLoggedIn');
-        SetIsLogstate(false);
+        SetIsLogstate('false');
 };
 
     return (
         <>
             <Routes>
-                // Whether to render login or home based on local storage State
-                <Route path="/" element={isLoggedIn ? <Navigate to={"/home"} /> : <Navigate to={"/login"} />} />
+                {/*Whether to render login or home based on local storage saved key = value then State  to update */}
+                <Route path="/home" element={isLoggedIn === "true" ? <HomePage /> : <Navigate to={"/login"} />} /> 
 
                 <Route  path="/login" element={isLoggedIn ? <Navigate to="/home" /> : <LoginPage loginSuccess={LoginRequest} />} />
                 
