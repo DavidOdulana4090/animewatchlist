@@ -7,7 +7,8 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 function App() {
     const [isLoggedIn, SetIsLogstate] = useState(() => {
         const saved = localStorage.getItem('isLoggedIn');
-        return saved === 'false';
+        return saved !== null ? saved : 'false';
+        // 
     });
 
     // isLoggedIn = ("true")  || ("false") Localstorage,stateforRendering
