@@ -23,7 +23,7 @@ function LoginPage(props) {
         let email = emailRef.current.value;
         let password = passwordRef.current.value
 
-        if (ValidateLogin(email, password) === true) {
+        if (ValidateLogin(email, password)) {
             props.loginSuccess();
             
             let userdata = {

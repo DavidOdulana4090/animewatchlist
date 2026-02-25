@@ -1,6 +1,6 @@
 // Helper Function and stuff
 
-export const ValidateLogin = (email: string, password: string) => {
+export const ValidateLogin = (email: string, password: string): boolean => {
     const isValidEmail = email.toLowerCase().endsWith(".com");
 
     const isLongEnough = password.length >= 8;
