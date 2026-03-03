@@ -1,13 +1,13 @@
-import "./styles/Login.css"
+import "../styles/Login.css"
 
-import Button from "./components/Button";
-import InputField from "./components/Input";
-import Label from "./components/Label"
-import Heading1 from "./components/H1";
+import Button from "../components/Button";
+import InputField from "../components/Input";
+import Label from "../components/Label"
+import Heading1 from "../components/H1";
 import { Link } from "react-router-dom";
 import { useRef, useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
-import { ValidateLogin } from "./functions/Logic";
+import { ValidateLogin } from "../utils/Logic";
 
 function LoginPage(props) {
     // States / Ref

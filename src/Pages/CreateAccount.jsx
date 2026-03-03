@@ -1,4 +1,4 @@
-import './styles/CreateAcc.css'
+import '../styles/CreateAcc.css'
 
 function CreateAccountPage() {
     return ( 
