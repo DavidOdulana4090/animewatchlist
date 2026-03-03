@@ -6,19 +6,14 @@ function App() {
         return localStorage.getItem('isLoggedIn') || 'false';
     });
 
-    const loginRequest = () => {
+    const AppServerLoginRequest = () => {  // Will change most of these later
         localStorage.setItem('isLoggedIn', 'true');
         SetIsLogstate('true');
     };
 
-    const logoutRequest = () => {
-        localStorage.removeItem('isLoggedIn');
-        SetIsLogstate('false');
-    };
-
     return (
         <div className="app-container">
-            <AppRoutes isLoggedIn={isLoggedIn} onLogin={loginRequest} />
+            <AppRoutes isLoggedIn={isLoggedIn} ServerLoginRequest={AppServerLoginRequest} />
         </div>
     );
 }

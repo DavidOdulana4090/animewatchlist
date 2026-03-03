@@ -19,12 +19,12 @@ function LoginPage(props) {
         Setshowpassword(!showpassword);
     }
 
-    function login() {
+    function ClientLoginRequest() {
         let email = emailRef.current.value;
         let password = passwordRef.current.value
 
         if (ValidateLogin(email, password)) {
-            props.loginSuccess();
+            props.ClientLoginSuccess();  // AppRoutes
             
             let userdata = {
                 EmailAddress: email,
@@ -59,7 +59,7 @@ return (
                         </div>                 
                     </div>
                 <br></br><br></br>
-                <Button text="login" onClick={login} />
+                <Button text="login" onClick={ClientLoginRequest} />
                 <br></br>
                 <p className="no-account-p"> Don't have an account? <Link to={'/sign-up'}> sign up </Link> </p>
             </div>

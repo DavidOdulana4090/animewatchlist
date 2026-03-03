@@ -5,22 +5,22 @@ import HomePage from "../Pages/HomePage";
 
 export interface AppRoutesProps {
     isLoggedIn: string;
-    onLogin: () => void;
+    ServerLoginRequest: () => void;
 }
 
-const AppRoutes = ({ isLoggedIn, onLogin }: AppRoutesProps) => {
+const AppRoutes = (props : AppRoutesProps) => {
     return (
         <Routes>
             {/* Protected Route */}
             <Route 
                 path="/home" 
-                element={isLoggedIn === 'true' ? <HomePage /> : <Navigate to="/login" />} 
+                element={props.isLoggedIn === 'true' ? <HomePage /> : <Navigate to="/login" />} 
             /> 
 
-            {/* Auth Routes */}
+            {/* Auth Routes Login page */}
             <Route 
                 path="/login" 
-                element={isLoggedIn === 'true' ? <Navigate to="/home" /> : <LoginPage loginSuccess={onLogin} />} 
+                element={props.isLoggedIn === 'true' ? <Navigate to="/home" /> : <LoginPage ClientLoginSuccess={props.ServerLoginRequest} />} 
             />
             
             <Route path="/sign-up" element={<CreateAccountPage />} />
