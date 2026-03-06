@@ -1,19 +1,20 @@
 import { useState } from "react";
 import AppRoutes from "./Routes/AppRoutes";
+import "./styles/App.css"
 
 function App() {
-    const [isLoggedIn, SetIsLogstate] = useState<string>(() => {
+    const [isLoggedIn, setIsLoggedIn] = useState<string>(() => {
         return localStorage.getItem('isLoggedIn') || 'false';
     });
 
-    const AppServerLoginRequest = () => {  // Will change most of these later
+    const appLoginRequest = () => {  // Will change most of these later
         localStorage.setItem('isLoggedIn', 'true');
-        SetIsLogstate('true');
+        setIsLoggedIn('true');
     };
 
     return (
         <div className="app-container">
-            <AppRoutes isLoggedIn={isLoggedIn} ServerLoginRequest={AppServerLoginRequest} />
+            <AppRoutes isLoggedIn={isLoggedIn} serverLoginRequest={appLoginRequest} />
         </div>
     );
 }

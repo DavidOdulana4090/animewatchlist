@@ -7,24 +7,24 @@ import Heading1 from "../components/H1";
 import { Link } from "react-router-dom";
 import { useRef, useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
-import { ValidateLogin } from "../utils/Logic";
+import { validateLogin as validateLogin } from "../utils/Logic";
 
 function LoginPage(props) {
     // States / Ref
-    const [showpassword, Setshowpassword] = useState(false);
+    const [showpassword, setShowPassword] = useState(false);
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
 
-    function PasswordVisibilityToggle() {
-        Setshowpassword(!showpassword);
+    function passwordToggle() {
+        setShowPassword(!showpassword);
     }
 
-    function ClientLoginRequest() {
+    function clientLoginRequest() {
         let email = emailRef.current.value;
         let password = passwordRef.current.value
 
-        if (ValidateLogin(email, password)) {
-            props.ClientLoginSuccess();  // AppRoutes
+        if (validateLogin(email, password)) {
+            props.clientLoginSuccess();  // AppRoutes
             
             let userdata = {
                 EmailAddress: email,
@@ -55,11 +55,11 @@ return (
                         <Label htmlFor="password-field" text="Password"/>
                         <div className="input-password-wrapper">
                             <InputField name="user-password" placeholder="Enter password.." type={showpassword ? "text" : "password"} id="password-field" className="password-input" ref={passwordRef}/>
-                            {showpassword ? <Eye className="icon-eye-password" onClick={PasswordVisibilityToggle}/> : <EyeOff className="icon-eye-password" onClick={PasswordVisibilityToggle}/>}
+                            {showpassword ? <Eye className="icon-eye-password" onClick={passwordToggle}/> : <EyeOff className="icon-eye-password" onClick={passwordToggle}/>}
                         </div>                 
                     </div>
                 <br></br><br></br>
-                <Button text="login" onClick={ClientLoginRequest} />
+                <Button text="login" onClick={clientLoginRequest} />
                 <br></br>
                 <p className="no-account-p"> Don't have an account? <Link to={'/sign-up'}> sign up </Link> </p>
             </div>

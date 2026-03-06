@@ -3,12 +3,12 @@ import LoginPage from "../Pages/LoginPage";
 import CreateAccountPage from "../Pages/CreateAccount";
 import HomePage from "../Pages/HomePage";
 
-export interface AppRoutesProps {
+export interface appRoutesProps {
     isLoggedIn: string;
-    ServerLoginRequest: () => void;
+    serverLoginRequest: () => void;
 }
 
-const AppRoutes = (props : AppRoutesProps) => {
+const AppRoutes = (props : appRoutesProps) => {
     return (
         <Routes>
             {/* Protected Route */}
@@ -20,7 +20,7 @@ const AppRoutes = (props : AppRoutesProps) => {
             {/* Auth Routes Login page */}
             <Route 
                 path="/login" 
-                element={props.isLoggedIn === 'true' ? <Navigate to="/home" /> : <LoginPage ClientLoginSuccess={props.ServerLoginRequest} />} 
+                element={props.isLoggedIn === 'true' ? <Navigate to="/home" /> : <LoginPage clientLoginSuccess={props.serverLoginRequest} />} 
             />
             
             <Route path="/sign-up" element={<CreateAccountPage />} />
