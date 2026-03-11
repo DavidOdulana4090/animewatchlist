@@ -10,8 +10,6 @@ const InputField = forwardRef((props, ref) => {
             type={props.type}
             name={props.name}
             id={props.id}>
-            
-
         </input>
     );
 });

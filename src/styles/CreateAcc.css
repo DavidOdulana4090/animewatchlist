@@ -1,0 +1,25 @@
+* {
+    background-color: rgb(124, 194, 145);
+}
+
+.container-createaccount {
+    display: flex;
+    justify-content: center;
+    align-items: left;
+    flex-direction: column;
+    padding: 50px 100px;
+    gap: 8px;
+    width: 32%;
+    border: 1px solid rgba(0, 0, 0, 0.212);
+    border-radius: 6px;
+}
+
+
+.container-container-createaccount {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    border: 1px solid black;
+}
