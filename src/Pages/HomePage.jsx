@@ -5,7 +5,6 @@ import Footer from "../components/Footer"
 function HomePage(props) {
     const [currentname, setcurrentname] = useState("nobody")
 
-
     return (
     
         <>

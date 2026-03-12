@@ -46,11 +46,13 @@ return (
             <div className="Login-container"> 
                 <Heading1 text="Track your movies.." className="heading1"/>
                 <br></br>
+
                     <div className="input-container">
                         <Label htmlFor="email-field" text="Email address"/>
                     <InputField name="user-emailaddress" placeholder="Enter Email address.." type="email" id="email-field" ref={emailRef} /> 
                     </div>
-                        <br></br>
+                <br></br>
+                
                     <div className="input-container"> 
                         <Label htmlFor="password-field" text="Password"/>
                         <div className="input-password-wrapper">
