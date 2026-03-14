@@ -19,7 +19,7 @@ body {
 
 .container-createaccount label {
     position: relative;
-    right: 5%;
+    right: 3%;
 }
 
 
@@ -62,4 +62,12 @@ body {
 .createaccountbutton {
     width: 30%;
     align-self: center;
+}
+
+.loginpage {
+    font-size: 16px;
+}
+
+.loginpage a  {
+    text-decoration: underline;
 }
