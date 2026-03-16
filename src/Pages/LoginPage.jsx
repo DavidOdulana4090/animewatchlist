@@ -7,7 +7,7 @@ import Heading1 from "../components/H1";
 import { Link } from "react-router-dom";
 import { useRef, useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
-import { validateLogin as validateLogin } from "../utils/Logic";
+import { isValidLogin as isValidLogin } from "../utils/Logic";
 
 function LoginPage(props) {
     // States / Ref
@@ -23,16 +23,13 @@ function LoginPage(props) {
         let email = emailRef.current.value;
         let password = passwordRef.current.value
 
-        if (validateLogin(email, password)) {
+        if (isValidLogin(email, password)) {
             props.clientLoginSuccess();  // AppRoutes
             
             let userdata = {
                 EmailAddress: email,
                 Password: password
             }
-
-            console.log(userdata);
-
         } else {
             alert("Invalid Password or email")
             return false;

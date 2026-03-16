@@ -12,6 +12,7 @@ function App() {
         setIsLoggedIn('true');
     };
 
+
     return (
         <div className="app-container">
             <AppRoutes isLoggedIn={isLoggedIn} serverLoginRequest={appLoginRequest} />

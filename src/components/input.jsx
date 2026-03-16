@@ -9,7 +9,8 @@ const InputField = forwardRef((props, ref) => {
             className={clsx('input-field', props.className)}
             type={props.type}
             name={props.name}
-            id={props.id}>
+            id={props.id}
+            onChange={props.onChange}>
         </input>
     );
 });

@@ -8,14 +8,16 @@ body {
     justify-content: center;
     align-items: left;
     flex-direction: column;
-    padding: 25px 50px;
+    padding: 65px 115px;
     gap: 8px;
-    width: 30%;
-    border: 1px solid rgba(0, 0, 0, 0.212);
+    min-width: 36%;
+    min-height: 60%;
+    border: 1px solid rgba(138, 255, 5, 0.932);
     border-radius: 6px;
 
     background-color: rgba(119, 114, 114, 0.158);
 }
+
 
 .container-createaccount label {
     position: relative;
