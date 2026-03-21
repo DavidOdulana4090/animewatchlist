@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useRef, useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import { isValidLogin as isValidLogin } from "../utils/Logic";
+import axios from "axios";
 
 function LoginPage(props) {
     // States / Ref
@@ -19,17 +20,38 @@ function LoginPage(props) {
         setShowPassword(!showpassword);
     }
 
+    const handleLogin = async () => {
+
+        try {
+            // user login data 
+             const userdata = {
+            email: emailRef.current.value,
+            password: passwordRef.current.value
+        }
+
+        const backendurl = import.meta.env.VITE_API_BASE_URL;
+        const backend = `${backendurl}/api/user/login`;
+
+            const response = await axios.post(backend, userdata);
+            console.log(response)
+            props.clientLoginSuccess();  // AppRoutes
+            
+        } catch (error) {
+            if (error.response) {
+                console.log("Error msg: ", error.response.data)
+            } else {
+                console.log("Error ", error.response)
+            }
+            return false;
+        }
+    }
+
     function clientLoginRequest() {
         let email = emailRef.current.value;
         let password = passwordRef.current.value
 
         if (isValidLogin(email, password)) {
-            props.clientLoginSuccess();  // AppRoutes
-            
-            let userdata = {
-                EmailAddress: email,
-                Password: password
-            }
+            handleLogin();
         } else {
             alert("Invalid Password or email")
             return false;

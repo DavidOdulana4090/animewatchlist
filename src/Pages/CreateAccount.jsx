@@ -6,10 +6,13 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import { isMatchingPassword } from "../utils/Logic";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function CreateAccountPage() {
 	const [showpassword, setShowPassword] = useState(false);
-	const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+    const navigate = useNavigate();
 
 	const emailref = useRef(null);
 	const passwordref = useRef(null);
@@ -25,36 +28,42 @@ function CreateAccountPage() {
 
 	function showPasswordError() {}
 
-	async function createAccount() {
-		const emailvalue = emailref.current.value;
+	function createAccount() {
 		const passwordvalue = passwordref.current.value;
 		const confirmpasswordvalue = confirmpasswordref.current.value;
-		console.log(emailvalue, passwordvalue, confirmpasswordvalue);
+	
 
 		if (isMatchingPassword(passwordvalue, confirmpasswordvalue)) {
-			console.log(true);
+            handleCreateAccount();
 		} else {
-			console.log(false);
+            alert("password mismatch ")
+            showPasswordError()
 		}
 	}
 
-	async function fetchData() {
-		try {
-			const backendport = import.meta.env.VITE_API_BASE_URL;
-			const response = await fetch(`${backendport}/api/response`);
+    const handleCreateAccount = async () => {
+        try {
+            // data to send 
+            const userData = {
+                email: emailref.current.value,
+                password: passwordref.current.value
+            }
+            const backendurl = import.meta.env.VITE_API_BASE_URL;
+            const backend = `${backendurl}/api/user/register`;
+            const response = await axios.post(backend, userData);
 
-			if (response.ok) {
-				const data = await response.text();
-				console.log(data);
-			} else {
-				console.error(response.status);
-			}
-		} catch (error) {
-			console.error(error);
-		}
-	}
 
-	fetchData();
+            if (response.data != null){
+                navigate("/login")  // if success reponse
+            }
+        } catch (error) {
+            if (error.response) {
+                console.log("Error Msg: ", error.response.data)
+            } else {
+                console.log("Error ", error.message)
+            }
+        }
+    }
 
 	return (
 		<>
