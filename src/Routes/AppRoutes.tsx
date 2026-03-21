@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from "../Pages/LoginPage";
 import CreateAccountPage from "../Pages/CreateAccount";
 import HomePage from "../Pages/HomePage";
+import ForgotPassword from '../Pages/ForgotPassword';
 
 export interface appRoutesProps {
     isLoggedIn: string;
@@ -27,6 +28,10 @@ const AppRoutes = (props : appRoutesProps) => {
 
             {/* Default | Redirect */}
             <Route path="/" element={<Navigate to="/home" replace />} />
+
+            {/* basic routes */}
+            <Route path='/forgot-password' element={<ForgotPassword/>} />
+            
         </Routes>
     );
 };

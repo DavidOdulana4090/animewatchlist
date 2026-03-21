@@ -67,9 +67,10 @@ body {
 }
 
 .loginpage {
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .loginpage a  {
     text-decoration: underline;
+    color: white;
 }

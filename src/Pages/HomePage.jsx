@@ -8,9 +8,7 @@ function HomePage(props) {
     return (
     
         <>
-            <h1> Hello my name is {currentname} </h1>
-            <button onClick={() => setcurrentname("david")}> button </button>
-            <Footer/>
+            
         </>
 )};
 

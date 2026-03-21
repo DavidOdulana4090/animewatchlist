@@ -82,6 +82,8 @@ return (
                 <br></br><br></br>
                 <Button text="login" onClick={clientLoginRequest} />
                 <br></br>
+                <Link to={'/forgot-password'} className="forgot-password"> Forgot Password?</Link>
+                <br></br>
                 <p className="no-account-p"> Don't have an account? <Link to={'/sign-up'}> sign up </Link> </p>
             </div>
         </div>
