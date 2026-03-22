@@ -8,17 +8,12 @@ import { HomeIcon, UserIcon, MessageSquareIcon, LucideSettings, DoorOpenIcon, Ta
 
 function HomePage(props) {
     const [username, setUsername] = useState(null);
-    const [isOpen, setIsOpen] = useState(false)
     const [isActive, setIsActive] = useState(null);
-
-    const toggleAside = () => {
-        setIsOpen(!isOpen);
-    }
 
 
     return (
         <>
-            <aside className={clsx('aside-styling', isOpen ? 'aside-open' : 'aside-closed')} onMouseEnter={toggleAside}>
+            <aside className={clsx('aside-styling')}>
                 <br></br>
                 <AsideButtons text="Dashboard" Icon={HomeIcon} active={isActive} onClick={setIsActive}/> 
                 <AsideButtons text="Profile" Icon={UserIcon} active={isActive} onClick={setIsActive}/>

@@ -12,7 +12,7 @@ function AsideButtons(props) {
         console.log(props.text)
     };
     return ( 
-        <button className={clsx('slice', props.className, isSelected ? 'selected' : '')} active={props.active} setIsActive={props.setIsActive} onClick={handleSelected}>
+        <button className={clsx('slice', props.className, isSelected ? 'selected' : '')} onClick={handleSelected}>
             {Icon && <Icon size={50} className={clsx('icon-styling')} />}
             <span className="text"> {props.text} </span>
         </button>
