@@ -1,0 +1,31 @@
+* {
+    
+}
+
+aside {
+    position: fixed;
+    width: 14%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.527);
+    padding: 8px;
+    overflow-x: hidden; 
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+aside button {
+    margin: 6px;
+    border-radius: 8px;
+    font-size: 10px;
+}
+
+.Logout-button {
+    margin-top: auto;
+}
+
+@media screen {
+    
+}

@@ -1,0 +1,70 @@
+.slice {
+  --c1: #202020;
+  --c2: #00a1b7; 
+  --size-letter: 16px; 
+  padding: 0.8em 1.2em;
+  font-size: var(--size-letter);
+
+  background-color: transparent;
+  border: calc(var(--size-letter) / 20) solid var(--c2);
+  border-radius: 0.4em;
+  cursor: pointer;
+
+  overflow: hidden;
+  position: relative;
+  transition: 300ms cubic-bezier(0.83, 0, 0.17, 1);
+
+
+  display: flex;
+  align-items: center;
+  gap: 1em; 
+}
+
+.slice .icon-styling,
+.slice > .text {
+  font-weight: 400;
+  color: var(--c2);
+  position: relative; 
+  z-index: 2;         
+  transition: color 700ms cubic-bezier(0.83, 0, 0.17, 1);
+  white-space: nowrap; 
+}
+
+
+.slice::after {
+  content: "";
+  width: 0;
+  height: calc(300% + 1em);
+  position: absolute;
+  translate: -50% -50%;
+  inset: 50%;
+  rotate: 30deg;
+  background-color: var(--c2); 
+  
+  z-index: 1; 
+  transition: 1000ms cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+
+.slice.selected::after,
+.slice:hover::after {
+  width: calc(150% + 1em); 
+}
+
+
+.slice.selected .icon-styling,
+.slice.selected > .text,
+.slice:hover .icon-styling,
+.slice:hover > .text {
+  color: #ffffff; 
+}
+
+
+.slice.selected {
+  border-color: var(--c2);
+}
+
+.slice:active {
+  scale: 0.96; 
+  filter: brightness(0.9);
+}
