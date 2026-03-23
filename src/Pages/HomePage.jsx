@@ -5,9 +5,9 @@ import clsx from 'clsx';
 import Button from '../components/Button';
 import AsideButtons from '../components/AsideButton';
 import { HomeIcon, UserIcon, MessageSquareIcon, LucideSettings, DoorOpenIcon, TagsIcon, PhoneCallIcon } from 'lucide-react';
+import { Outlet } from 'react-router-dom';
 
-function HomePage(props) {
-    const [username, setUsername] = useState(null);
+function HomePage() {
     const [isActive, setIsActive] = useState(null);
 
 
@@ -26,6 +26,9 @@ function HomePage(props) {
                 {/*  Aligned End */}
                 <AsideButtons text="Logout" className="Logout-button" Icon={DoorOpenIcon} active={isActive} onClick={setIsActive} />
             </aside>
+            <div>
+                <Outlet />
+            </div>
         </>
 )};
 

@@ -3,6 +3,7 @@ import LoginPage from "../Pages/LoginPage";
 import CreateAccountPage from "../Pages/CreateAccount";
 import HomePage from "../Pages/HomePage";
 import ForgotPassword from '../Pages/ForgotPassword';
+import Dashboard from '../Pages/Dashboard'
 
 export interface appRoutesProps {
     isLoggedIn: string;
@@ -13,24 +14,36 @@ const AppRoutes = (props : appRoutesProps) => {
     return (
         <Routes>
             {/* Protected Route */}
-            <Route 
+            <Route
                 path="/home" 
-                element={props.isLoggedIn === 'true' ? <HomePage /> : <Navigate to="/login" />} 
-            /> 
+                element={props.isLoggedIn === 'true' ? <HomePage /> : <Navigate to="/login" />}>
+                
+                {/* Nested protected Routes */}
+                <Route
+                    path='dashboard'
+                    element={<Dashboard />} />
+            
+            </Route>
+            
 
             {/* Auth Routes Login page */}
             <Route 
                 path="/login" 
-                element={props.isLoggedIn === 'true' ? <Navigate to="/home" /> : <LoginPage clientLoginSuccess={props.serverLoginRequest} />} 
-            />
+                element={props.isLoggedIn === 'true' ? <Navigate to="/home" /> : <LoginPage clientLoginSuccess={props.serverLoginRequest} />}  />
             
-            <Route path="/sign-up" element={<CreateAccountPage />} />
+            <Route
+                path="/sign-up"
+                element={<CreateAccountPage />} />
 
             {/* Default | Redirect */}
-            <Route path="/" element={<Navigate to="/home" replace />} />
+            <Route
+                path="/"
+                element={<Navigate to="/home" replace />} />
 
             {/* basic routes */}
-            <Route path='/forgot-password' element={<ForgotPassword/>} />
+            <Route
+                path='/forgot-password'
+                element={<ForgotPassword />} />
             
         </Routes>
     );
