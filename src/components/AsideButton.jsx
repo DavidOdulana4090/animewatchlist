@@ -9,7 +9,6 @@ function AsideButtons(props) {
 
     const handleSelected = () => {
         props.onClick(props.text); 
-        console.log(props.text)
     };
     return ( 
         <button className={clsx('slice', props.className, isSelected ? 'selected' : '')} onClick={handleSelected}>

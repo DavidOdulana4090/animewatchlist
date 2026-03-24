@@ -6,22 +6,33 @@ import ForgotPassword from '../Pages/ForgotPassword';
 import ProtectedRoutes from './ProtectedRoutes';
 import { useAuth } from '../utils/AuthContext';
 import Dashboard from '../Pages/Dashboard';
-
+import Profile from '../Pages/Profile'
+import Messages from '../Pages/Inbox';
+import Settings from '../Pages/Settings'
+import Tags from '../Pages/Tags'
+import ContactMe from '../Pages/ContactMe';
+import Logout from '../Pages/Logoutpage'
 
 function AppRoutes(){
     const { user } = useAuth();
 
     return (
-        <Routes>
-            {/* HomePage Protected */}            
-            <Route
-                path="/home" 
-                element={!user ? <Navigate to='/login' /> : <HomePage />} />
-            
+        <Routes> 
             {/* Children Protected */}
             <Route element={<ProtectedRoutes />}>
-                <Route path="/home" element={<HomePage />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route element={<HomePage />} >
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/Inbox" element={<Messages />} />
+                    <Route path='Contact' element={<ContactMe />} />
+                    <Route path='/Tags' element={<Tags /> } />
+                    <Route path="/Settings" element={<Settings />} />
+                    <Route path='/Logout' element={<Logout />} />
+
+            
+                    {/* Default redirect: */}
+                    <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                </Route>
             </Route>
             
             {/* LoginPage Redirect && LoginPage */}
@@ -32,7 +43,7 @@ function AppRoutes(){
             {/* Empty Path  */}
             <Route
                 path="/"
-                element={<Navigate to="/home" replace />} />
+                element={<Navigate to="/dashboard" replace />} />
 
             {/* Forgot Password */}
             <Route
@@ -43,6 +54,8 @@ function AppRoutes(){
             <Route
                 path="/sign-up"
                 element={<CreateAccountPage />} />
+            
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
             
         </Routes>
     );
