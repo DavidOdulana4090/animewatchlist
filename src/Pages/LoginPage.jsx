@@ -8,34 +8,37 @@ import { Link } from "react-router-dom";
 import { useRef, useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import { isValidLogin as isValidLogin } from "../utils/Logic";
+import { Navigate } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../utils/AuthContext";
 
-function LoginPage(props) {
+function LoginPage() {
     // States / Ref
     const [showpassword, setShowPassword] = useState(false);
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
+    const { user, login, logout } = useAuth();
 
     function passwordToggle() {
         setShowPassword(!showpassword);
     }
 
     const handleLogin = async () => {
-
         try {
             // user login data 
-             const userdata = {
-            email: emailRef.current.value,
-            password: passwordRef.current.value
-        }
+            const userdata = {
+                email: emailRef.current.value,
+                password: passwordRef.current.value }
 
-        const backendurl = import.meta.env.VITE_API_BASE_URL;
-        const backend = `${backendurl}/api/user/login`;
+            const backendurl = import.meta.env.VITE_API_BASE_URL;
+            const backend = `${backendurl}/api/user/login`;
 
             const response = await axios.post(backend, userdata);
-            console.log(response)
-            props.clientLoginSuccess();  // AppRoutes
-            
+            if (response) {
+                console.log(response);
+                login();
+                Navigate('/home')
+            }
         } catch (error) {
             if (error.response) {
                 console.log("Error msg: ", error.response.data)
@@ -57,7 +60,6 @@ function LoginPage(props) {
             return false;
         }   
     }
-
 
 return ( 
     <>

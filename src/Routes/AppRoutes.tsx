@@ -3,47 +3,46 @@ import LoginPage from "../Pages/LoginPage";
 import CreateAccountPage from "../Pages/CreateAccount";
 import HomePage from "../Pages/HomePage";
 import ForgotPassword from '../Pages/ForgotPassword';
-import Dashboard from '../Pages/Dashboard'
+import ProtectedRoutes from './ProtectedRoutes';
+import { useAuth } from '../utils/AuthContext';
+import Dashboard from '../Pages/Dashboard';
 
-export interface appRoutesProps {
-    isLoggedIn: string;
-    serverLoginRequest: () => void;
-}
 
-const AppRoutes = (props : appRoutesProps) => {
+function AppRoutes(){
+    const { user } = useAuth();
+
     return (
         <Routes>
-            {/* Protected Route */}
+            {/* HomePage Protected */}            
             <Route
                 path="/home" 
-                element={props.isLoggedIn === 'true' ? <HomePage /> : <Navigate to="/login" />}>
-                
-                {/* Nested protected Routes */}
-                <Route
-                    path='dashboard'
-                    element={<Dashboard />} />
+                element={!user ? <Navigate to='/login' /> : <HomePage />} />
             
+            {/* Children Protected */}
+            <Route element={<ProtectedRoutes />}>
+                <Route path="/home" element={<HomePage />} />
+                <Route path="/dashboard" element={<Dashboard />} />
             </Route>
             
-
-            {/* Auth Routes Login page */}
+            {/* LoginPage Redirect && LoginPage */}
             <Route 
                 path="/login" 
-                element={props.isLoggedIn === 'true' ? <Navigate to="/home" /> : <LoginPage clientLoginSuccess={props.serverLoginRequest} />}  />
+                element={user ? <Navigate to='/dashboard' replace/> : <LoginPage />} />
             
-            <Route
-                path="/sign-up"
-                element={<CreateAccountPage />} />
-
-            {/* Default | Redirect */}
+            {/* Empty Path  */}
             <Route
                 path="/"
                 element={<Navigate to="/home" replace />} />
 
-            {/* basic routes */}
+            {/* Forgot Password */}
             <Route
                 path='/forgot-password'
                 element={<ForgotPassword />} />
+            
+            {/* Signup */}
+            <Route
+                path="/sign-up"
+                element={<CreateAccountPage />} />
             
         </Routes>
     );

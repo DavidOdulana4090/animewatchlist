@@ -51,10 +51,9 @@ function CreateAccountPage() {
             const backendurl = import.meta.env.VITE_API_BASE_URL;
             const backend = `${backendurl}/api/user/register`;
             const response = await axios.post(backend, userData);
-
-
-            if (response.data != null){
-                navigate("/login")  // if success reponse
+            if (response.data != null) {
+                console.log(response.data)
+                navigate("/login")  
             }
         } catch (error) {
             if (error.response) {
