@@ -10,16 +10,26 @@
 # Forgotpassword
 ![alt text](image-2.png)
 
-# Dashboard
+# Homepage > no element
+![alt text](image-3.png)
 
-# Profile
+# Homepage > Dashboard (Fake data)
+![alt text](image-4.png)
 
-# Inbox
+# Homepage > Profile
+Empty
 
-# Contact Me
+# Homepage > Inbox
+Empty
 
-# Tags
+# Homepage > Contact Me
+Empty
 
-# Settings
+# Homepage > Tags
+Empty
 
-# Logout
+# Homepage > Settings
+Empty
+
+# Homepage > Logout
+Empty
