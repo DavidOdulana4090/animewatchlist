@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react';
+import { useAuth } from '../utils/AuthContext';
 
 function Dashboard() {
+    const { isLoggedIn, userdata, login, logout } = useAuth();
     const animeData = [
         { id: 1, title: "Demon Slayer", status: "watching", progress: 75, genre: "Action", rating: 9.2 },
         { id: 2, title: "Attack on Titan", status: "completed", progress: 100, genre: "Action", rating: 9.0 },
@@ -56,7 +58,7 @@ function Dashboard() {
                     <h1 className="text-5xl font-bold text-white mb-2 bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
                         Anime Dashboard
                     </h1>
-                    <p className="text-gray-300 text-lg">Track your anime journey with style</p>
+                    <p className="text-gray-300 text-lg">Track your anime journey with style {userdata?.username} </p>
                 </div>
 
                 {/* Stats Grid */}

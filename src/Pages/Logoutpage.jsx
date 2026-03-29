@@ -11,10 +11,11 @@ function LogOutPage() {
     useEffect(() => {
         console.log(userdata)
         logout();
+        navigate('/login')
     })
 
     console.log(userdata)
-
+    // Will add like a confirm logout here or something 
     return (
         <>
             <h1> LOGOUT PAGE TEST </h1>

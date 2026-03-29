@@ -5,16 +5,16 @@ import { useEffect } from 'react';
 
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setisLoggedIn] = useState(() => localStorage.getItem('isLoggedIn') === 'true');
-    const [userData, setUserData] = useState({
+    const [userdata, setUserData] = useState({
         email: null,
         username: null
     });
 
     useEffect(() => {
-        if (userData.email != null) {
-            console.log("Updated: ", JSON.stringify(userData));
+        if (userdata.email != null) {
+            console.log("Updated: ", JSON.stringify(userdata));
         }
-    }, [userData]);
+    }, [userdata]);
 
     const login = async (email, password) => {
         try {
@@ -26,14 +26,14 @@ export const AuthProvider = ({ children }) => {
 
                 const newUserData = {
                     email: email,
-                    username: userResponse.data 
+                    username: userResponse.data
                 };
 
                 setUserData(newUserData);
                 setisLoggedIn(true);
                 
                 localStorage.setItem('isLoggedIn', 'true');
-                console.log(JSON.stringify(userData));
+                console.log(JSON.stringify(userdata));
                 
                 return true;
             }
@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
     const logout = async () => {
         try {
             const backendurl = import.meta.env.VITE_API_BASE_URL;
-            await axios.post(`${backendurl}/api/user/logout`, { email: userData.email });
+            await axios.post(`${backendurl}/api/user/logout`, { email: userdata.email });
 
         } catch (error) {
             console.error("Logout error:", error.response?.data || error.message);
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, userData, login, logout }}>
+        <AuthContext.Provider value={{ isLoggedIn, userdata, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
