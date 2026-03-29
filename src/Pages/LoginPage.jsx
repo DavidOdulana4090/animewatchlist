@@ -4,7 +4,7 @@ import Button from "../components/Button";
 import InputField from "../components/Input";
 import Label from "../components/Label"
 import Heading1 from "../components/H1";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import { isValidLogin as isValidLogin } from "../utils/Logic";
@@ -17,36 +17,11 @@ function LoginPage() {
     const [showpassword, setShowPassword] = useState(false);
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
-    const { user, login, logout } = useAuth();
+    const { user, userdata, login, logout } = useAuth();
+    const navigate = useNavigate();
 
     function passwordToggle() {
         setShowPassword(!showpassword);
-    }
-
-    const handleLogin = async () => {
-        try {
-            // user login data 
-            const userdata = {
-                email: emailRef.current.value,
-                password: passwordRef.current.value }
-
-            const backendurl = import.meta.env.VITE_API_BASE_URL;
-            const backend = `${backendurl}/api/user/login`;
-
-            const response = await axios.post(backend, userdata);
-            if (response) {
-                console.log(response);
-                login();
-                Navigate('/home')
-            }
-        } catch (error) {
-            if (error.response) {
-                console.log("Error msg: ", error.response.data)
-            } else {
-                console.log("Error ", error.response)
-            }
-            return false;
-        }
     }
 
     function clientLoginRequest() {
@@ -54,7 +29,8 @@ function LoginPage() {
         let password = passwordRef.current.value
 
         if (isValidLogin(email, password)) {
-            handleLogin();
+            login(email, password)  // use auth 
+            navigate('/dashboard')
         } else {
             alert("Invalid Password or email")
             return false;

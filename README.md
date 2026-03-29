@@ -13,8 +13,6 @@
 # Homepage > no element
 ![alt text](image-3.png)
 
-# Homepage > Dashboard (Fake data)
-![alt text](image-4.png)
 
 # Homepage > Profile
 Empty
