@@ -18,48 +18,34 @@ function CreateAccountPage() {
 	const passwordref = useRef(null);
 	const confirmpasswordref = useRef(null);
 
-	function passwordToggle() {
+	const passwordToggle = () => {
 		setShowPassword(!showpassword);
 	}
 
-	function passwordToggleConfirm() {
+	const passwordToggleConfirm = () => {
 		setShowPasswordConfirm(!showPasswordConfirm);
-	}
-
-	function showPasswordError() {}
-
-	function createAccount() {
-		const passwordvalue = passwordref.current.value;
-		const confirmpasswordvalue = confirmpasswordref.current.value;
-	
-
-		if (isMatchingPassword(passwordvalue, confirmpasswordvalue)) {
-            handleCreateAccount();
-		} else {
-            alert("password mismatch ")
-            showPasswordError()
-		}
 	}
 
     const handleCreateAccount = async () => {
         try {
-            // data to send 
+            if (!isMatchingPassword(passwordref.current.value, confirmpasswordref.current.value)) {
+                return false;
+            }
+
             const userData = {
                 email: emailref.current.value,
                 password: passwordref.current.value
             }
             const backendurl = import.meta.env.VITE_API_BASE_URL;
-            const backend = `${backendurl}/api/user/register`;
-            const response = await axios.post(backend, userData);
-            if (response.data != null) {
-                console.log(response.data)
-                navigate("/login")  
+            const response = await axios.post(`${backendurl}/api/user/register`, userData);
+
+            if (response.data == null && response.status != 200) {
+                return false;
             }
+            navigate("/login")  
         } catch (error) {
             if (error.response) {
-                console.log("Error Msg: ", error.response.data)
-            } else {
-                console.log("Error ", error.message)
+                console.log("Error Msg: ", error.response?.data || error.message)
             }
         }
     }
@@ -109,7 +95,7 @@ function CreateAccountPage() {
 						)}
 					</div>
 					<br></br>
-					<Button text="confirm" className="createaccountbutton" onClick={createAccount}/>
+					<Button text="confirm" className="createaccountbutton" onClick={handleCreateAccount}/>
 					<br></br>
 					<p className="loginpage">
 						Already have an account? <Link to={"/login"}> login </Link>

@@ -19,10 +19,20 @@ export const AuthProvider = ({ children }) => {
     const login = async (email, password) => {
         try {
             const backendurl = import.meta.env.VITE_API_BASE_URL;
-            const loginResponse = await axios.post(`${backendurl}/api/user/login`, { email, password });
+            const loginResponse = await axios.post(`${backendurl}/api/user/login`,
+            
+                {
+                    email: email,
+                    password: password 
+                    
+                });
             
             if (loginResponse.status === 200) {
-                const userResponse = await axios.post(`${backendurl}/api/user/getusername`, { email });
+                const userResponse = await axios.post(`${backendurl}/api/user/getusername`,
+                
+                    {
+                        email: email 
+                    });
 
                 const newUserData = {
                     email: email,
@@ -31,10 +41,7 @@ export const AuthProvider = ({ children }) => {
 
                 setUserData(newUserData);
                 setisLoggedIn(true);
-                
                 localStorage.setItem('isLoggedIn', 'true');
-                console.log(JSON.stringify(userdata));
-                
                 return true;
             }
         } catch (error) {
@@ -46,17 +53,26 @@ export const AuthProvider = ({ children }) => {
     const logout = async () => {
         try {
             const backendurl = import.meta.env.VITE_API_BASE_URL;
-            await axios.post(`${backendurl}/api/user/logout`, { email: userdata.email });
+            await axios.post(`${backendurl}/api/user/logout`,
+            
+                {
+                    email: userdata.email 
+                });
 
         } catch (error) {
             console.error("Logout error:", error.response?.data || error.message);
 
         } finally {
             setisLoggedIn(false);
-            setUserData({ email: null, username: null });
+            setUserData(
+                {
+                    email: null,
+                    username: null
+                });
             localStorage.removeItem('isLoggedIn');
         }
     };
+
 
     return (
         <AuthContext.Provider value={{ isLoggedIn, userdata, login, logout }}>

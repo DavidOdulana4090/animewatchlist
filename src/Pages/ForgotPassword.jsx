@@ -14,52 +14,41 @@ function ForgotPassword() {
     const navigate = useNavigate();
 
     const updatePassword = async () => {
-        try {
-            const datatosend = {
-                email: emailRef.current.value
-            }
-            const backendurl = import.meta.env.VITE_API_BASE_URL;
-            const backend = `${backendurl}/api/user/forgotpassword`;
+			try {
+				const backendurl = import.meta.env.VITE_API_BASE_URL;
+				const response = await axios.put(`${backendurl}/api/user/forgotpassword`,{ email: emailRef.current.value });
 
-            const response = await axios.put(backend, datatosend);
-            if (response.data) {
-                setIsEmailVerified(true);
-                setVerifiedEmail(emailRef.current.value);
-            } else {
-                setIsEmailVerified(false);
-            }
-            emailRef.current.value = "";
+				if (!response.data && response.status != 200) {
+					setIsEmailVerified(false);
+					return false;
+				}
+				setIsEmailVerified(true);
+				setVerifiedEmail(emailRef.current.value);
+                emailRef.current.value = "";
 
-        } catch (error) {
-            if (error.response) {
-                console.log("Error msg ", error.response.data)
-            } else {
-                console.log("error occured ", error.response)
-            }
-        }
-    }
+			} catch (error) {
+				if (error.response) {
+					console.log("Error msg ", error.response?.data || error.message);
+				}
+			}
+		};
 
     const setPassword = async () => {
         try {
-            const datatosend = {
-                password: passwordRef.current.value,
-                email: verifiedEmail
-            }
-
             const backendurl = import.meta.env.VITE_API_BASE_URL;
-            const backend = `${backendurl}/api/user/newpassword`;
+            const response = await axios.put(`${backendurl}/api/user/newpassword`, {
+                email: verifiedEmail,
+                password: passwordRef.current.value
+            });
 
-            const response = await axios.put(backend, datatosend);
-
-            if (response) {
-                console.log(response.data)
-                navigate("/login")
+            if (!response) {
+                return false;
             }
+            navigate("/login")
+
         } catch (error) {
             if (error.response) {
-                console.log("Error msg ", error.response.data)
-            } else {
-                console.log("error occured ", error.response)
+                console.log("Error msg ", error.response?.data || error.response)
             }
         }
     }
