@@ -32,17 +32,18 @@ function CreateAccountPage() {
                 return false;
             }
 
-            const userData = {
-                email: emailref.current.value,
-                password: passwordref.current.value
-            }
             const backendurl = import.meta.env.VITE_API_BASE_URL;
-            const response = await axios.post(`${backendurl}/api/user/register`, userData);
+            const response = await axios.post(`${backendurl}/register`, {
+                email: emailref.current.value,
+                password: passwordref.current.value,
+            });
 
             if (response.data == null && response.status != 200) {
                 return false;
             }
+
             navigate("/login")  
+
         } catch (error) {
             if (error.response) {
                 console.log("Error Msg: ", error.response?.data || error.message)
@@ -92,7 +93,7 @@ function CreateAccountPage() {
 								className="icon-eye-password"
 								onClick={passwordToggleConfirm}
 							/>
-						)}
+                        )}
 					</div>
 					<br></br>
 					<Button text="confirm" className="createaccountbutton" onClick={handleCreateAccount}/>

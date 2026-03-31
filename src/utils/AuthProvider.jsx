@@ -16,21 +16,45 @@ export const AuthProvider = ({ children }) => {
         }
     }, [userdata]);
 
+    useEffect(() => {
+        const getInfo = async () => {
+            if (!isLoggedIn) {
+                return false;
+            }
+
+            try {
+                if (userdata.email == null) {
+                    console.log("NULL EMAIL")
+                    return null;
+                }
+
+                const backendurl = import.meta.env.VITE_API_BASE_URL;
+                const loginResponse = await axios.get(`${backendurl}/me`, { params: { email: userdata.email } });
+
+                if (loginResponse.data != null && loginResponse.status != 200) {
+                    console.log(loginResponse?.data || loginResponse.message)
+                    return false;
+                }
+
+                console.log(loginResponse);
+            
+            } catch(error) {
+                console.log(error)
+            }
+        }
+        getInfo()
+    }, [])
+
     const login = async (email, password) => {
         try {
             const backendurl = import.meta.env.VITE_API_BASE_URL;
-            const loginResponse = await axios.post(`${backendurl}/api/user/login`,
-            
-                {
+            const loginResponse = await axios.post(`${backendurl}/login`, {
                     email: email,
                     password: password 
-                    
                 });
             
             if (loginResponse.status === 200) {
-                const userResponse = await axios.post(`${backendurl}/api/user/getusername`,
-                
-                    {
+                const userResponse = await axios.post(`${backendurl}/getusername`, {
                         email: email 
                     });
 
@@ -53,9 +77,7 @@ export const AuthProvider = ({ children }) => {
     const logout = async () => {
         try {
             const backendurl = import.meta.env.VITE_API_BASE_URL;
-            await axios.post(`${backendurl}/api/user/logout`,
-            
-                {
+            await axios.post(`${backendurl}/logout`, {
                     email: userdata.email 
                 });
 
@@ -64,8 +86,7 @@ export const AuthProvider = ({ children }) => {
 
         } finally {
             setisLoggedIn(false);
-            setUserData(
-                {
+            setUserData({
                     email: null,
                     username: null
                 });

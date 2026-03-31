@@ -2,16 +2,16 @@
 ## In-Progress React JavaScript + TypeScript, tailwindcss
 
 # LoginScreen 
-![alt text](image.png)
+![alt text](public/image.png)
 
 # Signup 
-![alt text](image-1.png)
+![alt text](public/image-1.png)
 
 # Forgotpassword
-![alt text](image-2.png)
+![alt text](public/image-2.png)
 
 # Homepage > no element
-![alt text](image-3.png)
+![alt text](public/image-5.png)
 
 
 # Homepage > Profile
