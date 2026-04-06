@@ -28,7 +28,7 @@ function LoginPage() {
         setTimeout(() => {
             setisError(false);
             setErrorMsg("");
-        }, 3000)
+        }, 4000)
 
 
     }

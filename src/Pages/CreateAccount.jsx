@@ -3,7 +3,7 @@ import InputField from "../components/Input";
 import Label from "../components/Label";
 import { Eye, EyeOff, Underline } from "lucide-react";
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { data, Link } from "react-router-dom";
 import Button from "../components/Button";
 import { isMatchingPassword } from "../utils/Logic";
 import axios from "axios";
@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 function CreateAccountPage() {
 	const [showpassword, setShowPassword] = useState(false);
     const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
+    const [isError, setisError] = useState(false);
     const navigate = useNavigate();
 
 	const emailref = useRef(null);
@@ -24,11 +26,20 @@ function CreateAccountPage() {
 
 	const passwordToggleConfirm = () => {
 		setShowPasswordConfirm(!showPasswordConfirm);
-	}
+    }
+    
+    if (isError) {
+        setTimeout(() => {
+            setisError(false);
+            setErrorMsg("");
+        }, 4000)
+    }
 
     const handleCreateAccount = async () => {
         try {
             if (!isMatchingPassword(passwordref.current.value, confirmpasswordref.current.value)) {
+                setErrorMsg("Password do not Match");
+                setisError(true)
                 return false;
             }
 
@@ -38,16 +49,18 @@ function CreateAccountPage() {
                 password: passwordref.current.value,
             });
 
-            if (!response.data  && response.status != 200) {
-                return false;
-            }
-
             navigate("/login") 
             console.log(response?.data)
 
         } catch (error) {
             if (error.response) {
-                console.log("Error Msg: ", error.response?.data || error.message)
+                setErrorMsg(error.response.data);
+                setisError(true)
+                return {
+                    isSuccess: false,
+                    message: error.message,
+                    data: error.response.data
+                }
             }
         }
     }
@@ -95,7 +108,11 @@ function CreateAccountPage() {
 								onClick={passwordToggleConfirm}
 							/>
                         )}
-					</div>
+                    </div>
+                    <br></br>
+                    <div>
+                        <p className="error-message"> {errorMsg} </p>
+                    </div>
 					<br></br>
 					<Button text="confirm" className="createaccountbutton" onClick={handleCreateAccount}/>
 					<br></br>

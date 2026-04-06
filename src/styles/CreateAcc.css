@@ -74,3 +74,15 @@ body {
     text-decoration: underline;
     color: white;
 }
+
+.error-message {
+    color: #e63946; 
+    font-size: 0.975rem;
+    font-weight: 500;
+    margin-top: 0.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    font-size: 20px;
+}
