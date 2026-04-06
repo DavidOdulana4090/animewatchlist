@@ -26,12 +26,8 @@ export const AuthProvider = ({ children }) => {
                 }
                 const backendurl = import.meta.env.VITE_API_BASE_URL;
                 const loginResponse = await axios.get(`${backendurl}/me`, { email: userdata.email } );
-
-                if (loginResponse.data != null && loginResponse.status != 200) {
-                    console.log(loginResponse?.data || loginResponse.message)
-                    return false;
-                }
                 console.log(loginResponse);
+
             } catch(error) {
                 console.log(error)
             }
@@ -47,13 +43,6 @@ export const AuthProvider = ({ children }) => {
                 password: password
             });
 
-            if (loginResponse.status != 200) {
-                return 
-            }
-            // const userResponse = await axios.post(`${backendurl}/me`, {
-            //     email: email
-            // });
-
             const newUserData = {
                 email: email,
                 // username: userResponse.data
@@ -63,8 +52,9 @@ export const AuthProvider = ({ children }) => {
             setisLoggedIn(true);
             localStorage.setItem('isLoggedIn', 'true');
             return true;
+
         } catch (error) {
-            console.error("Login failed:", error.response?.data || error.message);
+            console.error("Login failed: ", error.response?.data || error.message);
             return {
                 isSuccess: false,
                 message: error.message,
@@ -82,7 +72,7 @@ export const AuthProvider = ({ children }) => {
             const response = await axios.post(`${backendurl}/logout`, {
                     email: userdata.email 
                 });
-            console.log(response?.data)
+
         } catch (error) {
             console.error("Logout error: ", error.response?.data || error.message);
 
