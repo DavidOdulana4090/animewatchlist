@@ -5,7 +5,7 @@ import InputField from "../components/Input";
 import Label from "../components/Label";
 import Heading1 from "../components/H1";
 import { Link, useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { isValidLogin as isValidLogin } from "../utils/Logic";
 import { Navigate } from "react-router-dom";
@@ -15,13 +15,23 @@ function LoginPage() {
 	const [showpassword, setShowPassword] = useState(false);
 	const emailRef = useRef(null);
 	const passwordRef = useRef(null);
-	const { user, userdata, login, logout } = useAuth();
-	const navigate = useNavigate();
+    const { user, userdata, login, logout } = useAuth();
+    const [isError, setisError] = useState(false);
+    const navigate = useNavigate();
+    const [errorMsg, setErrorMsg] = useState("");
 
 	const passwordToggle = () => {
 		setShowPassword(!showpassword);
-	};
+    };
+    
+    if (isError) {
+        setTimeout(() => {
+            setisError(false);
+            setErrorMsg("");
+        }, 3000)
 
+
+    }
 	const clientLoginRequest = async() => {
 		const email = emailRef.current.value;
 		const password = passwordRef.current.value;
@@ -32,8 +42,9 @@ function LoginPage() {
 
         const response = await login(email, password);
         
-        if (!response) {
-            // will add like an error message here 
+        if (!response.isSuccess) {
+            setErrorMsg(response?.data)
+            setisError(true)
             return false
         }
 
@@ -78,23 +89,24 @@ function LoginPage() {
 									className="icon-eye-password"
 									onClick={passwordToggle}
 								/>
-							)}
+                            )}
 						</div>
                     </div>
                     
-					<br></br>
+                    <br></br>
+                    <div className="error-message"> 
+                        <p> {errorMsg} </p>
+                    </div>
                     <br></br>
                     
 					<Button text="login" onClick={clientLoginRequest} />
 					<br></br>
 					<Link to={"/forgot-password"} className="forgot-password">
-						{" "}
 						Forgot Password?
 					</Link>
 					<br></br>
 					<p className="no-account-p">
-						{" "}
-						Don't have an account? <Link to={"/sign-up"}> sign up </Link>{" "}
+						Don't have an account? <Link to={"/sign-up"}> sign up </Link>
 					</p>
 				</div>
 			</div>

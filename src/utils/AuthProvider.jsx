@@ -18,26 +18,20 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const getInfo = async () => {
-            if (!isLoggedIn) {
-                return false;
-            }
-
+            if (!isLoggedIn) { return false;}
             try {
                 if (userdata.email == null) {
                     console.log("NULL EMAIL")
                     return null;
                 }
-
                 const backendurl = import.meta.env.VITE_API_BASE_URL;
-                const loginResponse = await axios.get(`${backendurl}/me`, { params: { email: userdata.email } });
+                const loginResponse = await axios.get(`${backendurl}/me`, { email: userdata.email } );
 
                 if (loginResponse.data != null && loginResponse.status != 200) {
                     console.log(loginResponse?.data || loginResponse.message)
                     return false;
                 }
-
                 console.log(loginResponse);
-            
             } catch(error) {
                 console.log(error)
             }
@@ -49,40 +43,48 @@ export const AuthProvider = ({ children }) => {
         try {
             const backendurl = import.meta.env.VITE_API_BASE_URL;
             const loginResponse = await axios.post(`${backendurl}/login`, {
-                    email: email,
-                    password: password 
-                });
-            
-            if (loginResponse.status === 200) {
-                const userResponse = await axios.post(`${backendurl}/getusername`, {
-                        email: email 
-                    });
+                email: email,
+                password: password
+            });
 
-                const newUserData = {
-                    email: email,
-                    username: userResponse.data
-                };
-
-                setUserData(newUserData);
-                setisLoggedIn(true);
-                localStorage.setItem('isLoggedIn', 'true');
-                return true;
+            if (loginResponse.status != 200) {
+                return 
             }
+            // const userResponse = await axios.post(`${backendurl}/me`, {
+            //     email: email
+            // });
+
+            const newUserData = {
+                email: email,
+                // username: userResponse.data
+            };
+
+            setUserData(newUserData);
+            setisLoggedIn(true);
+            localStorage.setItem('isLoggedIn', 'true');
+            return true;
         } catch (error) {
             console.error("Login failed:", error.response?.data || error.message);
-            return false;
+            return {
+                isSuccess: false,
+                message: error.message,
+                data: error.response?.data
+            };
         }
     };
     
     const logout = async () => {
         try {
+            if (userdata.email == null) {
+                return null;
+            }
             const backendurl = import.meta.env.VITE_API_BASE_URL;
-            await axios.post(`${backendurl}/logout`, {
+            const response = await axios.post(`${backendurl}/logout`, {
                     email: userdata.email 
                 });
-
+            console.log(response?.data)
         } catch (error) {
-            console.error("Logout error:", error.response?.data || error.message);
+            console.error("Logout error: ", error.response?.data || error.message);
 
         } finally {
             setisLoggedIn(false);
@@ -90,10 +92,9 @@ export const AuthProvider = ({ children }) => {
                     email: null,
                     username: null
                 });
-            localStorage.removeItem('isLoggedIn');
+            localStorage.setItem('isLoggedIn', 'false');
         }
     };
-
 
     return (
         <AuthContext.Provider value={{ isLoggedIn, userdata, login, logout }}>

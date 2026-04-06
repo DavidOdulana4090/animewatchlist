@@ -38,11 +38,12 @@ function CreateAccountPage() {
                 password: passwordref.current.value,
             });
 
-            if (response.data == null && response.status != 200) {
+            if (!response.data  && response.status != 200) {
                 return false;
             }
 
-            navigate("/login")  
+            navigate("/login") 
+            console.log(response?.data)
 
         } catch (error) {
             if (error.response) {
