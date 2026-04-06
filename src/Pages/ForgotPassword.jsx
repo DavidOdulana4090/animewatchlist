@@ -16,39 +16,39 @@ function ForgotPassword() {
     const updatePassword = async () => {
 			try {
 				const backendurl = import.meta.env.VITE_API_BASE_URL;
-				const response = await axios.put(`${backendurl}/api/user/forgotpassword`,{ email: emailRef.current.value });
-
-				if (!response.data && response.status != 200) {
-					setIsEmailVerified(false);
-					return false;
-				}
+                await axios.put(`${backendurl}/api/user/forgotpassword`, { email: emailRef.current.value });
+                
 				setIsEmailVerified(true);
 				setVerifiedEmail(emailRef.current.value);
                 emailRef.current.value = "";
 
-			} catch (error) {
-				if (error.response) {
-					console.log("Error msg ", error.response?.data || error.message);
-				}
+            } catch (error) {
+                setIsEmailVerified(false)
+                console.log("Error msg ", error.response?.data || error.message);
+                return {
+                    isSuccess: false,
+                    message: error.response.data,
+                    data: error.message
+                }
 			}
 		};
 
     const setPassword = async () => {
         try {
             const backendurl = import.meta.env.VITE_API_BASE_URL;
-            const response = await axios.put(`${backendurl}/api/user/newpassword`, {
+            await axios.put(`${backendurl}/api/user/newpassword`, {
                 email: verifiedEmail,
                 password: passwordRef.current.value
             });
 
-            if (!response) {
-                return false;
-            }
             navigate("/login")
 
         } catch (error) {
-            if (error.response) {
-                console.log("Error msg ", error.response?.data || error.response)
+            console.log("Error msg ", error.response?.data || error.message)
+            return {
+                isSuccess: true,
+                message: error.response.data,
+                data: error.message
             }
         }
     }

@@ -7,7 +7,6 @@ import Heading1 from "../components/H1";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { isValidLogin as isValidLogin } from "../utils/Logic";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../utils/AuthContext";
 
@@ -34,22 +33,23 @@ function LoginPage() {
     }
 	const clientLoginRequest = async() => {
 		const email = emailRef.current.value;
-		const password = passwordRef.current.value;
-
-		if (!isValidLogin(email, password)) {
-			return false;
-		}
+        const password = passwordRef.current.value;
+        if (email == "" || password == "") {
+            setErrorMsg("Input a value");
+            setisError(true)
+            return
+        }
 
         const response = await login(email, password);
+        console.log(response)
         
         if (!response.isSuccess) {
-            setErrorMsg(response?.data)
+            setErrorMsg(response?.errorMessage)
             setisError(true)
             return false
         }
 
 		navigate("/dashboard");
-		return true;
 	};
 
 	return (

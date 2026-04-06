@@ -3,9 +3,9 @@ import InputField from "../components/Input";
 import Label from "../components/Label";
 import { Eye, EyeOff, Underline } from "lucide-react";
 import { useRef, useState } from "react";
-import { data, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Button from "../components/Button";
-import { isMatchingPassword } from "../utils/Logic";
+import { isValidCreateAccount } from "../utils/Logic";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -37,11 +37,12 @@ function CreateAccountPage() {
 
     const handleCreateAccount = async () => {
         try {
-            if (!isMatchingPassword(passwordref.current.value, confirmpasswordref.current.value)) {
-                setErrorMsg("Password do not Match");
+            const result = isValidCreateAccount(emailref.current.value, passwordref.current.value, confirmpasswordref.current.value)
+            if (!result.isSuccess) {
+                setErrorMsg(result.errorMessage)
                 setisError(true)
-                return false;
-            }
+                return
+            } 
 
             const backendurl = import.meta.env.VITE_API_BASE_URL;
             const response = await axios.post(`${backendurl}/register`, {
@@ -53,14 +54,12 @@ function CreateAccountPage() {
             console.log(response?.data)
 
         } catch (error) {
-            if (error.response) {
-                setErrorMsg(error.response.data);
-                setisError(true)
-                return {
-                    isSuccess: false,
-                    message: error.message,
-                    data: error.response.data
-                }
+            setErrorMsg(error.response?.data);
+            setisError(true)
+            return {
+                isSuccess: false,
+                message: error.message,
+                data: error.response?.data
             }
         }
     }

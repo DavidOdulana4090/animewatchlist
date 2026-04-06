@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const getInfo = async () => {
-            if (!isLoggedIn) { return false;}
+            if (!isLoggedIn) { return false; }
             try {
                 if (userdata.email == null) {
                     console.log("NULL EMAIL")
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
     const login = async (email, password) => {
         try {
             const backendurl = import.meta.env.VITE_API_BASE_URL;
-            const loginResponse = await axios.post(`${backendurl}/login`, {
+            const response = await axios.post(`${backendurl}/login`, {
                 email: email,
                 password: password
             });
@@ -51,14 +51,16 @@ export const AuthProvider = ({ children }) => {
             setUserData(newUserData);
             setisLoggedIn(true);
             localStorage.setItem('isLoggedIn', 'true');
-            return true;
+            return {
+                isSuccess: true,
+                errorMessage: ""
+            };
 
         } catch (error) {
-            console.error("Login failed: ", error.response?.data || error.message);
+            console.error("Login failed: ", error);
             return {
                 isSuccess: false,
-                message: error.message,
-                data: error.response?.data
+                errorMessage: error.response?.data,
             };
         }
     };
@@ -69,7 +71,7 @@ export const AuthProvider = ({ children }) => {
                 return null;
             }
             const backendurl = import.meta.env.VITE_API_BASE_URL;
-            const response = await axios.post(`${backendurl}/logout`, {
+            await axios.post(`${backendurl}/logout`, {
                     email: userdata.email 
                 });
 
