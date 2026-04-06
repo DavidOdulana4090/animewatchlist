@@ -9,8 +9,12 @@ function LogOutPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        logout();
-        navigate('/login')
+        const userLogout = async () => {
+            const response = await logout();
+            console.log(response.Message);
+            navigate('/login');
+        }
+        userLogout();
     })
 
     // Will add like a confirm logout here or something 

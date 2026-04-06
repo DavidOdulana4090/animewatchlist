@@ -5,7 +5,7 @@ import InputField from "../components/Input";
 import Label from "../components/Label";
 import Heading1 from "../components/H1";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../utils/AuthContext";
@@ -28,9 +28,8 @@ function LoginPage() {
             setisError(false);
             setErrorMsg("");
         }, 4000)
-
-
     }
+
 	const clientLoginRequest = async() => {
 		const email = emailRef.current.value;
         const password = passwordRef.current.value;
@@ -41,10 +40,8 @@ function LoginPage() {
         }
 
         const response = await login(email, password);
-        console.log(response)
-        
         if (!response.isSuccess) {
-            setErrorMsg(response?.errorMessage)
+            setErrorMsg(response?.Message)
             setisError(true)
             return false
         }

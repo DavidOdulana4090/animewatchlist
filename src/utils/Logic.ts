@@ -10,41 +10,41 @@ export const isValidCreateAccount = (email: string, password: string, confirmpas
     if (email == "" || password == "" || confirmpassword == "") {
         return {
             isSuccess: false,
-            errorMessage: "Input a Value. "
+            Message: "Input a Value. "
         }
     }
 
     if (password != confirmpassword) {
         return {
             isSuccess: false,
-            errorMessage: "Password do not match. "
+            Message: "Password do not match. "
         }
     }
 
     if (!isLongEnough) {
         return {
             isSuccess: false,
-            errorMessage: "Password is Short"
+            Message: "Password is Short"
         }
     }
 
     if (!hasSpecialChar) {
         return {
             isSuccess: false,
-            errorMessage: "Try a stronger password"
+            Message: "Try a stronger password"
         }
     }
 
     if (isLongEnough && hasSpecialChar && hasEmailRegex) {
         return {
             isSuccess: true,
-            errorMessage: ""
+            Message: ""
         }
     }
 
     return {
         isSuccess: false,
-        errorMessage: ""
+        Message: ""
     }
 }
 

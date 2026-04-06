@@ -39,7 +39,7 @@ function CreateAccountPage() {
         try {
             const result = isValidCreateAccount(emailref.current.value, passwordref.current.value, confirmpasswordref.current.value)
             if (!result.isSuccess) {
-                setErrorMsg(result.errorMessage)
+                setErrorMsg(result.Message)
                 setisError(true)
                 return
             } 
@@ -58,7 +58,7 @@ function CreateAccountPage() {
             setisError(true)
             return {
                 isSuccess: false,
-                message: error.message,
+                Message: error.message,
                 data: error.response?.data
             }
         }

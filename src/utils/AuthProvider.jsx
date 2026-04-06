@@ -16,29 +16,10 @@ export const AuthProvider = ({ children }) => {
         }
     }, [userdata]);
 
-    useEffect(() => {
-        const getInfo = async () => {
-            if (!isLoggedIn) { return false; }
-            try {
-                if (userdata.email == null) {
-                    console.log("NULL EMAIL")
-                    return null;
-                }
-                const backendurl = import.meta.env.VITE_API_BASE_URL;
-                const loginResponse = await axios.get(`${backendurl}/me`, { email: userdata.email } );
-                console.log(loginResponse);
-
-            } catch(error) {
-                console.log(error)
-            }
-        }
-        getInfo()
-    }, [])
-
     const login = async (email, password) => {
         try {
             const backendurl = import.meta.env.VITE_API_BASE_URL;
-            const response = await axios.post(`${backendurl}/login`, {
+            await axios.post(`${backendurl}/login`, {
                 email: email,
                 password: password
             });
@@ -53,14 +34,14 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('isLoggedIn', 'true');
             return {
                 isSuccess: true,
-                errorMessage: ""
+                Message: ""
             };
 
         } catch (error) {
             console.error("Login failed: ", error);
             return {
                 isSuccess: false,
-                errorMessage: error.response?.data,
+                Message: error.response?.data,
             };
         }
     };
@@ -71,12 +52,20 @@ export const AuthProvider = ({ children }) => {
                 return null;
             }
             const backendurl = import.meta.env.VITE_API_BASE_URL;
-            await axios.post(`${backendurl}/logout`, {
+            const response = await axios.post(`${backendurl}/logout`, {
                     email: userdata.email 
-                });
+            });
+            return {
+                isSuccess: true,
+                Message: response?.data
+            }
 
         } catch (error) {
             console.error("Logout error: ", error.response?.data || error.message);
+            return {
+                isSuccess: false,
+                Message: error.response?.data
+            }
 
         } finally {
             setisLoggedIn(false);
