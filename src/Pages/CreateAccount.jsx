@@ -58,8 +58,7 @@ function CreateAccountPage() {
             setisError(true)
             return {
                 isSuccess: false,
-                Message: error.message,
-                data: error.response?.data
+                Message: error.response?.data || error.message,
             }
         }
     }

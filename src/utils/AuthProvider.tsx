@@ -1,11 +1,24 @@
 import { useState } from 'react';
-import { AuthContext } from './AuthContext'; 
+import { AuthContext } from './AuthContext';
 import axios from 'axios';
 import { useEffect } from 'react';
 
-export const AuthProvider = ({ children }) => {
+interface UserData {
+    email: string | null;
+    username: string | null;
+}
+
+export interface AuthContextType {
+    isLoggedIn: boolean;
+    userdata: UserData;
+    login: (email: string, password: string) => Promise<any>;
+    logout: () => Promise<any>;
+}
+
+export const AuthProvider = ({ children }: any) => {
+
     const [isLoggedIn, setisLoggedIn] = useState(() => localStorage.getItem('isLoggedIn') === 'true');
-    const [userdata, setUserData] = useState({
+    const [userdata, setUserData] = useState<UserData>({
         email: null,
         username: null
     });
@@ -16,17 +29,17 @@ export const AuthProvider = ({ children }) => {
         }
     }, [userdata]);
 
-    const login = async (email, password) => {
+    const login = async (email: string, password: string): Promise<object> => {
         try {
             const backendurl = import.meta.env.VITE_API_BASE_URL;
-            await axios.post(`${backendurl}/login`, {
+            const response = await axios.post(`${backendurl}/login`, {
                 email: email,
                 password: password
             });
 
             const newUserData = {
                 email: email,
-                // username: userResponse.data
+                username: null
             };
 
             setUserData(newUserData);
@@ -34,14 +47,14 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('isLoggedIn', 'true');
             return {
                 isSuccess: true,
-                Message: ""
+                Message: response?.data || "Login Successful"
             };
 
-        } catch (error) {
+        } catch (error: any) {
             console.error("Login failed: ", error);
             return {
                 isSuccess: false,
-                Message: error.response?.data,
+                Message: error.response?.data || error.message,
             };
         }
     };
@@ -57,14 +70,14 @@ export const AuthProvider = ({ children }) => {
             });
             return {
                 isSuccess: true,
-                Message: response?.data
+                Message: response?.data || "Logout Success"
             }
 
-        } catch (error) {
+        } catch (error: any) {
             console.error("Logout error: ", error.response?.data || error.message);
             return {
                 isSuccess: false,
-                Message: error.response?.data
+                Message: error.response?.data || error.message
             }
 
         } finally {
