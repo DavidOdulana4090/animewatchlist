@@ -1,8 +1,17 @@
-import { Icon } from "lucide-react";
+import { LucideIcon } from "lucide-react";
 import "../styles/AsideButton.css"
 import clsx from "clsx";
 
-function AsideButtons(props) {
+interface AsideButtonProps {
+    Icon?: LucideIcon;
+    text: string;
+    active: string | null;
+    onClick: (text: string) => void;
+    className?: string;
+    iconSize?: number;
+}
+
+function AsideButtons(props: AsideButtonProps) {
     const Icon = props.Icon;
 
     const isSelected = props.active === props.text;

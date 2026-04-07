@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useAuth } from '../utils/AuthContext';
 
 function Dashboard() {
-    const { isLoggedIn, userdata, login, logout } = useAuth();
+    const {userdata } = useAuth();
     const animeData = [
         { id: 1, title: "Demon Slayer", status: "watching", progress: 75, genre: "Action", rating: 9.2 },
         { id: 2, title: "Attack on Titan", status: "completed", progress: 100, genre: "Action", rating: 9.0 },
@@ -24,7 +24,7 @@ function Dashboard() {
         };
     }, [animeData]);
 
-    const getStatusColor = (status) => {
+    const getStatusColor = (status: string) => {
         switch(status) {
             case 'completed': return 'text-emerald-400';
             case 'watching': return 'text-cyan-400';
@@ -33,7 +33,7 @@ function Dashboard() {
         }
     };
 
-    const getStatusBg = (status) => {
+    const getStatusBg = (status: string) => {
         switch(status) {
             case 'completed': return 'bg-emerald-500/20 border-emerald-500/50';
             case 'watching': return 'bg-cyan-500/20 border-cyan-500/50';

@@ -1,6 +1,11 @@
 // Helper Function and stuff
 
-export const isValidCreateAccount = (email: string, password: string, confirmpassword: string): object => {
+interface ValidationResult {
+    isSuccess: boolean;
+    Message: string;
+}
+
+export const isValidCreateAccount = (email: string, password: string, confirmpassword: string): ValidationResult => {
     const isLongEnough = password.length >= 8;
     const specialCharRegex = /[`!@$%^&*()_+`\-=[\]';./,]/;
     const emailRegex = /\.(com|net|org|io)$/i;

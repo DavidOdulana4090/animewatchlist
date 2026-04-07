@@ -7,14 +7,13 @@ import Heading1 from "../components/H1";
 import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { Navigate } from "react-router-dom";
 import { useAuth } from "../utils/AuthContext";
 
 function LoginPage() {
 	const [showpassword, setShowPassword] = useState(false);
-	const emailRef = useRef(null);
-	const passwordRef = useRef(null);
-    const { user, userdata, login, logout } = useAuth();
+	const emailRef = useRef<HTMLInputElement | null>(null);
+	const passwordRef = useRef<HTMLInputElement | null>(null);
+    const { login } = useAuth();
     const [isError, setisError] = useState(false);
     const navigate = useNavigate();
     const [errorMsg, setErrorMsg] = useState("");
@@ -31,17 +30,17 @@ function LoginPage() {
     }
 
 	const clientLoginRequest = async() => {
-		const email = emailRef.current.value;
-        const password = passwordRef.current.value;
+		const email = emailRef.current?.value || "";
+        const password = passwordRef.current?.value || "";
         if (email == "" || password == "") {
             setErrorMsg("Input a value");
             setisError(true)
             return
         }
 
-        const response = await login(email, password);
+        const response: { isSuccess: boolean; Message?: string } = await login(email, password);
         if (!response.isSuccess) {
-            setErrorMsg(response?.Message)
+            setErrorMsg(response?.Message || "An error occurred");
             setisError(true)
             return false
         }

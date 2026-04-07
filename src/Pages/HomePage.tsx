@@ -1,19 +1,16 @@
 import { useState } from 'react';
 import '../styles/HomePage.css'
-import Footer from "../components/Footer"
 import clsx from 'clsx';
-import Button from '../components/Button';
 import AsideButtons from '../components/AsideButton';
 import { HomeIcon, UserIcon, MessageSquareIcon, LucideSettings, DoorOpenIcon, TagsIcon, PhoneCallIcon } from 'lucide-react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
 
 function HomePage() {
-    const [isActive, setIsActive] = useState(null);
+    const [isActive, setIsActive] = useState<string | null>(null);
     const navigate = useNavigate();
 
-    function HandleNavgiation(pathname, text) {
+    // Handle navigation and active state for aside buttons for css styling
+    function HandleNavgiation(pathname: string, text: string) {
         setIsActive(text);
         navigate(pathname);
     }
@@ -70,6 +67,7 @@ function HomePage() {
                         onClick={() => HandleNavgiation('Logout', 'Logout')} />
                     
                 </aside>
+                    {/*  Main page goes here */}
                     <div className='main-content'>
                         <Outlet />
                     </div>

@@ -2,7 +2,16 @@ import '../styles/Input.css'
 import clsx from 'clsx';
 import { forwardRef } from 'react';
 
-const InputField = forwardRef((props, ref) => {
+interface InputFieldProps {
+    placeholder: string | "";
+    type?: string | "";
+    name?: string | "";
+    id?: string | "";
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    className?: string | "";
+}
+
+const InputField = forwardRef((props: InputFieldProps, ref: React.Ref<HTMLInputElement>) => {
     return (
         <input placeholder={props.placeholder}
             ref={ref}

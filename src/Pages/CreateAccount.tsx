@@ -16,9 +16,9 @@ function CreateAccountPage() {
     const [isError, setisError] = useState(false);
     const navigate = useNavigate();
 
-	const emailref = useRef(null);
-	const passwordref = useRef(null);
-	const confirmpasswordref = useRef(null);
+	const emailref = useRef<HTMLInputElement>(null);
+	const passwordref = useRef<HTMLInputElement>(null);
+	const confirmpasswordref = useRef<HTMLInputElement>(null);
 
 	const passwordToggle = () => {
 		setShowPassword(!showpassword);
@@ -28,6 +28,7 @@ function CreateAccountPage() {
 		setShowPasswordConfirm(!showPasswordConfirm);
     }
     
+    // Error message timeout for create account form validation
     if (isError) {
         setTimeout(() => {
             setisError(false);
@@ -35,9 +36,10 @@ function CreateAccountPage() {
         }, 4000)
     }
 
-    const handleCreateAccount = async () => {
+
+    const handleCreateAccount = async (): Promise<void> => {
         try {
-            const result = isValidCreateAccount(emailref.current.value, passwordref.current.value, confirmpasswordref.current.value)
+            const result = isValidCreateAccount(emailref.current?.value || "", passwordref.current?.value || "", confirmpasswordref.current?.value || "")
             if (!result.isSuccess) {
                 setErrorMsg(result.Message)
                 setisError(true)
@@ -45,21 +47,16 @@ function CreateAccountPage() {
             } 
 
             const backendurl = import.meta.env.VITE_API_BASE_URL;
-            const response = await axios.post(`${backendurl}/register`, {
-                email: emailref.current.value,
-                password: passwordref.current.value,
+            await axios.post(`${backendurl}/register`, {
+                email: emailref.current?.value,
+                password: passwordref.current?.value,
             });
 
             navigate("/login") 
-            console.log(response?.data)
 
-        } catch (error) {
-            setErrorMsg(error.response?.data);
+        } catch (error :any) {
+            setErrorMsg(error.response?.data || "An error occurred");
             setisError(true)
-            return {
-                isSuccess: false,
-                Message: error.response?.data || error.message,
-            }
         }
     }
 

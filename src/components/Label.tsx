@@ -1,7 +1,13 @@
 import clsx from "clsx";
 import '../styles/Label.css'
 
-function comp_label(props) {
+interface LabelProps {
+    text: string;
+    className?: string;
+    htmlFor?: string;
+}
+
+function comp_label(props: LabelProps) {
     return ( 
         <label htmlFor={props.htmlFor} 
                 className={clsx('labelcomp', props.className)}>

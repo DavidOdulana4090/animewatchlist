@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 function LogOutPage() {
     const [username, setUsername] = useState(null);
-    const { user, userdata, login, logout } = useAuth();
+    const { userdata, logout } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {

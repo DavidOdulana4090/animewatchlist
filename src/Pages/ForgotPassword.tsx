@@ -7,8 +7,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function ForgotPassword() {
-    const emailRef = useRef(null);
-    const passwordRef = useRef(null);
+    const emailRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
     const [isEmailVerified, setIsEmailVerified] = useState(false);
     const [verifiedEmail, setVerifiedEmail] = useState("null@gmail.com")
     const navigate = useNavigate();
@@ -16,13 +16,13 @@ function ForgotPassword() {
     const updatePassword = async () => {
 			try {
 				const backendurl = import.meta.env.VITE_API_BASE_URL;
-                await axios.put(`${backendurl}/api/user/forgotpassword`, { email: emailRef.current.value });
+                await axios.put(`${backendurl}/api/user/forgotpassword`, { email: emailRef.current?.value });
                 
 				setIsEmailVerified(true);
-				setVerifiedEmail(emailRef.current.value);
-                emailRef.current.value = "";
+				setVerifiedEmail(emailRef.current?.value || "");
+                emailRef.current!.value = "";
 
-            } catch (error) {
+            } catch (error: any) {
                 setIsEmailVerified(false)
                 console.log("Error msg ", error.response?.data || error.message);
                 return {
@@ -38,12 +38,12 @@ function ForgotPassword() {
             const backendurl = import.meta.env.VITE_API_BASE_URL;
             await axios.put(`${backendurl}/api/user/newpassword`, {
                 email: verifiedEmail,
-                password: passwordRef.current.value
+                password: passwordRef.current?.value
             });
 
             navigate("/login")
 
-        } catch (error) {
+        } catch (error: any) {
             console.log("Error msg ", error.response?.data || error.message)
             return {
                 isSuccess: true,
