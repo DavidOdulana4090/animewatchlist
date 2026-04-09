@@ -1,0 +1,531 @@
+.div-container-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    border: none;
+    background: linear-gradient(135deg, #0a0e27 0%, #16213e 50%, #0f3460 100%);
+    overflow: hidden;
+}
+
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 30px;
+    border: none;
+    background: linear-gradient(180deg, rgba(10, 14, 39, 0.95) 0%, rgba(22, 33, 62, 0.95) 50%, rgba(15, 52, 96, 0.95) 100%);
+    gap: 40px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.dashboard-container::-webkit-scrollbar {
+    display: none;
+}
+
+.dashboard-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 25px 30px;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #1e1a47 0%, #2d1b5e 50%, #1a1f4d 100%);
+    border: 2px solid #e0218a;
+    box-shadow: 0 0 30px rgba(224, 33, 138, 0.3), inset 0 0 20px rgba(224, 33, 138, 0.1);
+    overflow-y: visible;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.dashboard-heading {
+    font-size: 3rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ff006e 0%, #e0218a 50%, #00f5ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(224, 33, 138, 0.5);
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: #00f5ff;
+    margin: 15px 0 0 0;
+    font-style: italic;
+    text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+}
+
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.stat-card {
+    padding: 25px;
+    border-radius: 12px;
+    border: 2px solid;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.stat-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(224, 33, 138, 0.3);
+}
+
+.stat-card:hover::before {
+    left: 0;
+}
+
+.stat-card.completed {
+    border-color: #00d084;
+    box-shadow: 0 0 15px rgba(0, 208, 132, 0.2);
+}
+
+.stat-card.completed::before {
+    background: rgba(0, 208, 132, 0.1);
+}
+
+.stat-card.watching {
+    border-color: #00f5ff;
+    box-shadow: 0 0 15px rgba(0, 245, 255, 0.2);
+}
+
+.stat-card.watching::before {
+    background: rgba(0, 245, 255, 0.1);
+}
+
+.stat-card.planned {
+    border-color: #b537f2;
+    box-shadow: 0 0 15px rgba(181, 55, 242, 0.2);
+}
+
+.stat-card.planned::before {
+    background: rgba(181, 55, 242, 0.1);
+}
+
+.stat-card.favorite {
+    border-color: #ff006e;
+    box-shadow: 0 0 15px rgba(255, 0, 110, 0.2);
+}
+
+.stat-card.favorite::before {
+    background: rgba(255, 0, 110, 0.1);
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #00f5ff;
+    margin: 10px 0;
+    text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+}
+
+.stat-label {
+    font-size: 0.95rem;
+    color: #a0a0a0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, #00f5ff 0%, #e0218a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 25px 0;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, #00f5ff 0%, #e0218a 100%);
+    border-radius: 2px;
+}
+
+
+.featured-section {
+    margin-top: 10px;
+}
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.featured-card {
+    padding: 25px;
+    border-radius: 15px;
+    background: linear-gradient(135deg, rgba(45, 27, 94, 0.6) 0%, rgba(30, 26, 71, 0.6) 100%);
+    border: 2px solid #e0218a;
+    backdrop-filter: blur(10px);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(224, 33, 138, 0.15);
+}
+
+.featured-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(224, 33, 138, 0.2) 0%, transparent 70%);
+    border-radius: 50%;
+    transition: all 0.4s ease;
+}
+
+.featured-card:hover {
+    transform: translateY(-12px);
+    border-color: #00f5ff;
+    box-shadow: 0 15px 40px rgba(224, 33, 138, 0.3);
+}
+
+.featured-card:hover::before {
+    top: -10%;
+    right: -10%;
+}
+
+.featured-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 15px;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.featured-header h3 {
+    font-size: 1.5rem;
+    color: #00f5ff;
+    margin: 0;
+    font-weight: 700;
+    flex: 1;
+}
+
+.rating-badge {
+    background: linear-gradient(135deg, #ff006e 0%, #e0218a 100%);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 0 0 10px rgba(224, 33, 138, 0.4);
+}
+
+.anime-meta {
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.genre-tag {
+    display: inline-block;
+    background: rgba(0, 245, 255, 0.15);
+    color: #00f5ff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    border: 1px solid #00f5ff;
+    font-weight: 600;
+}
+
+.progress-section {
+    position: relative;
+    z-index: 1;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 8px;
+    border: 1px solid rgba(0, 245, 255, 0.3);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00f5ff 0%, #e0218a 100%);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    box-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+}
+
+.progress-text {
+    font-size: 0.85rem;
+    color: #a0a0a0;
+    display: block;
+    text-align: right;
+}
+
+
+.all-anime-section {
+    margin-top: 20px;
+}
+
+.anime-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.anime-item {
+    padding: 20px;
+    border-radius: 12px;
+    background: rgba(30, 26, 71, 0.6);
+    border-left: 5px solid #e0218a;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(224, 33, 138, 0.1);
+}
+
+.anime-item:hover {
+    transform: translateX(10px);
+    box-shadow: 0 8px 25px rgba(224, 33, 138, 0.2);
+    background: rgba(45, 27, 94, 0.8);
+}
+
+.anime-item.completed {
+    border-left-color: #00d084;
+}
+
+.anime-item.watching {
+    border-left-color: #00f5ff;
+}
+
+.anime-item.planned {
+    border-left-color: #b537f2;
+}
+
+.anime-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    gap: 15px;
+}
+
+.anime-title {
+    font-size: 1.3rem;
+    color: #00f5ff;
+    margin: 0;
+    font-weight: 700;
+    flex: 1;
+}
+
+.status-indicator {
+    display: flex;
+    gap: 10px;
+}
+
+.status-badge {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid;
+}
+
+.status-badge.completed {
+    background: rgba(0, 208, 132, 0.2);
+    color: #00d084;
+    border-color: #00d084;
+}
+
+.status-badge.watching {
+    background: rgba(0, 245, 255, 0.2);
+    color: #00f5ff;
+    border-color: #00f5ff;
+}
+
+.status-badge.planned {
+    background: rgba(181, 55, 242, 0.2);
+    color: #b537f2;
+    border-color: #b537f2;
+}
+
+.anime-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.detail-left {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.genre-label {
+    color: #a0a0a0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    background: rgba(0, 245, 255, 0.1);
+    border-radius: 6px;
+    border: 1px solid rgba(0, 245, 255, 0.2);
+}
+
+.rating-label {
+    color: #ffd700;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+}
+
+.detail-right {
+    min-width: 200px;
+}
+
+.mini-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mini-progress-bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 245, 255, 0.3);
+}
+
+.mini-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00f5ff 0%, #e0218a 100%);
+    border-radius: 3px;
+    transition: width 0.5s ease;
+}
+
+.progress-percent {
+    font-size: 0.85rem;
+    color: #00f5ff;
+    font-weight: 700;
+    min-width: 35px;
+    text-align: right;
+}
+
+
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(20px, -20px);
+    }
+}
+
+
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 15px;
+        gap: 25px;
+    }
+
+    .dashboard-hero {
+        padding: 30px 15px;
+    }
+
+    .dashboard-heading {
+        font-size: 2.2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .featured-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .anime-details {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .detail-right {
+        width: 100%;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-container {
+        padding: 10px;
+    }
+
+    .dashboard-heading {
+        font-size: 1.8rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .anime-item-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .anime-title {
+        font-size: 1.1rem;
+    }
+}
