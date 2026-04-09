@@ -29,6 +29,7 @@ aside {
     box-sizing: border-box;
     transition: all 0.3s ease;
     min-width: 30px;
+    background: linear-gradient(180deg, rgba(10, 14, 39, 0.95) 0%, rgba(22, 33, 62, 0.95) 50%, rgba(15, 52, 96, 0.95) 100%);
 }
 
 .aside-styling .text {

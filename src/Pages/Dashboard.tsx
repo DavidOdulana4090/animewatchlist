@@ -1,15 +1,16 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useAuth } from "../utils/AuthContext";
 import "../styles/Dashboard.css";
 
 function Dashboard() {
     const { userdata } = useAuth();
+    const [Id, setId] = useState<number>(0);
     
     interface Anime {
         id: number;
         title: string;
-        status?: "completed" | "watching" | "planned" | "dropped";
-        progress?: number; // percentage
+        status?: "completed" | "watching" | "planned" | "dropped" | null;
+        progress?: number ; // percentage
         genre?: string | null;
         rating?: number; // out of 10
         favourite?: boolean;
@@ -19,19 +20,19 @@ function Dashboard() {
 	const userAnimeList: Anime[] = [
         {
             // Test data, replace with actual data from backend
-			id: 1,
+			id: 0,
 			title: "Demon Slayer",
 			status: "watching",
-			progress: 75,
+			progress: 100,
 			genre: "Action",
 			rating: 9.2,
 			favourite: true,
         },
         
         {
-			id: 2,
+			id: 1,
             title: "One Piece",
-            status: "planned",
+            status: "watching",
             progress: 0,
             genre: "Adventure",
             rating: 8.8,
@@ -39,37 +40,28 @@ function Dashboard() {
         }
 	];
 
-    userAnimeList.map((anime) => {
-        console.log(anime.title, anime)
+    // userAnimeList.map((anime) => {
+    //     console.log(anime.title, anime)
 
-    })
+    // })
 
+    // Function to determine card styling based on anime status
+    const getStylefromStatus = (status: Anime["status"]) => {
+        switch (status) {
+            case "completed":
+                return `stat-card completed`;
+            case "watching":
+                return `stat-card watching`;
+            case "planned":
+                return `stat-card planned`;
+            case "dropped":
+                return `stat-card dropped`;
+            default:
+                return "";
+        }
+    }
 
-	const getStatusColor = (status: string) => {
-		switch (status) {
-			case "completed":
-				return "text-emerald-400";
-			case "watching":
-				return "text-cyan-400";
-			case "planned":
-				return "text-purple-400";
-			default:
-				return "text-gray-400";
-		}
-	};
-
-	const getStatusBg = (status: string) => {
-		switch (status) {
-			case "completed":
-				return "bg-emerald-500/20 border-emerald-500/50";
-			case "watching":
-				return "bg-cyan-500/20 border-cyan-500/50";
-			case "planned":
-				return "bg-purple-500/20 border-purple-500/50";
-			default:
-				return "bg-gray-500/20 border-gray-500/50";
-		}
-	};
+        console.log(getStylefromStatus(userAnimeList[1].status))
 
 	return (
 		<div className="div-container-container">
@@ -92,17 +84,26 @@ function Dashboard() {
 						<div className="stat-icon"></div>
 						{/* <div className="stat-value">{stats.totalWatched}</div> */}
 						<div className="stat-label">Completed</div>
-					</div>
+                    </div>
+                    
 					<div className="stat-card watching">
 						<div className="stat-icon"></div>
 						{/* <div className="stat-value">{stats.currentlyWatching}</div> */}
 						<div className="stat-label">Watching</div>
-					</div>
+                    </div>
+                    
 					<div className="stat-card planned">
 						<div className="stat-icon"></div>
 						{/* <div className="stat-value">{stats.planned}</div> */}
 						<div className="stat-label">Planned</div>
-					</div>
+                    </div>
+                    
+                    <div className="stat-card dropped">
+                        <div className="stat-icon"></div>
+                        {/* <div className="stat-value">{stats.dropped}</div> */}
+                        <div className="stat-label">Dropped</div>
+                    </div>
+
 					<div className="stat-card favorite">
 						<div className="stat-icon"></div>
 						{/* <div className="stat-value">{stats.favoriteGenre}</div> */}
@@ -115,7 +116,7 @@ function Dashboard() {
 					<h2 className="section-title">Currently Watching</h2>
 					<div className="featured-grid">
 						{userAnimeList
-							.filter((a) => a.status === "watching")
+							.filter((anime) => anime.status === "watching")
 							.map((anime) => (
 								<div key={anime.id} className="featured-card">
 									<div className="featured-header">
