@@ -37,7 +37,7 @@ function CreateAccountPage() {
     }
 
 
-    const handleCreateAccount = async (): Promise<void> => {
+    const handleCreateAccount = async () => {
         try {
             const result = isValidCreateAccount(emailref.current?.value || "", passwordref.current?.value || "", confirmpasswordref.current?.value || "")
             if (!result.isSuccess) {
