@@ -17,7 +17,7 @@ aside {
     position: fixed;
     height: 100vh;
     justify-content: center;
-    min-width: 15%;
+    min-width: 5%;
     gap: 10px;
     align-items: center;
     display: flex;
@@ -39,6 +39,7 @@ aside {
 }
 
 aside button {
+    cursor: pointer;
     margin: 6px;
     display: flex;
     justify-content: flex-start;
@@ -59,8 +60,8 @@ aside button svg {
 
 
 @media only screen and (max-width: 599px) {
-    aside {
-        width: 20%;
+    .aside-styling {
+        width: 60px;
     }
 
     aside button {
@@ -77,11 +78,15 @@ aside button svg {
     }
 }
 
-
+@media only screen and (min-width: 600px) and (max-width: 900px) {
+    .aside-styling {
+        width: 100px;
+    }
+}
 
 @media only screen and (min-width: 901px) {
-    aside {
-        width: 20%;
+    .aside-styling {
+        width: 260px;
     }
 
     aside button {
@@ -98,14 +103,17 @@ aside button svg {
 
 .aside-styling {
     width: 260px;        
-    flex-shrink: 0;    
+    flex-shrink: 1;    
     height: 100vh;
     position: sticky;    
     top: 0;
+    min-width: 60px;
+    transition: all 0.3s ease;
 }
 
 .main-content {
     flex-grow: 1;        
     background-color: #fff; 
-    overflow-y: auto;    
+    overflow-y: auto;
+    min-width: 0;
 }

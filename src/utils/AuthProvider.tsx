@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 interface UserData {
     email: string | null;
     username: string | null;
+    userId?: string | null;
 }
 
 export interface AuthContextType {
