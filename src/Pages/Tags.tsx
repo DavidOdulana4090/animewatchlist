@@ -1,8 +1,8 @@
-function Tags() {
+function MyList() {
     return (
         <>
         
     </> );
 }
 
-export default Tags;
+export default MyList;

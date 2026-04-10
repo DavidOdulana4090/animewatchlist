@@ -14,7 +14,7 @@ import ContactMe from '../Pages/ContactMe';
 import Logout from '../Pages/Logoutpage'
 
 function AppRoutes(){
-    const { user } = useAuth();
+    const { isLoggedIn } = useAuth();
 
     return (
         <Routes> 
@@ -25,7 +25,7 @@ function AppRoutes(){
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/Inbox" element={<Messages />} />
                     <Route path='Contact' element={<ContactMe />} />
-                    <Route path='/Tags' element={<Tags /> } />
+                    <Route path='/MyList' element={<Tags /> } />
                     <Route path="/Settings" element={<Settings />} />
                     <Route path='/Logout' element={<Logout />} />
 
@@ -38,7 +38,7 @@ function AppRoutes(){
             {/* LoginPage Redirect && LoginPage */}
             <Route 
                 path="/login" 
-                element={user ? <Navigate to='/dashboard' replace/> : <LoginPage />} />
+                element={isLoggedIn ? <Navigate to='/dashboard' replace/> : <LoginPage />} />
             
             {/* Empty Path  */}
             <Route

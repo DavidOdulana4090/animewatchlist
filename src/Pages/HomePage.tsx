@@ -46,10 +46,10 @@ function HomePage() {
                         onClick={() => HandleNavgiation('Contact', 'Contact Me')} />
                     
                     <AsideButtons
-                        text="Tags"
+                        text="My List"
                         Icon={TagsIcon}
                         active={isActive}
-                        onClick={() => HandleNavgiation('Tags', 'Tags')} />
+                        onClick={() => HandleNavgiation('MyList', 'My List')} />
                     
                     <AsideButtons
                         text="Settings"

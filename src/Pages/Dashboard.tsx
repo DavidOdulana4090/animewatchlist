@@ -72,7 +72,7 @@ function Dashboard() {
                 return {
                     id: anime?.id || 0,
                     title: anime?.title || "Unknown Title",
-                    status: anime?.status || null,
+                    status: anime?.progress > 99 ? "completed" : anime?.status,
                     progress: anime?.progress || 0,
                     genre: anime?.genre || null,
                     rating: anime?.rating || 0,
@@ -85,14 +85,14 @@ function Dashboard() {
 
         }
         catch (error : any) {
-            console.error("Error fetching user data:", error.response?.data || error.message);
+            console.error("Error fetching user data: ", error.response?.data || error.message);
             throw error;
         }
 
     };
 
         useEffect(() => {
-            fetchUserAnimeData()
+            fetchUserAnimeData();
         }, [])
 
 	return (
@@ -114,32 +114,32 @@ function Dashboard() {
 				<div className="stats-grid">
 					<div className="stat-card completed">
 						<div className="stat-icon"></div>
-						{/* <div className="stat-value">{stats.totalWatched}</div> */}
+						<div className="stat-value">{userAnimeList.filter((anime) => anime.status === "completed").length}</div>
 						<div className="stat-label">Completed</div>
                     </div>
                     
 					<div className="stat-card watching">
 						<div className="stat-icon"></div>
-						{/* <div className="stat-value">{stats.currentlyWatching}</div> */}
+						<div className="stat-value">{userAnimeList.filter((anime) => anime.status === "watching").length}</div>
 						<div className="stat-label">Watching</div>
                     </div>
                     
 					<div className="stat-card planned">
 						<div className="stat-icon"></div>
-						{/* <div className="stat-value">{stats.planned}</div> */}
+						<div className="stat-value">{userAnimeList.filter((anime) => anime.status === "planned").length}</div>
 						<div className="stat-label">Planned</div>
                     </div>
                     
                     <div className="stat-card dropped">
                         <div className="stat-icon"></div>
-                        {/* <div className="stat-value">{stats.dropped}</div> */}
+                        <div className="stat-value">{userAnimeList.filter((anime) => anime.status === "dropped").length}</div>
                         <div className="stat-label">Dropped</div>
                     </div>
 
 					<div className="stat-card favorite">
 						<div className="stat-icon"></div>
-						{/* <div className="stat-value">{stats.favoriteGenre}</div> */}
-						<div className="stat-label">Favorite Genre</div>
+						<div className="stat-value">{userAnimeList.filter((anime) => anime.favourite).length}</div>
+						<div className="stat-label">Favorites</div>
 					</div>
 				</div>
 
