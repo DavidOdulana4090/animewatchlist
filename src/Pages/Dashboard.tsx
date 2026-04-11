@@ -67,12 +67,12 @@ function Dashboard() {
     const fetchUserAnimeData: () => Promise<Anime[]> = async (): Promise<Anime[]> => {
         try {
             const backendurl = import.meta.env.VITE_API_BASE_URL;
-            const response = await axios.get(`${backendurl}/anime/all/${1}`);
+            const response = await axios.get(`${backendurl}/anime/all/${userdata.userId}`);
             const animeList = response.data.map((anime: any) => {
                 return {
                     id: anime?.id || 0,
                     title: anime?.title || "Unknown Title",
-                    status: anime?.progress > 99 ? "completed" : anime?.status,
+                    status: anime?.progress > 99 ? "completed" : anime?.status == null ? "planned" : anime?.status || "Error",
                     progress: anime?.progress || 0,
                     genre: anime?.genre || null,
                     rating: anime?.rating || 0,

@@ -40,9 +40,11 @@ export const AuthProvider = ({ children }: any) => {
 
             const newUserData = {
                 email: email,
-                username: null
+                username: null,
+                userId: response.data.userId || null
             };
 
+            console.log("Login successful: ", response?.data);
             setUserData(newUserData);
             setisLoggedIn(true);
             localStorage.setItem('isLoggedIn', 'true');
