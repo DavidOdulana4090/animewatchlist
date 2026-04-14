@@ -67,7 +67,7 @@ function Dashboard() {
     const fetchUserAnimeData: () => Promise<Anime[]> = async (): Promise<Anime[]> => {
         try {
             const backendurl = import.meta.env.VITE_API_BASE_URL;
-            const response = await axios.get(`${backendurl}/anime/all/${userdata.userId}`);
+            const response = await axios.get(`${backendurl}/anime/list/${userdata.userId}`);
             const animeList = response.data.map((anime: any) => {
                 return {
                     id: anime?.id || 0,
@@ -91,9 +91,11 @@ function Dashboard() {
 
     };
 
-        useEffect(() => {
-            fetchUserAnimeData();
-        }, [])
+    useEffect(() => {
+            if (userdata.userId) {
+                fetchUserAnimeData();
+            }
+        }, [userdata.userId]);
 
 	return (
 		<div className="div-container-container">

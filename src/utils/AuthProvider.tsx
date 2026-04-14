@@ -4,9 +4,11 @@ import axios from 'axios';
 import { useEffect } from 'react';
 
 interface UserData {
-    email: string | null;
-    username: string | null;
+    email?: string | null;
+    username?: string | null;
+    createdAt?: string | null;
     userId?: string | null;
+    token?: string | null;
 }
 
 export interface AuthContextType {
@@ -18,17 +20,10 @@ export interface AuthContextType {
 
 export const AuthProvider = ({ children }: any) => {
 
-    const [isLoggedIn, setisLoggedIn] = useState(() => localStorage.getItem('isLoggedIn') === 'true');
-    const [userdata, setUserData] = useState<UserData>({
-        email: null,
-        username: null
+    const [isLoggedIn, setisLoggedIn] = useState(() => {
+        return localStorage.getItem('token') ? true : false;
     });
-
-    useEffect(() => {
-        if (userdata.email != null) {
-            console.log("Updated: ", JSON.stringify(userdata));
-        }
-    }, [userdata]);
+    const [userdata, setUserData] = useState<UserData>({    });
 
     const login = async (email: string, password: string): Promise<object> => {
         try {
@@ -41,13 +36,15 @@ export const AuthProvider = ({ children }: any) => {
             const newUserData = {
                 email: email,
                 username: null,
-                userId: response.data.userId || null
+                createdAt: response.data?.createdAt || null,
+                userId: response.data?.userId || null,
+                token: response.data?.token || null
             };
 
-            console.log("Login successful: ", response?.data);
             setUserData(newUserData);
             setisLoggedIn(true);
-            localStorage.setItem('isLoggedIn', 'true');
+            console.log("Login successful: ", newUserData);
+            localStorage.setItem('token', response.data.token);
             return {
                 isSuccess: true,
                 Message: response?.data || "Login Successful"
@@ -61,7 +58,34 @@ export const AuthProvider = ({ children }: any) => {
             };
         }
     };
-    
+
+    const initializeUserData = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            setisLoggedIn(false);
+            return;
+    }
+        try {
+            const backendurl = import.meta.env.VITE_API_BASE_URL;
+            const response = await axios.get(`${backendurl}/users/me`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            console.log("User data fetched: ", response.data);
+            setUserData(prev => ({
+                ...prev,
+                email: response.data.email,
+                username: response.data.username,
+                createdAt: response.data.createdAt,
+                userId: response.data.userId,
+                token: token
+            }));
+        } catch (error: any) {
+            console.error("Failed to initialize user data: ", error);
+        }
+    };
+
     const logout = async () => {
         try {
             if (userdata.email == null) {
@@ -84,14 +108,25 @@ export const AuthProvider = ({ children }: any) => {
             }
 
         } finally {
-            setisLoggedIn(false);
+            setisLoggedIn(false); // this just forces the state to update immediately, the backend logout is more for token invalidation and security
             setUserData({
                     email: null,
-                    username: null
+                    username: null,
+                    createdAt: null,
+                    userId: null,
+                    token: null
                 });
-            localStorage.setItem('isLoggedIn', 'false');
+            localStorage.removeItem('token');
         }
     };
+
+    useEffect(() => {
+        console.log("AuthProvider useEffect - isLoggedIn: ", isLoggedIn);
+        if (isLoggedIn) {
+            initializeUserData();
+        }
+    }, [isLoggedIn]);
+
 
     return (
         <AuthContext.Provider value={{ isLoggedIn, userdata, login, logout }}>

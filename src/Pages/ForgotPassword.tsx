@@ -16,7 +16,7 @@ function ForgotPassword() {
     const updatePassword = async () => {
 			try {
 				const backendurl = import.meta.env.VITE_API_BASE_URL;
-                await axios.put(`${backendurl}/api/user/forgotpassword`, { email: emailRef.current?.value });
+                await axios.put(`${backendurl}/api/user/forgot-password`, emailRef.current?.value);
                 
 				setIsEmailVerified(true);
 				setVerifiedEmail(emailRef.current?.value || "");
@@ -36,7 +36,7 @@ function ForgotPassword() {
     const setPassword = async () => {
         try {
             const backendurl = import.meta.env.VITE_API_BASE_URL;
-            await axios.put(`${backendurl}/api/user/newpassword`, {
+            await axios.put(`${backendurl}/api/user/update-password`, {
                 email: verifiedEmail,
                 password: passwordRef.current?.value
             });
