@@ -9,13 +9,14 @@ import { FaRunning } from "react-icons/fa";
 import { FcDislike, FcTodoList } from "react-icons/fc";
 import { PiTelevision } from "react-icons/pi";
 import { ImCheckmark, ImCheckmark2 } from "react-icons/im";
+import { List } from "postcss/lib/list";
 
 interface Anime {
         id: number;
         title: string;
         status?: "completed" | "watching" | "planned" | "dropped" | null;
         progress?: number ; // percentage
-        genre?: string | null;
+        genres?: string[] | null;
         rating?: number; // out of 10
         favourite?: boolean;
     }
@@ -34,7 +35,7 @@ function Dashboard() {
 	// 		title: "Demon Slayer",
 	// 		status: "watching",
 	// 		progress: 100,
-	// 		genre: "Action",
+	// 		genres: "Action",
 	// 		rating: 9.2,
 	// 		favourite: true,
     //     },
@@ -44,7 +45,7 @@ function Dashboard() {
     //         title: "One Piece",
     //         status: "watching",
     //         progress: 0,
-    //         genre: "Adventure",
+    //         genres: "Adventure",
     //         rating: 8.8,
     //         favourite: false,
     //     }
@@ -76,7 +77,7 @@ function Dashboard() {
                     title: anime?.title || "Unknown Title",
                     status: anime?.progress > 99 ? "completed" : anime?.status == null ? "planned" : anime?.status || "Error",
                     progress: anime?.progress || 0,
-                    genre: anime?.genre || null,
+                    genres: anime?.genres || null,
                     rating: anime?.rating || 0,
                     favourite: anime?.favourite || false,
                 } as Anime;
@@ -159,9 +160,11 @@ function Dashboard() {
 										<h3>{anime.title}</h3>
 										<div className="rating-badge">Rating: {anime.rating}</div>
 									</div>
-									<div className="anime-meta">
-										<span className="genre-tag">{anime.genre}</span>
-									</div>
+									<div className="anime-meta">{anime?.genres && anime.genres.map && anime.genres.map((genre: string) => (
+										<span key={genre} className="genre-tag">
+											{genre}
+										</span>
+									))}</div>
 									<div className="progress-section">
 										<div className="progress-bar">
 											<div

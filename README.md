@@ -11,7 +11,7 @@
 ![alt text](public/image-2.png)
 
 # Homepage > Dashboard
-![alt text](public/image-4.png)
+![alt text](public/image-3.png)
 
 
 # Homepage > Profile
