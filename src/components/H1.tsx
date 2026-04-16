@@ -6,10 +6,10 @@ interface Heading1Props {
     className?: string;
 }
 
-function heading1(props: Heading1Props) {
+function heading1({ text, className }: Heading1Props) {
     return (
-    <h1 className={clsx('heading-1',props.className)}>
-        {props.text}
+    <h1 className={clsx('heading-1',className)}>
+        {text}
     </h1>  );
 }
 

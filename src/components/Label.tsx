@@ -7,12 +7,13 @@ interface LabelProps {
     htmlFor?: string;
 }
 
-function comp_label(props: LabelProps) {
+function comp_label({ text, className, htmlFor }: LabelProps) {
     return ( 
-        <label htmlFor={props.htmlFor} 
-                className={clsx('labelcomp', props.className)}>
-            {props.text}
-        </label> 
-);}
+        <label htmlFor={htmlFor} 
+            className={clsx('labelcomp', className)}>
+            {text}
+        </label>
+    );    
+;}
 
 export default comp_label;

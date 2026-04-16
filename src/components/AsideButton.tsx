@@ -11,18 +11,16 @@ interface AsideButtonProps {
     iconSize?: number;
 }
 
-function AsideButtons(props: AsideButtonProps) {
-    const Icon = props.Icon;
-
-    const isSelected = props.active === props.text;
+function AsideButtons({ Icon, text, active, onClick, className, iconSize }: AsideButtonProps) {
+    const isSelected = active === text;
 
     const handleSelected = () => {
-        props.onClick(props.text); 
+        onClick(text); 
     };
     return ( 
-        <button className={clsx('slice', props.className, isSelected ? 'selected' : '')} onClick={handleSelected}>
-            {Icon && <Icon size={props.iconSize} className={clsx('icon-styling')} />}
-            <span className="text"> {props.text} </span>
+        <button className={clsx('slice', className, isSelected ? 'selected' : '')} onClick={handleSelected}>
+            {Icon && <Icon size={iconSize} className={clsx('icon-styling')} />}
+            <span className="text"> {text} </span>
         </button>
      );
 }

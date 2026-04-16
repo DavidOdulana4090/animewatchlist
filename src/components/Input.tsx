@@ -11,15 +11,15 @@ interface InputFieldProps {
     className?: string | "";
 }
 
-const InputField = forwardRef((props: InputFieldProps, ref: React.Ref<HTMLInputElement>) => {
+const InputField = forwardRef(( { placeholder, type, name, id, onChange, className }: InputFieldProps, ref: React.Ref<HTMLInputElement>) => {
     return (
-        <input placeholder={props.placeholder}
+        <input placeholder={placeholder}
             ref={ref}
-            className={clsx('input-field', props.className)}
-            type={props.type}
-            name={props.name}
-            id={props.id}
-            onChange={props.onChange}>
+            className={clsx('input-field', className)}
+            type={type}
+            name={name}
+            id={id}
+            onChange={onChange}>
         </input>
     );
 });

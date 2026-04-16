@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
+import Icon from "../components/Icon";
 import { useAuth } from "../utils/AuthContext";
 import "../styles/Dashboard.css";
 import axios from "axios";
+import { Heart } from "lucide-react";
 
 interface Anime {
         id: number;
@@ -14,15 +16,15 @@ interface Anime {
     }
 
 function Dashboard() {
-    const { userdata } = useAuth();
+    const { userdata 
+} = useAuth();
     const [Id, setId] = useState<number>(0);
-    const [userAnimeList, setUserAnimeList] = useState<Anime[]>([]);
-    
+    const [userAnimeList, setUserAnimeList] = useState<Anime[]>([]); 
 
     // Mock data for demonstration this is where user's anime list would be fetched and stored in state
 	// const userAnimeList: Anime[] = [
     //     {
-    //         // Test data, replace with actual data from backend
+    //      // Test data, replace with actual data from backend
 	// 		id: 0,
 	// 		title: "Demon Slayer",
 	// 		status: "watching",
@@ -42,11 +44,6 @@ function Dashboard() {
     //         favourite: false,
     //     }
 	// ];
-
-    // userAnimeList.map((anime) => {
-    //     console.log(anime.title, anime)
-
-    // })
 
     // Function to determine card styling based on anime status
     const getStylefromStatus = (status: Anime["status"]) => {
@@ -92,8 +89,8 @@ function Dashboard() {
     };
 
     useEffect(() => {
-            if (userdata.userId) {
-                fetchUserAnimeData();
+        if (userdata.userId) {
+            fetchUserAnimeData();
             }
         }, [userdata.userId]);
 
@@ -139,7 +136,7 @@ function Dashboard() {
                     </div>
 
 					<div className="stat-card favorite">
-						<div className="stat-icon"></div>
+						<div className="stat-icon"> <Icon Icon={Heart} color="Red" size={36}/> </div>
 						<div className="stat-value">{userAnimeList.filter((anime) => anime.favourite).length}</div>
 						<div className="stat-label">Favorites</div>
 					</div>
