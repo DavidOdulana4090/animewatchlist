@@ -1,7 +1,7 @@
 import { LucideIcon } from "lucide-react";
 
 interface IconProps{
-    Icon: LucideIcon;
+    Icon: LucideIcon | React.ComponentType<{ size?: number; color?: string }>;
     size?: number;
     className?: string;
     color?: string;

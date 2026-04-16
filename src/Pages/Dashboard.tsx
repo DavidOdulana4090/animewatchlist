@@ -3,7 +3,12 @@ import Icon from "../components/Icon";
 import { useAuth } from "../utils/AuthContext";
 import "../styles/Dashboard.css";
 import axios from "axios";
-import { Heart } from "lucide-react";
+import { Heart, Notebook, NotebookTabs, WatchIcon } from "lucide-react";
+import { GiCheckMark, GiVomiting } from "react-icons/gi";
+import { FaRunning } from "react-icons/fa";
+import { FcDislike, FcTodoList } from "react-icons/fc";
+import { PiTelevision } from "react-icons/pi";
+import { ImCheckmark, ImCheckmark2 } from "react-icons/im";
 
 interface Anime {
         id: number;
@@ -77,12 +82,12 @@ function Dashboard() {
                 } as Anime;
             });
             setUserAnimeList(animeList);
-            console.log("Fetched Anime List:", animeList);
+            console.log("[INFO] User Anime List:", animeList);
             return animeList;
 
         }
         catch (error : any) {
-            console.error("Error fetching user data: ", error.response?.data || error.message);
+            console.error("[ERROR] Error fetching user data: ", error.response?.data || error.message);
             throw error;
         }
 
@@ -104,7 +109,7 @@ function Dashboard() {
 							Welcome, {userdata?.username || "Guest"}!
 						</h1>
 						<p className="hero-subtitle">
-							Track your favorite anime and never miss an episode
+                            <strong> Wow!! </strong> you have {userAnimeList.length} anime in your list! Keep up the great work and enjoy your anime journey!
 						</p>
 					</div>
 				</div>
@@ -112,25 +117,25 @@ function Dashboard() {
 				{/* Stats Section */}
 				<div className="stats-grid">
 					<div className="stat-card completed">
-						<div className="stat-icon"></div>
+						<div className="stat-icon"> <Icon Icon={ImCheckmark} color="green" size={36}/> </div>
 						<div className="stat-value">{userAnimeList.filter((anime) => anime.status === "completed").length}</div>
 						<div className="stat-label">Completed</div>
                     </div>
                     
 					<div className="stat-card watching">
-						<div className="stat-icon"></div>
+						<div className="stat-icon"> <Icon Icon={PiTelevision} color="cyan" size={36}/> </div>
 						<div className="stat-value">{userAnimeList.filter((anime) => anime.status === "watching").length}</div>
 						<div className="stat-label">Watching</div>
                     </div>
                     
 					<div className="stat-card planned">
-						<div className="stat-icon"></div>
+						<div className="stat-icon"> <Icon Icon={FcTodoList} color="white" size={36}/> </div>
 						<div className="stat-value">{userAnimeList.filter((anime) => anime.status === "planned").length}</div>
 						<div className="stat-label">Planned</div>
                     </div>
                     
                     <div className="stat-card dropped">
-                        <div className="stat-icon"></div>
+                        <div className="stat-icon"> <Icon Icon={GiVomiting} color="grey" size={36}/> </div>
                         <div className="stat-value">{userAnimeList.filter((anime) => anime.status === "dropped").length}</div>
                         <div className="stat-label">Dropped</div>
                     </div>

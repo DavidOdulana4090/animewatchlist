@@ -67,10 +67,10 @@ export const AuthProvider = ({ children }: any) => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            console.log("Token is valid: ", response.data);
+            console.log("[INFO]", response?.data);
             return true;
         } catch (error: any) {
-            console.error("Token validation failed: ", error.response?.data || error.message);
+            console.error("[ERROR] Token validation failed: ", error.response?.data || error.message);
             return false;
         }
     };
@@ -96,7 +96,7 @@ export const AuthProvider = ({ children }: any) => {
                     Authorization: `Bearer ${token}`
                 }
             });
-            console.log("User data fetched: ", response.data);
+            console.log("[INFO] User data fetched: ", response.data);
             setUserData(prev => ({
                 ...prev,
                 email: response.data.email,
@@ -106,7 +106,7 @@ export const AuthProvider = ({ children }: any) => {
                 token: token
             }));
         } catch (error: any) {
-            console.error("Failed to initialize user data: ", error);
+            console.error("[ERROR] Failed to initialize user data: ", error);
         }
     };
 
@@ -125,7 +125,7 @@ export const AuthProvider = ({ children }: any) => {
             }
 
         } catch (error: any) {
-            console.error("Logout error: ", error.response?.data || error.message);
+            console.error("[ERROR] Logout error: ", error.response?.data || error.message);
             return {
                 isSuccess: false,
                 Message: error.response?.data || error.message
