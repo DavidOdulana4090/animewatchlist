@@ -59,12 +59,36 @@ export const AuthProvider = ({ children }: any) => {
         }
     };
 
+    const checkTokenValidity = async (token: string) => {
+        try {
+            const backendurl = import.meta.env.VITE_API_BASE_URL;
+            const response = await axios.get(`${backendurl}/token/validate`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            console.log("Token is valid: ", response.data);
+            return true;
+        } catch (error: any) {
+            console.error("Token validation failed: ", error.response?.data || error.message);
+            return false;
+        }
+    };
+
     const initializeUserData = async () => {
         const token = localStorage.getItem('token');
         if (!token) {
             setisLoggedIn(false);
             return;
-    }
+        }
+
+        if(!await checkTokenValidity(token)) {
+            setisLoggedIn(false);
+            localStorage.removeItem('token');
+            logout();
+            return;
+        }
+
         try {
             const backendurl = import.meta.env.VITE_API_BASE_URL;
             const response = await axios.get(`${backendurl}/users/me`, {
@@ -108,7 +132,7 @@ export const AuthProvider = ({ children }: any) => {
             }
 
         } finally {
-            setisLoggedIn(false); // this just forces the state to update immediately, the backend logout is more for token invalidation and security
+            setisLoggedIn(false); // this just forces the state to update immediately, deleting token for logout process
             setUserData({
                     email: null,
                     username: null,
@@ -121,7 +145,6 @@ export const AuthProvider = ({ children }: any) => {
     };
 
     useEffect(() => {
-        console.log("AuthProvider useEffect - isLoggedIn: ", isLoggedIn);
         if (isLoggedIn) {
             initializeUserData();
         }

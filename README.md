@@ -1,5 +1,5 @@
-## Anime / Movie tracker 
-## In-Progress React JavaScript + TypeScript, tailwindcss
+# Anime / Movie tracker 
+## Using Typescript with react and tailwindcss for styling 
 
 # LoginScreen 
 ![alt text](public/image.png)
