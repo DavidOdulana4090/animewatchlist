@@ -10,6 +10,7 @@ import { FcDislike, FcTodoList } from "react-icons/fc";
 import { PiTelevision } from "react-icons/pi";
 import { ImCheckmark, ImCheckmark2 } from "react-icons/im";
 import { List } from "postcss/lib/list";
+import { IoCheckmarkCircleSharp } from "react-icons/io5";
 
 interface Anime {
         id: number;
@@ -109,8 +110,14 @@ function Dashboard() {
 						<h1 className="dashboard-heading">
 							Welcome, {userdata?.username || "Guest"}!
 						</h1>
-						<p className="hero-subtitle">
-                            <strong> Wow!! </strong> you have {userAnimeList.length} anime in your list! Keep up the great work and enjoy your anime journey!
+                        <p className="hero-subtitle">
+                            {(() => {
+                                if (userAnimeList.length === 0) {
+                                    return "Your anime watchlist is empty. Start adding your favorite shows to track your progress and discover new anime to enjoy!";
+                                } else {
+                                    return `You have ${userAnimeList.length} anime in your watchlist. Keep up the great work`;
+                                }
+                            })()}
 						</p>
 					</div>
 				</div>
@@ -118,7 +125,7 @@ function Dashboard() {
 				{/* Stats Section */}
 				<div className="stats-grid">
 					<div className="stat-card completed">
-						<div className="stat-icon"> <Icon Icon={ImCheckmark} color="green" size={36}/> </div>
+						<div className="stat-icon"> <Icon Icon={IoCheckmarkCircleSharp} color="green" size={36}/> </div>
 						<div className="stat-value">{userAnimeList.filter((anime) => anime.status === "completed").length}</div>
 						<div className="stat-label">Completed</div>
                     </div>
@@ -150,14 +157,14 @@ function Dashboard() {
 
 				{/* Featured Section */}
 				<div className="featured-section">
-					<h2 className="section-title">Currently Watching</h2>
+					<h2 className="section-title"> Watching </h2>
 					<div className="featured-grid">
 						{userAnimeList
 							.filter((anime) => anime.status === "watching")
 							.map((anime) => (
 								<div key={anime.id} className="featured-card">
 									<div className="featured-header">
-										<h3>{anime.title}</h3>
+										<h3>{anime.title}   <Icon Icon={PiTelevision} color="cyan" size={36}/> </h3>
 										<div className="rating-badge">Rating: {anime.rating}</div>
 									</div>
 									<div className="anime-meta">{anime?.genres && anime.genres.map && anime.genres.map((genre: string) => (

@@ -9,7 +9,7 @@ import Dashboard from '../Pages/Dashboard';
 import Profile from '../Pages/Profile'
 import Messages from '../Pages/Inbox';
 import Settings from '../Pages/Settings'
-import Tags from '../Pages/Tags'
+import Tags from '../Pages/MyList'
 import ContactMe from '../Pages/ContactMe';
 import Logout from '../Pages/Logoutpage'
 
