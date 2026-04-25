@@ -23,8 +23,8 @@ Empty
 # Homepage > Contact Me
 Empty
 
-# Homepage > Tags
-Empty
+# Homepage > List
+![alt text](public/Screenshot%202026-04-25%20193248.png)
 
 # Homepage > Settings
 Empty
