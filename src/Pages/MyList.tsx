@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "../components/Button";
 import NewAnimeform from "../components/NewAnimeform";
-
+import Dashboard from "./Dashboard";
 
 function MyList() {
     const [formVisible, setFormVisible] = useState(false);
@@ -17,7 +17,8 @@ function MyList() {
             <br></br>
             <Button text="New Anime" onClick={newAnime} />
             {formVisible && <NewAnimeform />}
-    
+            <br></br>
+            <p> Customize your watchlist </p>
         </>
     );
 }

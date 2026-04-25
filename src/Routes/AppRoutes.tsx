@@ -14,7 +14,7 @@ import ContactMe from '../Pages/ContactMe';
 import Logout from '../Pages/Logoutpage'
 
 function AppRoutes(){
-    const { isLoggedIn } = useAuth();
+    const { isUserLoggedIn } = useAuth();
 
     return (
         <Routes> 
@@ -38,7 +38,7 @@ function AppRoutes(){
             {/* LoginPage Redirect && LoginPage */}
             <Route 
                 path="/login" 
-                element={isLoggedIn ? <Navigate to='/dashboard' replace/> : <LoginPage />} />
+                element={isUserLoggedIn ? <Navigate to='/dashboard' replace/> : <LoginPage />} />
             
             {/* Empty Path  */}
             <Route

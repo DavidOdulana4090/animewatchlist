@@ -1,5 +1,4 @@
 import "../styles/Login.css";
-
 import Button from "../components/Button";
 import InputField from "../components/Input";
 import Label from "../components/Label";
@@ -13,7 +12,7 @@ function LoginPage() {
 	const [showpassword, setShowPassword] = useState(false);
 	const emailRef = useRef<HTMLInputElement | null>(null);
 	const passwordRef = useRef<HTMLInputElement | null>(null);
-    const { login } = useAuth();
+    const { userLogin } = useAuth();
     const [isError, setisError] = useState(false);
     const navigate = useNavigate();
     const [errorMsg, setErrorMsg] = useState("");
@@ -38,13 +37,12 @@ function LoginPage() {
             return
         }
 
-        const response: { isSuccess: boolean; Message?: string } = await login(email, password);
+        const response = await userLogin(email, password);
         if (!response.isSuccess) {
-            setErrorMsg(response?.Message || "An error occurred");
+            setErrorMsg(response.Message.toString() || "An error occurred");
             setisError(true)
             return false
         }
-
 		navigate("/dashboard");
 	};
 

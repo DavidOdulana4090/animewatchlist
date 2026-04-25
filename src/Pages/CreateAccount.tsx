@@ -1,7 +1,7 @@
 import "../styles/CreateAcc.css";
 import InputField from "../components/Input";
 import Label from "../components/Label";
-import { Eye, EyeOff, Underline } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
@@ -45,13 +45,11 @@ function CreateAccountPage() {
                 setisError(true)
                 return
             } 
-
             const backendurl = import.meta.env.VITE_API_BASE_URL;
             await axios.post(`${backendurl}/register`, {
                 email: emailref.current?.value,
                 password: passwordref.current?.value,
             });
-
             navigate("/login") 
 
         } catch (error :any) {

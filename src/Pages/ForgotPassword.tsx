@@ -32,7 +32,7 @@ function ForgotPassword() {
                 }
 			}
 		};
-
+    // Will Make a better way to Reset password and not just ANYONE being able to reset password for any email, will implement token system in the future
     const setPassword = async () => {
         try {
             const backendurl = import.meta.env.VITE_API_BASE_URL;
@@ -60,7 +60,7 @@ function ForgotPassword() {
                     <div className="div-container">
                         <h1 className="header"> Enter Password </h1>
                         <Label text="New password" className="label-field" />
-                        <InputField ref={passwordRef} />
+                        <InputField ref={passwordRef} placeholder=""/>
                         <br></br>
                         <Button className="button-reset-password" text="reset" onClick={setPassword} />
                     </div>
@@ -70,7 +70,7 @@ function ForgotPassword() {
                     <div className="div-container">
                         <h1 className="header"> Enter Associated email to reset password </h1>
                         <Label text="Email address" className="label-field" />
-                        <InputField ref={emailRef} />
+                        <InputField ref={emailRef} placeholder=""/>
                         <br></br>
                         <Button className="button-reset-password" text="reset" onClick={updatePassword} />
                     </div>

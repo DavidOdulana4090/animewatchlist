@@ -1,12 +1,15 @@
-
-import { use, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import '../styles/NewAnimeForm.css';
+import { useAuth } from '../utils/AuthContext';
+import axios from 'axios';
 
-interface NewAnimeFormProps {
+// Structure for the anime data
+export interface NewAnimeFormProps {
+    id?: number;
     Title: string;
-    Status: "completed" | "watching" | "planned" | "dropped" | null;
+    Status: "Completed" | "Watching" | "Planned" | "Dropped" | null;
     Progress: number; // percentage
-    Genres: string[] | null;
+    Genres?: string[] | null;
     Rating: number; 
     Favourite: boolean;
 }
@@ -15,12 +18,42 @@ interface NewAnimeFormProps {
 function NewAnimeForm() {
     const formref = useRef<HTMLFormElement>(null)
     const [checked, setChecked] = useState(false);
+    const { userData } = useAuth();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(formref.current!);
         console.log("Form Data:", Object.fromEntries(formData.entries()));
+        addNewAnime({
+            Title: formData.get("title") as string,
+            Status: formData.get("status") as NewAnimeFormProps["Status"],
+            Progress: Number(formData.get("progress")) > 100 ? 100 : Number(formData.get("progress")) < 0 ? 0 : Number(formData.get("progress")),
+            Genres: formData.get("genres") ? (formData.get("genres") as string).split(",").map(genre => genre.trim()) : null,
+            Rating: Number(formData.get("rating")),
+            Favourite: checked || false,
+        }, userData.userId);
     }
+
+    const addNewAnime = async (animeData: NewAnimeFormProps, userId: string | undefined) => {
+        if (!userId) {
+            console.error("User ID is undefined. Cannot add anime.");
+            return;
+        }
+        try {
+            const backendurl = import.meta.env.VITE_API_BASE_URL;
+            const response = await axios.post(`${backendurl}/anime/add/${userId}`, {
+                animeData
+            });
+            if (response.status != 200) {
+                throw new Error(`[ERROR] Failed to add new anime. ${response.status}`);
+            }
+            console.log("New anime added successfully: ", response.data);
+          }
+        catch (error: any) {
+            console.error("Error adding new anime: ", error.response?.data || error.message);
+        }
+    };
+
             
 
     return (
@@ -57,7 +90,6 @@ function NewAnimeForm() {
                     <label htmlFor="favourite">Favourite:</label>
                     <input type="checkbox" id="favourite" name="favourite" checked={checked} onChange={(() => {
                         setChecked(!checked);
-                        console.log("Favourite Checkbox:", checked);
                     })}/>
                 </div>
                 <button type="submit" className="form-submit-btn">Add Anime</button>
