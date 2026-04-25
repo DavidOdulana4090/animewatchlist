@@ -6,12 +6,12 @@ import axios from 'axios';
 // Structure for the anime data
 export interface NewAnimeFormProps {
     id?: number;
-    Title: string;
-    Status: "Completed" | "Watching" | "Planned" | "Dropped" | null;
-    Progress: number; // percentage
-    Genres?: string[] | null;
-    Rating: number; 
-    Favourite: boolean;
+    title: string;
+    status?: "Completed" | "Watching" | "Planned" | "Dropped" | null;
+    progress: number; // percentage
+    genres?: string[] | null;
+    rating: number; 
+    favourite: boolean;
 }
 
 
@@ -24,14 +24,15 @@ function NewAnimeForm() {
         event.preventDefault();
         const formData = new FormData(formref.current!);
         console.log("Form Data:", Object.fromEntries(formData.entries()));
-        addNewAnime({
-            Title: formData.get("title") as string,
-            Status: formData.get("status") as NewAnimeFormProps["Status"],
-            Progress: Number(formData.get("progress")) > 100 ? 100 : Number(formData.get("progress")) < 0 ? 0 : Number(formData.get("progress")),
-            Genres: formData.get("genres") ? (formData.get("genres") as string).split(",").map(genre => genre.trim()) : null,
-            Rating: Number(formData.get("rating")),
-            Favourite: checked || false,
-        }, userData.userId);
+        const animeToAdd: NewAnimeFormProps = {
+            title: formData.get("title")?.toString() || "Unknown Title",
+            status: formData.get("status") as NewAnimeFormProps["status"],
+            progress: Number(formData.get("progress")) > 100 ? 100 : Number(formData.get("progress")) < 0 ? 0 : Number(formData.get("progress")),
+            genres: formData.get("genres") ? (formData.get("genres") as string).split(",").map(genre => genre.trim()) : null,
+            rating: Number(formData.get("rating")),
+            favourite: checked || false,
+        };
+        addNewAnime(animeToAdd, userData.userId);
     }
 
     const addNewAnime = async (animeData: NewAnimeFormProps, userId: string | undefined) => {
@@ -41,9 +42,9 @@ function NewAnimeForm() {
         }
         try {
             const backendurl = import.meta.env.VITE_API_BASE_URL;
-            const response = await axios.post(`${backendurl}/anime/add/${userId}`, {
+            const response = await axios.post(`${backendurl}/anime/add/${userId}`, 
                 animeData
-            });
+            );
             if (response.status != 200) {
                 throw new Error(`[ERROR] Failed to add new anime. ${response.status}`);
             }
@@ -68,10 +69,10 @@ function NewAnimeForm() {
                     <label htmlFor="status">Status:</label>
                     <select id="status" name="status" required>
                         <option value="">Select Status</option>
-                        <option value="completed">Completed</option>
-                        <option value="watching">Watching</option>
-                        <option value="planned">Planned</option>
-                        <option value="dropped">Dropped</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Watching">Watching</option>
+                        <option value="Planned">Planned</option>
+                        <option value="Dropped">Dropped</option>
                     </select>
                 </div>
                 <div className="form-group">

@@ -9,7 +9,6 @@ import type { NewAnimeFormProps } from "../components/NewAnimeform";
 import { GiVomiting } from "react-icons/gi";
 import { FcTodoList } from "react-icons/fc";
 import { Heart } from "lucide-react";
-import { Interface } from "node:readline";
 
 export interface DashboardProps {
     userAnimeListProp: NewAnimeFormProps[];
@@ -27,12 +26,12 @@ function Dashboard() {
             const animeList = response.data.map((anime: any) => {
                 return {
                     id: anime.id || 0,
-                    Title: anime?.title || "Unknown Title",
-                    Status: anime?.progress > 99 ? "Completed" : anime?.Status == null ? "Planned" : anime?.Status || "Error",
-                    Progress: anime?.progress || 0,
-                    Genres: anime?.genres || null,
-                    Rating: anime?.rating || 0,
-                    Favourite: anime?.isFavourite || false,
+                    title: anime?.title || "Unknown Title",
+                    status: anime?.progress > 99 ? "Completed" : anime?.status == null ? "Planned" : anime?.status || "Error",
+                    progress: anime?.progress || 0,
+                    genres: anime?.genres || null,
+                    rating: anime?.rating || 0,
+                    favourite: anime?.isFavourite || false,
                 } 
             });
             setUserAnimeList(animeList);
@@ -48,7 +47,7 @@ function Dashboard() {
 
     useEffect(() => {
         if (userData.userId) {
-            fetchUserAnimeData();
+                fetchUserAnimeData();
             }
         }, [userData.userId]);
 
@@ -76,31 +75,31 @@ function Dashboard() {
 				<div className="stats-grid">
 					<div className="stat-card completed">
 						<div className="stat-icon"> <Icon Icon={IoCheckmarkCircleSharp} color="green" size={36}/> </div>
-						<div className="stat-value">{userAnimeList.filter((anime) => anime.Status === "Completed").length}</div>
+						<div className="stat-value">{userAnimeList.filter((anime) => anime.status === "Completed").length}</div>
 						<div className="stat-label">Completed</div>
                     </div>
                     
 					<div className="stat-card watching">
 						<div className="stat-icon"> <Icon Icon={PiTelevision} color="cyan" size={36}/> </div>
-						<div className="stat-value">{userAnimeList.filter((anime) => anime.Status === "Watching").length}</div>
+						<div className="stat-value">{userAnimeList.filter((anime) => anime.status === "Watching").length}</div>
 						<div className="stat-label">Watching</div>
                     </div>
                     
 					<div className="stat-card planned">
 						<div className="stat-icon"> <Icon Icon={FcTodoList} color="white" size={36}/> </div>
-						<div className="stat-value">{userAnimeList.filter((anime) => anime.Status === "Planned").length}</div>
+						<div className="stat-value">{userAnimeList.filter((anime) => anime.status === "Planned").length}</div>
 						<div className="stat-label">Planned</div>
                     </div>
                     
                     <div className="stat-card dropped">
                         <div className="stat-icon"> <Icon Icon={GiVomiting} color="grey" size={36}/> </div>
-                        <div className="stat-value">{userAnimeList.filter((anime) => anime.Status === "Dropped").length}</div>
+                        <div className="stat-value">{userAnimeList.filter((anime) => anime.status === "Dropped").length}</div>
                         <div className="stat-label">Dropped</div>
                     </div>
 
 					<div className="stat-card favorite">
 						<div className="stat-icon"> <Icon Icon={Heart} color="Red" size={36}/> </div>
-						<div className="stat-value">{userAnimeList.filter((anime) => anime.Favourite).length}</div>
+						<div className="stat-value">{userAnimeList.filter((anime) => anime.favourite).length}</div>
 						<div className="stat-label">Favorites</div>
 					</div>
 				</div>
@@ -109,14 +108,14 @@ function Dashboard() {
 					<h2 className="section-title"> Watching </h2>
 					<div className="featured-grid">
 						{userAnimeList
-							.filter((anime) => anime.Status === "Watching")
+							.filter((anime) => anime.status === "Watching")
 							.map((anime) => (
 								<div key={anime.id} className="featured-card">
 									<div className="featured-header">
-										<h3>{anime.Title}   <Icon Icon={PiTelevision} color="cyan" size={36}/> </h3>
-										<div className="rating-badge">Rating: {anime.Rating}</div>
+										<h3>{anime.title}   <Icon Icon={PiTelevision} color="cyan" size={36}/> </h3>
+										<div className="rating-badge">Rating: {anime.rating}</div>
 									</div>
-									<div className="anime-meta">{anime?.Genres && anime.Genres.map && anime.Genres.map((genre: string) => (
+									<div className="anime-meta">{anime?.genres && anime.genres.map && anime.genres.map((genre: string) => (
 										<span key={genre} className="genre-tag">
 											{genre}
 										</span>
@@ -125,11 +124,11 @@ function Dashboard() {
 										<div className="progress-bar">
 											<div
 												className="progress-fill"
-												style={{ width: `${anime.Progress}%` }}
+												style={{ width: `${anime.progress}%` }}
 											></div>
 										</div>
 										<span className="progress-text">
-											{anime.Progress}% Complete
+											{anime.progress}% Complete
 										</span>
 									</div>
 								</div>

@@ -7,7 +7,6 @@ function MyList() {
     const [formVisible, setFormVisible] = useState(false);
 
     const newAnime = () => {
-        console.log("New Anime button clicked");
         setFormVisible(true);
     }
 
