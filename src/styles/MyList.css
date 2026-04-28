@@ -42,9 +42,7 @@
     white-space: nowrap;
     align-self: center;
     padding: 0.8rem 1.5rem;
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
     border: none;
-    color: white;
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
@@ -54,6 +52,16 @@
 .mylist-header button:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+}
+
+.mylist-header .button-add {
+    background: linear-gradient(135deg, #628ccf, #7e9cdd);
+    color: white;
+}
+
+.mylist-header .button-cancel {
+    background: linear-gradient(135deg, #ef4444, #6d3636);
+    color: white;
 }
 
 .form-section {
@@ -632,3 +640,4 @@
     }
 }
 }
+

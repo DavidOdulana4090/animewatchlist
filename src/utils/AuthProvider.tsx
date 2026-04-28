@@ -7,15 +7,27 @@ interface userData {
 	email?: string | null;
 	username?: string | null;
 	createdAt?: string | null;
-	userId?: string;
+	userId?: string | null;
 	token?: string | null;
+}
+
+export interface AnimeListItem {
+	id: number;
+	title: string;
+	status: string;
+	progress: number;
+	genres: string[] | null;
+	rating: number;
+	favourite: boolean;
 }
 
 export interface AuthContextType {
 	isUserLoggedIn: boolean;
 	userData: userData;
+	userAnimeList: AnimeListItem[];
 	userLogin: (email: string, password: string) => Promise<{isSuccess: boolean; Message: string | object}>;
 	userLogout: () => Promise<any>;
+	fetchUserAnimeData: () => Promise<void>;
 }
 
 export const AuthProvider = ({ children }: any) => {
@@ -23,11 +35,12 @@ export const AuthProvider = ({ children }: any) => {
 		return localStorage.getItem("token") ? true : false;
 	});
 	const [userData, setuserData] = useState<userData>({});
+	const [userAnimeList, setUserAnimeList] = useState<AnimeListItem[]>([]);
 
 	const userLogin = async (email: string, password: string) => {
 		try {
 			const backendurl = import.meta.env.VITE_API_BASE_URL;
-			const response = await axios.post(`${backendurl}/userLogin`, {
+			const response = await axios.post(`${backendurl}/login`, {
 				email: email,
 				password: password,
 			});
@@ -145,14 +158,42 @@ export const AuthProvider = ({ children }: any) => {
 		}
 	};
 
+	const fetchUserAnimeData = async () => {
+		try {
+			if (!userData.userId) return;
+			const backendurl = import.meta.env.VITE_API_BASE_URL;
+			const response = await axios.get(`${backendurl}/anime/list/${userData.userId}`);
+			console.log("Raw Anime Data: ", response.data);
+			const animeList = response.data.map((anime: any) => ({
+				id: anime.id || 0,
+				title: anime?.title || "Unknown Title",
+				status: anime?.progress > 99 ? "Completed" : anime?.status == null ? "Planned" : anime?.status || "Error",
+				progress: anime?.progress || 0,
+				genres: anime?.genres || null,
+				rating: anime?.rating || 0,
+				favourite: anime?.isFavourite || false,
+			}));
+			setUserAnimeList(animeList);
+			console.log("[INFO] User Anime List:", animeList);
+		} catch (error: any) {
+			console.error("[ERROR] Error fetching user anime data: ", error.response?.data || error.message);
+		}
+	};
+
 	useEffect(() => {
 		if (isUserLoggedIn) {
 			initializeuserData();
 		}
 	}, [isUserLoggedIn]);
 
+	useEffect(() => {
+		if (userData.userId) {
+			fetchUserAnimeData();
+		}
+	}, [userData.userId]);
+
 	return (
-		<AuthContext.Provider value={{ isUserLoggedIn, userData, userLogin, userLogout }}>
+		<AuthContext.Provider value={{ isUserLoggedIn, userData, userAnimeList, userLogin, userLogout, fetchUserAnimeData }}>
 			{children}
 		</AuthContext.Provider>
 	);

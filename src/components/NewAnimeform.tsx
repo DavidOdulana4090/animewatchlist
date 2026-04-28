@@ -14,7 +14,6 @@ export interface NewAnimeFormProps {
     favourite: boolean;
 }
 
-
 function NewAnimeForm() {
     const formref = useRef<HTMLFormElement>(null)
     const [checked, setChecked] = useState(false);
@@ -35,10 +34,10 @@ function NewAnimeForm() {
         addNewAnime(animeToAdd, userData.userId);
     }
 
-    const addNewAnime = async (animeData: NewAnimeFormProps, userId: string | undefined) => {
+    const addNewAnime: (anime: NewAnimeFormProps, userId: string | any) => Promise<{ isSuccess: boolean; Message: string } | object> = async (animeData, userId) => {
         if (!userId) {
             console.error("User ID is undefined. Cannot add anime.");
-            return;
+            return { isSuccess: false, Message: "User ID is undefined. Cannot add anime." };
         }
         try {
             const backendurl = import.meta.env.VITE_API_BASE_URL;
@@ -49,9 +48,11 @@ function NewAnimeForm() {
                 throw new Error(`[ERROR] Failed to add new anime. ${response.status}`);
             }
             console.log("New anime added successfully: ", response.data);
+            return { isSuccess: true, Message: "New anime added successfully." };
           }
         catch (error: any) {
             console.error("Error adding new anime: ", error.response?.data || error.message);
+            return { isSuccess: false, Message: error.response?.data || error.message };
         }
     };
 
@@ -95,7 +96,7 @@ function NewAnimeForm() {
                     <label htmlFor="rating" className="form-label" style={{"color": "#f5f5f5"}}>
                         Rating:
                     </label>
-                    <input type="number" id="rating" name="rating" min="1" max="10" step="0.1" placeholder='1.0-10'/>
+                    <input type="number" id="rating" name="rating" min="1" max="10" step="0.1" placeholder='1.0-10' style={{ "color" : "white"}}/>
                 </div>
                 <div className="form-group checkbox-group">
                     <label htmlFor="favourite" className="form-label" style={{"color": "#f5f5f5"}}>
@@ -105,6 +106,7 @@ function NewAnimeForm() {
                         setChecked(!checked);
                     })}/>
                 </div>
+                <br></br>
                 <button type="submit" className="form-submit-btn">Add Anime</button>
             </form>
         </div>

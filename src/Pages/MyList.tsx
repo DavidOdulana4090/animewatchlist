@@ -1,16 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import NewAnimeform from "../components/NewAnimeform";
 import "../styles/MyList.css";
+import { useAuth } from "../utils/AuthContext";
 import type { NewAnimeFormProps } from "../components/NewAnimeform";
 
 function MyList() {
     const [formVisible, setFormVisible] = useState(false);
-    const [animeList, setAnimeList] = useState<NewAnimeFormProps[]>([]);
+    const { userAnimeList } = useAuth();
+    
 
     const newAnime = () => {
         setFormVisible(!formVisible);
     }
+
+    function handleAnimeDelete(anime: NewAnimeFormProps) {
+        // Implement delete functionality here
+        console.log(`${anime.title} Anime deleted!`);
+    }
+
+    useEffect(() => {
+            //UI or some message here
+    }, [userAnimeList])
 
     return (
         <div className="mylist-container">
@@ -19,7 +30,7 @@ function MyList() {
                     <h1>Manage Your Anime Watchlist</h1>
                     <p className="header-subtitle">Organize and customize your favorite anime collection</p>
                 </div>
-                <Button text="+ New Anime" onClick={newAnime} />
+                <Button className={formVisible ? "button-cancel" : "button-add"} text={formVisible ? "Cancel" : "Add New Anime"} onClick={newAnime}/>
             </div>
 
             {formVisible && (
@@ -29,13 +40,13 @@ function MyList() {
             )}
 
             <div className="anime-list-section">
-                {animeList.length === 0 ? (
+                {userAnimeList.length === 0 ? (
                     <div className="empty-state">
                         <p>Your watchlist is empty. Start by adding a new anime!</p>
                     </div>
                 ) : (
                     <div className="anime-grid">
-                        {animeList.map((anime, index) => (
+                        {userAnimeList.map((anime, index) => (
                             <div key={index} className="anime-card">
                                 <div className="anime-card-header">
                                     <h3 className="anime-title">{anime.title}</h3>
@@ -75,7 +86,7 @@ function MyList() {
 
                                 <div className="anime-card-footer">
                                     <button className="card-btn edit-btn">Edit</button>
-                                    <button className="card-btn delete-btn">Delete</button>
+                                    <button className="card-btn delete-btn" onClick={() => handleAnimeDelete(anime)}>Delete</button>
                                 </div>
                             </div>
                         ))}

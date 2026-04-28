@@ -1,55 +1,14 @@
-import { useEffect, useState } from "react";
 import Icon from "../components/Icon";
 import { useAuth } from "../utils/AuthContext";
 import "../styles/Dashboard.css";
-import axios from "axios";
 import { PiTelevision } from "react-icons/pi";
 import { IoCheckmarkCircleSharp } from "react-icons/io5";
-import type { NewAnimeFormProps } from "../components/NewAnimeform";
 import { GiVomiting } from "react-icons/gi";
 import { FcTodoList } from "react-icons/fc";
 import { Heart } from "lucide-react";
 
-export interface DashboardProps {
-    userAnimeListProp: NewAnimeFormProps[];
-}
-
 function Dashboard() {
-    const { userData } = useAuth();
-    const [userAnimeList, setUserAnimeList] = useState<NewAnimeFormProps[]>([]); 
-
-    const fetchUserAnimeData: () => Promise<void> = async() => {
-        try {
-            const backendurl = import.meta.env.VITE_API_BASE_URL;
-            const response = await axios.get(`${backendurl}/anime/list/${userData.userId}`);
-            console.log("Raw Anime Data: ", response.data);
-            const animeList = response.data.map((anime: any) => {
-                return {
-                    id: anime.id || 0,
-                    title: anime?.title || "Unknown Title",
-                    status: anime?.progress > 99 ? "Completed" : anime?.status == null ? "Planned" : anime?.status || "Error",
-                    progress: anime?.progress || 0,
-                    genres: anime?.genres || null,
-                    rating: anime?.rating || 0,
-                    favourite: anime?.isFavourite || false,
-                } 
-            });
-            setUserAnimeList(animeList);
-            console.log("[INFO] User Anime List:", animeList);
-            return animeList;
-
-        }
-        catch (error : any) {
-            console.error("[ERROR] Error fetching user data: ", error.response?.data || error.message);
-            throw error;
-        }
-    };
-
-    useEffect(() => {
-        if (userData.userId) {
-                fetchUserAnimeData();
-            }
-        }, [userData.userId]);
+    const { userData, userAnimeList } = useAuth();
 
 	return (
 		<div className="div-container-container">
