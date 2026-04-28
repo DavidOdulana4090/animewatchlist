@@ -12,13 +12,23 @@ interface userData {
 }
 
 export interface AnimeListItem {
-	id: number;
-	title: string;
-	status: string;
-	progress: number;
-	genres: string[] | null;
-	rating: number;
-	favourite: boolean;
+    id?: number;
+    title: string;
+    status?: "Completed" | "Watching" | "Planned" | "Dropped" | null;
+    progress: number; // percentage
+    genres?: string[] | null;
+    rating: number; 
+    favourite: boolean;
+}
+
+interface AnimeBackendResponse {
+    id: number;
+    title: string;
+    status: "Completed" | "Watching" | "Planned" | "Dropped" | null;
+    progress: number;
+    genres: string[] | null;
+    rating: number; 
+    isFavourite: boolean; 
 }
 
 export interface AuthContextType {
@@ -162,13 +172,13 @@ export const AuthProvider = ({ children }: any) => {
 		try {
 			if (!userData.userId) return;
 			const backendurl = import.meta.env.VITE_API_BASE_URL;
-			const response = await axios.get(`${backendurl}/anime/list/${userData.userId}`);
+			const response = await axios.get<AnimeBackendResponse[]>(`${backendurl}/anime/list/${userData.userId}`);
 			console.log("Raw Anime Data: ", response.data);
-			const animeList = response.data.map((anime: any) => ({
+			const animeList: AnimeListItem[] = response.data.map((anime) => ({
 				id: anime.id || 0,
 				title: anime?.title || "Unknown Title",
-				status: anime?.progress > 99 ? "Completed" : anime?.status == null ? "Planned" : anime?.status || "Error",
-				progress: anime?.progress || 0,
+				status: anime?.status || "Planned",
+				progress: anime?.progress || anime?.status === "Completed" ? 100 : 0,
 				genres: anime?.genres || null,
 				rating: anime?.rating || 0,
 				favourite: anime?.isFavourite || false,

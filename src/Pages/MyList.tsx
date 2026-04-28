@@ -4,20 +4,32 @@ import NewAnimeform from "../components/NewAnimeform";
 import "../styles/MyList.css";
 import { useAuth } from "../utils/AuthContext";
 import type { NewAnimeFormProps } from "../components/NewAnimeform";
+import axios from "axios";
 
 function MyList() {
     const [formVisible, setFormVisible] = useState(false);
-    const { userAnimeList } = useAuth();
+    const { userAnimeList, fetchUserAnimeData } = useAuth();
     
 
     const newAnime = () => {
         setFormVisible(!formVisible);
     }
 
-    function handleAnimeDelete(anime: NewAnimeFormProps) {
+    const handleAnimeDelete = async (anime: NewAnimeFormProps) => {
         // Implement delete functionality here
         console.log(`${anime.title} Anime deleted!`);
-    }
+        try {
+            const backendurl = import.meta.env.VITE_API_BASE_URL;
+            const response = await axios.delete(`${backendurl}/anime/delete/${anime.id}`)
+            if (response.status != 200) {
+                throw new Error(`[ERROR] Failed to delete anime. ${response.status}`);
+            }
+            console.log("Anime deleted successfully: ", response?.data);
+            fetchUserAnimeData();
+        } catch (error) {
+            console.error("Error deleting anime:", error);
+        }
+    };
 
     useEffect(() => {
             //UI or some message here
@@ -69,7 +81,7 @@ function MyList() {
 
                                     <div className="card-row">
                                         <span className="label">Rating:</span>
-                                        <span className="rating">{'IconHere'.repeat(Math.round(anime.rating))} ({anime.rating}/10)</span>
+                                        <span className="rating">{'★'.repeat(Math.round(anime.rating))} ({anime.rating}/10)</span>
                                     </div>
 
                                     {anime.genres && anime.genres.length > 0 && (
