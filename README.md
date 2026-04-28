@@ -24,7 +24,7 @@ Empty
 Empty
 
 # Homepage > List
-![alt text](public/Screenshot%202026-04-25%20193248.png)
+[alt text](image.png)
 
 # Homepage > Settings
 Empty

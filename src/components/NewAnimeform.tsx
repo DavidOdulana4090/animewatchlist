@@ -17,7 +17,7 @@ export interface NewAnimeFormProps {
 function NewAnimeForm() {
     const formref = useRef<HTMLFormElement>(null)
     const [checked, setChecked] = useState(false);
-    const { userData } = useAuth();
+    const { userData, fetchUserAnimeData } = useAuth();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -32,6 +32,7 @@ function NewAnimeForm() {
             favourite: checked || false,
         };
         addNewAnime(animeToAdd, userData.userId);
+        formref.current?.reset();
     }
 
     const addNewAnime: (anime: NewAnimeFormProps, userId: string | any) => Promise<{ isSuccess: boolean; Message: string } | object> = async (animeData, userId) => {
