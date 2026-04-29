@@ -9,7 +9,7 @@ import axios from "axios";
 function MyList() {
     const [formVisible, setFormVisible] = useState(false);
     const { userAnimeList, fetchUserAnimeData } = useAuth();
-    
+    const [edittedAnimeForm, setEdittedAnimeForm] = useState<NewAnimeFormProps | null>(null)
 
     const newAnime = () => {
         setFormVisible(!formVisible);
@@ -31,6 +31,14 @@ function MyList() {
         }
     };
 
+    const handleAnimeEdit = (anime: NewAnimeFormProps) => {
+        setFormVisible(!formVisible);
+        setEdittedAnimeForm(anime)
+        return {
+            ...anime
+        }
+    }
+
     useEffect(() => {
             //UI or some message here
     }, [userAnimeList])
@@ -45,9 +53,11 @@ function MyList() {
                 <Button className={formVisible ? "button-cancel" : "button-add"} text={formVisible ? "Cancel" : "Add New Anime"} onClick={newAnime}/>
             </div>
 
-            {formVisible && (
+            {formVisible && edittedAnimeForm &&(
                 <div className="form-section">
-                    <NewAnimeform />
+                    <NewAnimeform
+                        {...edittedAnimeForm}
+                    /> {/*  */}
                 </div>
             )}
 
@@ -97,7 +107,7 @@ function MyList() {
                                 </div>
 
                                 <div className="anime-card-footer">
-                                    <button className="card-btn edit-btn">Edit</button>
+                                    <button className="card-btn edit-btn" onClick={() => console.log(handleAnimeEdit(anime))}>Edit</button>
                                     <button className="card-btn delete-btn" onClick={() => handleAnimeDelete(anime)}>Delete</button>
                                 </div>
                             </div>

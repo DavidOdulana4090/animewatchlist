@@ -14,22 +14,22 @@ export interface NewAnimeFormProps {
     favourite: boolean;
 }
 
-function NewAnimeForm() {
+function NewAnimeForm({ title, status, progress, genres, rating, favourite } : NewAnimeFormProps) {
     const formref = useRef<HTMLFormElement>(null)
     const [checked, setChecked] = useState(false);
-    const { userData, fetchUserAnimeData } = useAuth();
+    const { userData } = useAuth();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(formref.current!);
         console.log("Form Data:", Object.fromEntries(formData.entries()));
         const animeToAdd: NewAnimeFormProps = {
-            title: formData.get("title")?.toString() || "Unknown Title",
-            status: formData.get("status") as NewAnimeFormProps["status"],
-            progress: Number(formData.get("progress")) > 100 ? 100 : Number(formData.get("progress")) < 0 ? 0 : Number(formData.get("progress")),
-            genres: formData.get("genres") ? (formData.get("genres") as string).split(",").map(genre => genre.trim()) : null,
-            rating: Number(formData.get("rating")),
-            favourite: checked || false,
+            title: formData.get("title")?.toString() || title || "Unknown Title",
+            status: formData.get("status") as NewAnimeFormProps["status"] || status,
+            progress: Number(formData.get("progress")) > 100 ? 100 : Number(formData.get("progress")) < 0 ? 0 : Number(formData.get("progress")) || progress,
+            genres: formData.get("genres") ? (formData.get("genres") as string).split(",").map(genre => genre.trim()) : genres,
+            rating: Number(formData.get("rating")) || rating,
+            favourite: checked || favourite || false,
         };
         addNewAnime(animeToAdd, userData.userId);
         formref.current?.reset();
@@ -41,7 +41,7 @@ function NewAnimeForm() {
             return { isSuccess: false, Message: "User ID is undefined. Cannot add anime." };
         }
         try {
-            const backendurl = import.meta.env.VITE_API_BASE_URL;
+            const backendurl: String = import.meta.env.VITE_API_BASE_URL;
             const response = await axios.post(`${backendurl}/anime/add/${userId}`, 
                 animeData
             );
@@ -67,13 +67,13 @@ function NewAnimeForm() {
                     <label htmlFor="title" className="form-label" style={{"color": "#f5f5f5"}}>
                         Title:
                     </label>
-                    <input type="text" id="title" name="title" required placeholder='Required Field' style={{"color": "#f5f5f5", "background": "transparent"}}/>
+                    <input type="text" id="title" name="title" required placeholder='Required Field' value={title} style={{"color": "#f5f5f5", "background": "transparent"}}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="status" className="form-label" style={{"color": "#f5f5f5"}}>
                         Status:
                     </label>
-                    <select id="status" name="status" required >
+                    <select id="status" value={status} name="status" required>
                         <option value="">Select Status</option>
                         <option value="Completed">Completed</option>
                         <option value="Watching">Watching</option>
@@ -85,25 +85,25 @@ function NewAnimeForm() {
                     <label htmlFor="progress" className="form-label" style={{"color": "#f5f5f5"}}>
                         Progress (%):
                     </label>
-                    <input type="number" id="progress" name="progress" min="0" max="100" placeholder='1-100' style={{"color": "#f5f5f5", "background": "transparent"}}/>
+                    <input type="number" id="progress" value={progress} name="progress" min="0" max="100" placeholder='1-100' style={{"color": "#f5f5f5", "background": "transparent"}}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="genres" className="form-label" style={{"color": "#f5f5f5"}}>
                         Genres (comma separated):
                     </label>
-                    <input type="text" id="genres" name="genres" style={{"color": "#f5f5f5", "background": "transparent"}}/>
+                    <input type="text" id="genres" value={genres} name="genres" style={{"color": "#f5f5f5", "background": "transparent"}}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="rating" className="form-label" style={{"color": "#f5f5f5"}}>
                         Rating:
                     </label>
-                    <input type="number" id="rating" name="rating" min="1" max="10" step="0.1" placeholder='1.0-10' style={{ "color" : "white"}}/>
+                    <input type="number" id="rating" value={rating} name="rating" min="1" max="10" step="0.1" placeholder='1.0-10' style={{ "color" : "white"}}/>
                 </div>
                 <div className="form-group checkbox-group">
                     <label htmlFor="favourite" className="form-label" style={{"color": "#f5f5f5"}}>
                         Favourite:
                     </label>
-                    <input type="checkbox" id="favourite" name="favourite" checked={checked} onChange={(() => {
+                    <input type="checkbox" id="favourite" name="favourite" checked={checked || favourite} onChange={(() => {
                         setChecked(!checked);
                     })}/>
                 </div>
