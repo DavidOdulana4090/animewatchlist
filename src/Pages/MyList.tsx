@@ -4,15 +4,18 @@ import NewAnimeform from "../components/NewAnimeform";
 import "../styles/MyList.css";
 import { useAuth } from "../utils/AuthContext";
 import type { NewAnimeFormProps } from "../components/NewAnimeform";
+import type { NewAndEditedFormProps } from "../components/NewAnimeform";
 import axios from "axios";
 
 function MyList() {
     const [formVisible, setFormVisible] = useState(false);
     const { userAnimeList, fetchUserAnimeData } = useAuth();
-    const [edittedAnimeForm, setEdittedAnimeForm] = useState<NewAnimeFormProps | null>(null)
+    const [edittedAnimeForm, setEdittedAnimeForm] = useState<NewAnimeFormProps | null>(null);
+    const [isNewAnime, setIsNewAnime] = useState(false);
 
     const newAnime = () => {
         setFormVisible(!formVisible);
+        setIsNewAnime(true);
     }
 
     const handleAnimeDelete = async (anime: NewAnimeFormProps) => {
@@ -31,9 +34,10 @@ function MyList() {
         }
     };
 
-    const handleAnimeEdit = (anime: NewAnimeFormProps) => {
+    const handleAnimeEdit = (anime: NewAndEditedFormProps) => {
         setFormVisible(!formVisible);
         setEdittedAnimeForm(anime)
+        setIsNewAnime(false)
         return {
             ...anime
         }
@@ -57,6 +61,9 @@ function MyList() {
                 <div className="form-section">
                     <NewAnimeform
                         {...edittedAnimeForm}
+                        info={
+                            { newAnime: isNewAnime }
+                        }
                     /> {/*  */}
                 </div>
             )}
@@ -107,7 +114,7 @@ function MyList() {
                                 </div>
 
                                 <div className="anime-card-footer">
-                                    <button className="card-btn edit-btn" onClick={() => console.log(handleAnimeEdit(anime))}>Edit</button>
+                                    <button className="card-btn edit-btn" onClick={() => handleAnimeEdit(anime)} >Edit</button>
                                     <button className="card-btn delete-btn" onClick={() => handleAnimeDelete(anime)}>Delete</button>
                                 </div>
                             </div>

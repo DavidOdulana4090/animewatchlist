@@ -95,6 +95,14 @@
   margin-top: 10px;
 }
 
+.form-group select#status {
+    width: 100%;
+    padding: 10px;         
+    color: #007bff; 
+    font-style: italic;      
+    cursor: pointer;
+}
+
 .form-submit-btn:hover {
   background: transparent;
   color: #0B2447;

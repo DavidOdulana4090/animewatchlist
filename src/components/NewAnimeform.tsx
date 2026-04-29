@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import '../styles/NewAnimeForm.css';
 import { useAuth } from '../utils/AuthContext';
 import axios from 'axios';
@@ -7,34 +7,60 @@ import axios from 'axios';
 export interface NewAnimeFormProps {
     id?: number;
     title: string;
-    status?: "Completed" | "Watching" | "Planned" | "Dropped" | null;
+    status?: "Completed" | "Watching" | "Planned" | "Dropped" | string | null;
     progress: number; // percentage
     genres?: string[] | null;
     rating: number; 
     favourite: boolean;
 }
 
-function NewAnimeForm({ title, status, progress, genres, rating, favourite } : NewAnimeFormProps) {
+// Stuff i might need
+export interface NewAndEditedFormProps extends NewAnimeFormProps {
+    info?: {
+        newAnime: boolean,
+    }
+}
+
+function NewAnimeForm({ title, status, progress, genres, rating, favourite , info }:NewAndEditedFormProps ) {
+    
     const formref = useRef<HTMLFormElement>(null)
     const [checked, setChecked] = useState(false);
-    const { userData } = useAuth();
+    const { userData, userAnimeList } = useAuth();
+    const [text, setText] = useState("Add New Anime");
+
+    useEffect(() => {
+        if (info?.newAnime === true) {
+            setText("Add New Anime")
+        } else {
+            setText("Update Anime")
+        }
+    },[info?.newAnime])
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(formref.current!);
         console.log("Form Data:", Object.fromEntries(formData.entries()));
         const animeToAdd: NewAnimeFormProps = {
-            title: formData.get("title")?.toString() || title || "Unknown Title",
-            status: formData.get("status") as NewAnimeFormProps["status"] || status,
-            progress: Number(formData.get("progress")) > 100 ? 100 : Number(formData.get("progress")) < 0 ? 0 : Number(formData.get("progress")) || progress,
-            genres: formData.get("genres") ? (formData.get("genres") as string).split(",").map(genre => genre.trim()) : genres,
-            rating: Number(formData.get("rating")) || rating,
-            favourite: checked || favourite || false,
+            title: formData.get("title")?.toString() || "Unknown Title",
+            status: formData.get("status") as NewAnimeFormProps["status"],
+            progress: Number(formData.get("progress")) > 100 ? 100 : Number(formData.get("progress")) < 0 ? 0 : Number(formData.get("progress")),
+            genres: formData.get("genres") ? (formData.get("genres") as string).split(",").map(genre => genre.trim()) : null,
+            rating: Number(formData.get("rating")),
+            favourite: checked || false,
         };
-        addNewAnime(animeToAdd, userData.userId);
+
+        if (isAnimeExist(animeToAdd)) {
+            // PutMapping Function Here 
+            updateExistingAnime(animeToAdd, userData.userId);
+        } else {
+            // Post Function 
+            addNewAnime(animeToAdd, userData.userId);
+        }
+
         formref.current?.reset();
     }
 
+    // Add or Update 
     const addNewAnime: (anime: NewAnimeFormProps, userId: string | any) => Promise<{ isSuccess: boolean; Message: string } | object> = async (animeData, userId) => {
         if (!userId) {
             console.error("User ID is undefined. Cannot add anime.");
@@ -57,7 +83,13 @@ function NewAnimeForm({ title, status, progress, genres, rating, favourite } : N
         }
     };
 
-            
+    const isAnimeExist = (userList: NewAnimeFormProps  ) => {
+            return userAnimeList.some(anime => anime.id === userList.id)
+    }
+    
+    const updateExistingAnime = async (anime: NewAnimeFormProps, userId: string | any) => {
+        
+    };
 
     return (
         <div className="anime-form-container">
@@ -67,14 +99,13 @@ function NewAnimeForm({ title, status, progress, genres, rating, favourite } : N
                     <label htmlFor="title" className="form-label" style={{"color": "#f5f5f5"}}>
                         Title:
                     </label>
-                    <input type="text" id="title" name="title" required placeholder='Required Field' value={title} style={{"color": "#f5f5f5", "background": "transparent"}}/>
+                    <input type="text" id="title" name="title" required placeholder='Required Field' defaultValue={title} style={{"color": "#f5f5f5", "background": "transparent"}}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="status" className="form-label" style={{"color": "#f5f5f5"}}>
                         Status:
                     </label>
-                    <select id="status" value={status} name="status" required>
-                        <option value="">Select Status</option>
+                    <select id="status" defaultValue={status || "Planned"} name="status" required>
                         <option value="Completed">Completed</option>
                         <option value="Watching">Watching</option>
                         <option value="Planned">Planned</option>
@@ -85,33 +116,33 @@ function NewAnimeForm({ title, status, progress, genres, rating, favourite } : N
                     <label htmlFor="progress" className="form-label" style={{"color": "#f5f5f5"}}>
                         Progress (%):
                     </label>
-                    <input type="number" id="progress" value={progress} name="progress" min="0" max="100" placeholder='1-100' style={{"color": "#f5f5f5", "background": "transparent"}}/>
+                    <input type="number" id="progress" defaultValue={progress} name="progress" min="0" max="100" placeholder='1-100' style={{"color": "#f5f5f5", "background": "transparent"}}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="genres" className="form-label" style={{"color": "#f5f5f5"}}>
                         Genres (comma separated):
                     </label>
-                    <input type="text" id="genres" value={genres} name="genres" style={{"color": "#f5f5f5", "background": "transparent"}}/>
+                    <input type="text" id="genres" defaultValue={genres} name="genres" style={{"color": "#f5f5f5", "background": "transparent"}}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="rating" className="form-label" style={{"color": "#f5f5f5"}}>
                         Rating:
                     </label>
-                    <input type="number" id="rating" value={rating} name="rating" min="1" max="10" step="0.1" placeholder='1.0-10' style={{ "color" : "white"}}/>
+                    <input type="number" id="rating" defaultValue={rating} name="rating" min="1" max="10" step="0.1" placeholder='1.0-10' style={{ "color" : "white"}}/>
                 </div>
                 <div className="form-group checkbox-group">
                     <label htmlFor="favourite" className="form-label" style={{"color": "#f5f5f5"}}>
                         Favourite:
                     </label>
-                    <input type="checkbox" id="favourite" name="favourite" checked={checked || favourite} onChange={(() => {
+                    <input type="checkbox" id="favourite" defaultValue={favourite || false}  name="favourite" checked={checked} onChange={(() => {
                         setChecked(!checked);
                     })}/>
                 </div>
                 <br></br>
-                <button type="submit" className="form-submit-btn">Add Anime</button>
+                <button type="submit" className="form-submit-btn">{text}</button>
             </form>
         </div>
-     );
+    );
 }
 
 export default NewAnimeForm;
