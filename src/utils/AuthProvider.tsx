@@ -173,7 +173,6 @@ export const AuthProvider = ({ children }: any) => {
 			if (!userData.userId) return;
 			const backendurl = import.meta.env.VITE_API_BASE_URL;
 			const response = await axios.get<AnimeBackendResponse[]>(`${backendurl}/anime/list/${userData.userId}`);
-			console.log("Raw Anime Data: ", response.data);
 			const animeList: AnimeListItem[] = response.data.map((anime) => ({
 				id: anime.id || 0,
 				title: anime?.title || "Unknown Title",

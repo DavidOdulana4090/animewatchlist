@@ -57,10 +57,10 @@ function MyList() {
                 <Button className={formVisible ? "button-cancel" : "button-add"} text={formVisible ? "Cancel" : "Add New Anime"} onClick={newAnime}/>
             </div>
 
-            {formVisible && edittedAnimeForm &&(
+            {formVisible && (isNewAnime || edittedAnimeForm) &&(
                 <div className="form-section">
                     <NewAnimeform
-                        {...edittedAnimeForm}
+                        {...(edittedAnimeForm || { title: "", progress: 0, rating: 0, favourite: false })}
                         info={
                             { newAnime: isNewAnime }
                         }
