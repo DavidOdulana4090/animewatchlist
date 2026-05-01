@@ -43,6 +43,12 @@ function MyList() {
         }
     }
 
+    const handleFormClose = () => {
+        setFormVisible(false);
+        setEdittedAnimeForm(null);
+        setIsNewAnime(false);
+    }
+
     useEffect(() => {
             //UI or some message here
     }, [userAnimeList])
@@ -62,8 +68,12 @@ function MyList() {
                     <NewAnimeform
                         {...(edittedAnimeForm || { title: "", progress: 0, rating: 0, favourite: false })}
                         info={
-                            { newAnime: isNewAnime }
+                            {
+                                newAnime: isNewAnime,
+                                
+                             }
                         }
+                        onFormClose={handleFormClose}
                     /> {/*  */}
                 </div>
             )}

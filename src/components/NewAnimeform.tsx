@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import '../styles/NewAnimeForm.css';
 import { useAuth } from '../utils/AuthContext';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 // Structure for the anime data
 export interface NewAnimeFormProps {
@@ -18,13 +19,15 @@ export interface NewAnimeFormProps {
 export interface NewAndEditedFormProps extends NewAnimeFormProps {
     info?: {
         newAnime: boolean,
-    }
+    },
+    onFormClose?: () => void;
 }
 
-function NewAnimeForm({ id, title, status, progress, genres, rating, favourite , info }:NewAndEditedFormProps ) {
-    
+function NewAnimeForm({ id, title, status, progress, genres, rating, favourite , info, onFormClose }:NewAndEditedFormProps ) {
+    const navigate = useNavigate();
     const formref = useRef<HTMLFormElement>(null)
     const [checked, setChecked] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
     const { userData, userAnimeList } = useAuth();
     const [text, setText] = useState("Add New Anime");
     
@@ -34,12 +37,12 @@ function NewAnimeForm({ id, title, status, progress, genres, rating, favourite ,
     }, [userAnimeList])
 
     useEffect(() => {
-        if (info?.newAnime === true) {
+        if (info?.newAnime) {
             setText("Add New Anime")
         } else {
             setText("Update Anime")
         }
-    },[info?.newAnime])
+    }, [info?.newAnime])
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -64,6 +67,8 @@ function NewAnimeForm({ id, title, status, progress, genres, rating, favourite ,
         }
 
         formref.current?.reset();
+        setIsSubmitted(!isSubmitted);
+        onFormClose?.();
     }
 
     // Add Post
@@ -105,6 +110,7 @@ function NewAnimeForm({ id, title, status, progress, genres, rating, favourite ,
                 anime)
             
             if (response.status != 200) {
+                throw new Error(`[ERROR] Failed to update anime. ${response.status}`);
                 return
             }
 
@@ -115,18 +121,19 @@ function NewAnimeForm({ id, title, status, progress, genres, rating, favourite ,
         }  
     };
 
-    return (
+    return ( 
+        !isSubmitted ? (
         <div className="anime-form-container">
             <h1>Enter Details</h1>
             <form className="anime-form" ref={formref} onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label htmlFor="title" className="form-label" style={{"color": "#f5f5f5"}}>
+                    <label htmlFor="title" className="form-label" style={{ "color": "#f5f5f5" }}>
                         Title:
                     </label>
-                    <input type="text" id="title" name="title" required placeholder='Required Field' defaultValue={title} style={{"color": "#f5f5f5", "background": "transparent"}}/>
+                    <input type="text" id="title" name="title" required placeholder='Required Field' defaultValue={title} style={{ "color": "#f5f5f5", "background": "transparent" }} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="status" className="form-label" style={{"color": "#f5f5f5"}}>
+                    <label htmlFor="status" className="form-label" style={{ "color": "#f5f5f5" }}>
                         Status:
                     </label>
                     <select id="status" defaultValue={status || "Planned"} name="status" required>
@@ -137,35 +144,40 @@ function NewAnimeForm({ id, title, status, progress, genres, rating, favourite ,
                     </select>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="progress" className="form-label" style={{"color": "#f5f5f5"}}>
+                    <label htmlFor="progress" className="form-label" style={{ "color": "#f5f5f5" }}>
                         Progress (%):
                     </label>
-                    <input type="number" id="progress" defaultValue={progress} name="progress" min="0" max="100" placeholder='1-100' style={{"color": "#f5f5f5", "background": "transparent"}}/>
+                    <input type="number" id="progress" defaultValue={progress} name="progress" min="0" max="100" placeholder='1-100' style={{ "color": "#f5f5f5", "background": "transparent" }} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="genres" className="form-label" style={{"color": "#f5f5f5"}}>
+                    <label htmlFor="genres" className="form-label" style={{ "color": "#f5f5f5" }}>
                         Genres (comma separated):
                     </label>
-                    <input type="text" id="genres" defaultValue={genres} name="genres" style={{"color": "#f5f5f5", "background": "transparent"}}/>
+                    <input type="text" id="genres" defaultValue={genres} name="genres" style={{ "color": "#f5f5f5", "background": "transparent" }} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="rating" className="form-label" style={{"color": "#f5f5f5"}}>
+                    <label htmlFor="rating" className="form-label" style={{ "color": "#f5f5f5" }}>
                         Rating:
                     </label>
-                    <input type="number" id="rating" defaultValue={rating} name="rating" min="1" max="10" step="0.1" placeholder='1.0-10' style={{ "color" : "white"}}/>
+                    <input type="number" id="rating" defaultValue={rating} name="rating" min="1" max="10" step="0.1" placeholder='1.0-10' style={{ "color": "white" }} />
                 </div>
                 <div className="form-group checkbox-group">
-                    <label htmlFor="favourite" className="form-label" style={{"color": "#f5f5f5"}}>
+                    <label htmlFor="favourite" className="form-label" style={{ "color": "#f5f5f5" }}>
                         Favourite:
                     </label>
-                    <input type="checkbox" id="favourite" defaultValue={favourite || false}  name="favourite" checked={checked} onChange={(() => {
+                    <input type="checkbox" id="favourite" defaultValue={favourite || false} name="favourite" checked={checked} onChange={(() => {
                         setChecked(!checked);
-                    })}/>
+                    })} />
                 </div>
                 <br></br>
                 <button type="submit" className="form-submit-btn">{text}</button>
             </form>
         </div>
+        ) : (
+        <div>
+            
+        </div>
+        )
     );
 }
 
