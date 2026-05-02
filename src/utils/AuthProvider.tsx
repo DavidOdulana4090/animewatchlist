@@ -199,7 +199,7 @@ export const AuthProvider = ({ children }: any) => {
 		if (userData.userId) {
 			fetchUserAnimeData();
 		}
-	}, [userData.userId]);
+    }, [userData.userId]);
 
 	return (
 		<AuthContext.Provider value={{ isUserLoggedIn, userData, userAnimeList, userLogin, userLogout, fetchUserAnimeData }}>

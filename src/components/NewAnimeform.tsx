@@ -26,7 +26,7 @@ function NewAnimeForm({ id, title, status, progress, genres, rating, favourite ,
     const formref = useRef<HTMLFormElement>(null)
     const [checked, setChecked] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const { userData, userAnimeList } = useAuth();
+    const { userData, userAnimeList, fetchUserAnimeData } = useAuth();
     const [text, setText] = useState("Add New Anime");
     
 
@@ -42,7 +42,7 @@ function NewAnimeForm({ id, title, status, progress, genres, rating, favourite ,
         }
     }, [info?.newAnime])
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(formref.current!);
         console.log("Form Data:", Object.fromEntries(formData.entries()));
@@ -58,15 +58,18 @@ function NewAnimeForm({ id, title, status, progress, genres, rating, favourite ,
 
         if (isAnimeExist(animeToAdd)) {
             // PutMapping Function Here 
-            updateExistingAnime(animeToAdd, userData.userId);
+            await updateExistingAnime(animeToAdd);
         } else {
             // Post Function 
-            addNewAnime(animeToAdd, userData.userId);
+            await addNewAnime(animeToAdd, userData.userId);
         }
 
         formref.current?.reset();
         setIsSubmitted(!isSubmitted);
         onFormClose?.();
+
+        // refresh
+        await fetchUserAnimeData();
     }
 
     // Add Post
@@ -89,7 +92,7 @@ function NewAnimeForm({ id, title, status, progress, genres, rating, favourite ,
         catch (error: any) {
             console.error("[Error] adding new anime: ", error.response?.data || error.message);
             return { isSuccess: false, Message: error.response?.data || error.message };
-        }
+        } 
     };
 
     const isAnimeExist = (userList: NewAnimeFormProps): boolean => {
@@ -100,8 +103,7 @@ function NewAnimeForm({ id, title, status, progress, genres, rating, favourite ,
     }
     
     // Put
-    const updateExistingAnime = async (anime: NewAnimeFormProps, userId: string | any) => {
-
+    const updateExistingAnime = async (anime: NewAnimeFormProps ) => {
         try {
             const backendurl: string = import.meta.env.VITE_API_BASE_URL;
             const response = await axios.put(`${backendurl}/anime/update/${anime.id}`,
@@ -116,7 +118,7 @@ function NewAnimeForm({ id, title, status, progress, genres, rating, favourite ,
 
         } catch (error :any) {
             console.log("[ERROR] failed to Update ", error.response?.data || error.message )
-        }  
+        }
     };
 
     return ( 
