@@ -1,27 +1,40 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../utils/AuthContext";
-import { useNavigate } from "react-router-dom";
+import '../styles/LogoutPage.css'
 
 function LogOutPage() {
     const { userData, userLogout } = useAuth();
-    const navigate = useNavigate();
+    const [count, setCount] = useState(5);
 
     useEffect(() => {
-        const userLogout = async () => {
-            await userLogout();
-            console.log("Logout Successful ");
-            navigate('/login');
-        }
-        userLogout();
-    })
+        if (count <= 0) return;
+			const timer = setInterval(() => {
+				setCount((prevCount) => {
+                    if (prevCount > 0) {
+						return prevCount - 1;
+                    }
+                    console.log("Logging Out")
+                    // Logout function here wont put for now
+					return prevCount;
+                });
+                
+			}, 1000);
+
+			return () => clearInterval(timer);
+		}, []); 
+    
+
+    const message = count > 0 ? `Logging out of ${userData.username} in ${count} Seconds!` : "You have been logged out !!";
 
     // Will add like a confirm logout here or something 
     return (
-        <>
-            <h1> LOGOUT PAGE TEST </h1>
-            <p> Bye Bye </p> 
-            <span> ${userData?.username} </span>
-        </>
+        <div className="logout-page-container">
+            <div className="logout-page-main-content">
+                <h1 className="logout-message">
+                    {message}
+                </h1>
+            </div>
+        </div>
     );
 }
 

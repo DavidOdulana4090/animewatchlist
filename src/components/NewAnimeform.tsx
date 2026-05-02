@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import '../styles/NewAnimeForm.css';
 import { useAuth } from '../utils/AuthContext';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 // Structure for the anime data
 export interface NewAnimeFormProps {
@@ -24,7 +23,6 @@ export interface NewAndEditedFormProps extends NewAnimeFormProps {
 }
 
 function NewAnimeForm({ id, title, status, progress, genres, rating, favourite , info, onFormClose }:NewAndEditedFormProps ) {
-    const navigate = useNavigate();
     const formref = useRef<HTMLFormElement>(null)
     const [checked, setChecked] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
