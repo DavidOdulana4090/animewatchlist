@@ -63,8 +63,9 @@ function Dashboard() {
 					</div>
 				</div>
 				{/* Featured Section */}
-				<div className="featured-section">
-					<h2 className="section-title"> Watching </h2>
+                <div className="featured-section">
+                    {/* Customizable section display SOON */}
+					<h2 className="section-title"> WATCHING </h2>
 					<div className="featured-grid">
 						{userAnimeList
 							.filter((anime) => anime.status === "Watching")

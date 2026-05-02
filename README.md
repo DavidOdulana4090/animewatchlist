@@ -1,33 +1,13 @@
-# Anime / Movie tracker 
-## Using Typescript with react and tailwindcss for styling 
+# Anime progress watch tracker
+## Learning while also making this Easy to use react project that allows users to keep track of every anime or movie they 
+## watched and being able to share with other people in a clean format with your Favourite listed and ur Top 5
+## tech stack used react with typescript, javascript , tailwindcss, vite, npm package manager
 
-# LoginScreen 
-![alt text](public/image.png)
-
-# Signup 
-![alt text](public/image-1.png)
-
-# Forgotpassword
-![alt text](public/image-2.png)
-
-# Homepage > Dashboard
-![alt text](public/image-3.png)
+![Dashboard](image-1.png)
+![MyList](image-2.png)
+![New Anime Form](image-3.png)
+![Login Page](image-4.png)
+![Create Account](image-5.png)
+![ResetPassword](image-6.png)
 
 
-# Homepage > Profile
-Empty
-
-# Homepage > Inbox
-Empty
-
-# Homepage > Contact Me
-Empty
-
-# Homepage > List
-[alt text](image.png)
-
-# Homepage > Settings
-Empty
-
-# Homepage > Logout
-Empty
