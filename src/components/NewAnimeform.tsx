@@ -24,15 +24,15 @@ export interface NewAndEditedFormProps extends NewAnimeFormProps {
 
 function NewAnimeForm({ id, title, status, progress, genres, rating, favourite , info, onFormClose }:NewAndEditedFormProps ) {
     const formref = useRef<HTMLFormElement>(null)
-    const [checked, setChecked] = useState(false);
+    const [checked, setChecked] = useState(favourite || false);
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const { userData, userAnimeList, fetchUserAnimeData } = useAuth();
+    const { userData, userAnimeList, fetchUserAnimeData, SetIsLoading } = useAuth();
     const [text, setText] = useState("Add New Anime");
     
 
     useEffect(() => {
-
-    }, [userAnimeList])
+        setChecked(favourite || false);
+    }, [favourite])
 
     useEffect(() => {
         if (info?.newAnime) {
@@ -83,6 +83,7 @@ function NewAnimeForm({ id, title, status, progress, genres, rating, favourite ,
             const response = await axios.post(`${backendurl}/anime/add/${userId}`, 
                 animeData
             );
+            SetIsLoading(true);
             if (response.status != 200) {
                 throw new Error(`[ERROR] Failed to add new anime. ${response.status}`);
             }
@@ -92,7 +93,9 @@ function NewAnimeForm({ id, title, status, progress, genres, rating, favourite ,
         catch (error: any) {
             console.error("[Error] adding new anime: ", error.response?.data || error.message);
             return { isSuccess: false, Message: error.response?.data || error.message };
-        } 
+        } finally {
+            SetIsLoading(false);
+        }
     };
 
     const isAnimeExist = (userList: NewAnimeFormProps): boolean => {
@@ -108,7 +111,7 @@ function NewAnimeForm({ id, title, status, progress, genres, rating, favourite ,
             const backendurl: string = import.meta.env.VITE_API_BASE_URL;
             const response = await axios.put(`${backendurl}/anime/update/${anime.id}`,
                 anime)
-            
+            SetIsLoading(true)
             if (response.status != 200) {
                 throw new Error(`[ERROR] Failed to update anime. ${response.status}`);
                 return
@@ -118,6 +121,8 @@ function NewAnimeForm({ id, title, status, progress, genres, rating, favourite ,
 
         } catch (error :any) {
             console.log("[ERROR] failed to Update ", error.response?.data || error.message )
+        } finally {
+            SetIsLoading(false)
         }
     };
 
@@ -165,9 +170,7 @@ function NewAnimeForm({ id, title, status, progress, genres, rating, favourite ,
                     <label htmlFor="favourite" className="form-label" style={{ "color": "#f5f5f5" }}>
                         Favourite:
                     </label>
-                    <input type="checkbox" id="favourite" defaultValue={favourite || false} name="favourite" checked={checked} onChange={(() => {
-                        setChecked(!checked);
-                    })} />
+                        <input type="checkbox" id="favourite" name="favourite" checked={checked} onChange={() => setChecked(!checked)} />
                 </div>
                 <br></br>
                 <button type="submit" className="form-submit-btn">{text}</button>

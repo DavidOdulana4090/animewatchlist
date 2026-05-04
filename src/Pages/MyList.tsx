@@ -38,9 +38,7 @@ function MyList() {
         setFormVisible(!formVisible);
         setEdittedAnimeForm(anime)
         setIsNewAnime(false)
-        return {
-            ...anime
-        }
+        console.log(anime)
     }
 
     const handleFormClose = () => {

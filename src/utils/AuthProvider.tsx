@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AuthContext } from "./AuthContext";
 import axios from "axios";
 import { useEffect } from "react";
+import LoadingScreen from "../components/LoadingScreen";
 
 interface userData {
 	email?: string | null;
@@ -37,7 +38,9 @@ export interface AuthContextType {
 	userAnimeList: AnimeListItem[];
 	userLogin: (email: string, password: string) => Promise<{isSuccess: boolean; Message: string | object}>;
 	userLogout: () => Promise<any>;
-	fetchUserAnimeData: () => Promise<void>;
+    fetchUserAnimeData: () => Promise<void>;
+    SetIsLoading(isLoading: boolean): void;
+    isLoading: Boolean
 }
 
 export const AuthProvider = ({ children }: any) => {
@@ -45,15 +48,17 @@ export const AuthProvider = ({ children }: any) => {
 		return localStorage.getItem("token") ? true : false;
 	});
 	const [userData, setuserData] = useState<userData>({});
-	const [userAnimeList, setUserAnimeList] = useState<AnimeListItem[]>([]);
+    const [userAnimeList, setUserAnimeList] = useState<AnimeListItem[]>([]);
+    const [isLoading, setIsLoading] = useState<Boolean>(false)
 
 	const userLogin = async (email: string, password: string) => {
 		try {
+			setIsLoading(true);
 			const backendurl = import.meta.env.VITE_API_BASE_URL;
 			const response = await axios.post(`${backendurl}/login`, {
 				email: email,
 				password: password,
-			});
+            });
 
 			const newuserData = {
 				email: email,
@@ -77,17 +82,20 @@ export const AuthProvider = ({ children }: any) => {
 				isSuccess: false,
 				Message: error.response?.data || error.message,
 			};
-		}
+        } finally {
+            setIsLoading(false)
+        }
 	};
 
 	const checkTokenValidity = async (token: string) => {
 		try {
+			setIsLoading(true);
 			const backendurl = import.meta.env.VITE_API_BASE_URL;
 			const response = await axios.get(`${backendurl}/token/validate`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
-			});
+            });
 			console.log("[INFO]", response?.data);
 			return true;
 		} catch (error: any) {
@@ -96,7 +104,9 @@ export const AuthProvider = ({ children }: any) => {
 				error.response?.data || error.message,
 			);
 			return false;
-		}
+        } finally {
+            setIsLoading(false)
+        }
 	};
 
 	const initializeuserData = async () => {
@@ -113,12 +123,13 @@ export const AuthProvider = ({ children }: any) => {
 		}
 
 		try {
+			setIsLoading(true);
 			const backendurl = import.meta.env.VITE_API_BASE_URL;
 			const response = await axios.get(`${backendurl}/users/me`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
-			});
+            });
 			console.log("[INFO] User data fetched: ", response.data);
 			setuserData((prev) => ({
 				...prev,
@@ -130,18 +141,21 @@ export const AuthProvider = ({ children }: any) => {
 			}));
 		} catch (error: any) {
 			console.error("[ERROR] Failed to initialize user data: ", error);
-		}
+        } finally {
+            setIsLoading(false)
+        }
 	};
 
 	const userLogout = async () => {
 		try {
+			setIsLoading(true);
 			if (userData.email == null) {
 				return null;
 			}
 			const backendurl = import.meta.env.VITE_API_BASE_URL;
 			const response = await axios.post(`${backendurl}/userLogout`, {
 				email: userData.email,
-			});
+            });
 			return {
 				isSuccess: true,
 				Message: response?.data || "userLogout Success",
@@ -156,7 +170,8 @@ export const AuthProvider = ({ children }: any) => {
 				Message: error.response?.data || error.message,
 			};
 		} finally {
-			setisUserLoggedIn(false); // this just forces the state to update immediately, deleting token for userLogout process
+            setisUserLoggedIn(false); // this just forces the state to update immediately, deleting token for userLogout process
+            setIsLoading(false)
 			setuserData({
 				email: null,
 				username: null,
@@ -171,8 +186,9 @@ export const AuthProvider = ({ children }: any) => {
 	const fetchUserAnimeData = async () => {
 		try {
 			if (!userData.userId) return;
+			setIsLoading(true);
 			const backendurl = import.meta.env.VITE_API_BASE_URL;
-			const response = await axios.get<AnimeBackendResponse[]>(`${backendurl}/anime/list/${userData.userId}`);
+            const response = await axios.get<AnimeBackendResponse[]>(`${backendurl}/anime/list/${userData.userId}`);
 			const animeList: AnimeListItem[] = response.data.map((anime) => ({
 				id: anime.id || 0,
 				title: anime?.title || "Unknown Title",
@@ -186,7 +202,9 @@ export const AuthProvider = ({ children }: any) => {
 			console.log("[INFO] User Anime List:", animeList);
 		} catch (error: any) {
 			console.error("[ERROR] Error fetching user anime data: ", error.response?.data || error.message);
-		}
+        } finally {
+            setIsLoading(false)
+        }
 	};
 
 	useEffect(() => {
@@ -201,9 +219,24 @@ export const AuthProvider = ({ children }: any) => {
 		}
     }, [userData.userId]);
 
+    useEffect(() => {
+
+    }, [isLoading])
+
 	return (
-		<AuthContext.Provider value={{ isUserLoggedIn, userData, userAnimeList, userLogin, userLogout, fetchUserAnimeData }}>
-			{children}
+		<AuthContext.Provider
+			value={{
+				isUserLoggedIn,
+				userData,
+				userAnimeList,
+				userLogin,
+				userLogout,
+				fetchUserAnimeData,
+                SetIsLoading: setIsLoading,
+                isLoading
+			}}
+		>
+			{isLoading ? <LoadingScreen /> : children}
 		</AuthContext.Provider>
 	);
 };

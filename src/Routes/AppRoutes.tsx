@@ -12,6 +12,7 @@ import Settings from '../Pages/Settings'
 import Tags from '../Pages/MyList'
 import ContactMe from '../Pages/ContactMe';
 import Logout from '../Pages/Logoutpage'
+import NotFound from '../Pages/NotFound'
 
 function AppRoutes(){
     const { isUserLoggedIn } = useAuth();
@@ -55,7 +56,8 @@ function AppRoutes(){
                 path="/sign-up"
                 element={<CreateAccountPage />} />
             
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            {/* 404 Not Found */}
+            <Route path="*" element={<NotFound />} />
             
         </Routes>
     );
