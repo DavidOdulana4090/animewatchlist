@@ -109,7 +109,7 @@ export const AuthProvider = ({ children }: any) => {
         }
 	};
 
-	const initializeuserData = async () => {
+	const initializeuserData = async (): Promise<userData | undefined> => {
 		const token = localStorage.getItem("token");
 		if (!token) {
 			setisUserLoggedIn(false);
@@ -138,7 +138,8 @@ export const AuthProvider = ({ children }: any) => {
 				createdAt: response.data.createdAt,
 				userId: response.data.userId,
 				token: token,
-			}));
+            }));
+            return response.data;
 		} catch (error: any) {
 			console.error("[ERROR] Failed to initialize user data: ", error);
         } finally {
@@ -207,21 +208,21 @@ export const AuthProvider = ({ children }: any) => {
         }
 	};
 
-	useEffect(() => {
-		if (isUserLoggedIn) {
-			initializeuserData();
-		}
+    useEffect(() => {
+        // using 1 render / function to trigger fetching user profile then their anime data linked to it
+        const bootApp = async() => {
+            if (!isUserLoggedIn) {
+                return 
+            }
+            const data = await initializeuserData();
+            if (data?.userId != null) {
+                fetchUserAnimeData();
+            }
+        }
+        bootApp();
+        
 	}, [isUserLoggedIn]);
 
-	useEffect(() => {
-		if (userData.userId) {
-			fetchUserAnimeData();
-		}
-    }, [userData.userId]);
-
-    useEffect(() => {
-
-    }, [isLoading])
 
 	return (
 		<AuthContext.Provider
