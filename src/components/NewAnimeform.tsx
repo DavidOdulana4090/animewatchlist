@@ -69,7 +69,7 @@ function NewAnimeForm({ id, title, status, progress, genres, rating, favourite ,
         onFormClose?.();
 
         // refresh
-        await fetchUserAnimeData();
+        await fetchUserAnimeData(userData.userId);
     }
 
     // Add Post

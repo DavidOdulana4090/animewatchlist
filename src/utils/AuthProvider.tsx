@@ -38,7 +38,7 @@ export interface AuthContextType {
 	userAnimeList: AnimeListItem[];
 	userLogin: (email: string, password: string) => Promise<{isSuccess: boolean; Message: string | object}>;
 	userLogout: () => Promise<any>;
-    fetchUserAnimeData: () => Promise<void>;
+    fetchUserAnimeData: (UserId: userData["userId"]) => Promise<void>;
     SetIsLoading(isLoading: boolean): void;
     isLoading: Boolean
 }
@@ -184,12 +184,11 @@ export const AuthProvider = ({ children }: any) => {
 		}
 	};
 
-	const fetchUserAnimeData = async () => {
+	const fetchUserAnimeData = async (userId: userData["userId"]) => {
 		try {
-			if (!userData.userId) return;
 			setIsLoading(true);
 			const backendurl = import.meta.env.VITE_API_BASE_URL;
-            const response = await axios.get<AnimeBackendResponse[]>(`${backendurl}/anime/list/${userData.userId}`);
+            const response = await axios.get<AnimeBackendResponse[]>(`${backendurl}/anime/list/${userId}`);
 			const animeList: AnimeListItem[] = response.data.map((anime) => ({
 				id: anime.id || 0,
 				title: anime?.title || "Unknown Title",
@@ -216,11 +215,11 @@ export const AuthProvider = ({ children }: any) => {
             }
             const data = await initializeuserData();
             if (data?.userId != null) {
-                fetchUserAnimeData();
+                fetchUserAnimeData(data.userId);
             }
         }
         bootApp();
-        
+
 	}, [isUserLoggedIn]);
 
 
