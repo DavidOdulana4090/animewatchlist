@@ -1,3 +1,4 @@
+import ComingSoon from "../components/ComingSoon";
 import { useAuth } from "../utils/AuthContext";
 
 function Profile() {
@@ -6,7 +7,7 @@ function Profile() {
     
     return (
         <>
-
+            <ComingSoon/>
     </>  );
 }
 

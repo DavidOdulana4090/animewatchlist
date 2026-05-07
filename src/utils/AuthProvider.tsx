@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }: any) => {
 
 			const newuserData = {
 				email: email,
-				username: null,
+				username: response?.data.username || null,
 				createdAt: response.data?.createdAt || null,
 				userId: response.data?.userId || null,
 				token: response.data?.token || null,

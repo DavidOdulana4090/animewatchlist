@@ -1,8 +1,6 @@
 function ContactMe() {
-    return (
-        <>
-        
-    </> );
+    return (<>
+    </>);
 }
 
 export default ContactMe;

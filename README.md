@@ -108,4 +108,4 @@ This project is open source and available under the MIT License.
 
 Feel free to fork this project and submit pull requests for any improvements.
 
-backend - https://github.com/DavidOdulana4090/animewatchlist-springboot
+See this project backend: https://github.com/DavidOdulana4090/animewatchlist-springboot

@@ -9,7 +9,7 @@ import axios from "axios";
 
 function MyList() {
     const [formVisible, setFormVisible] = useState(false);
-    const { userAnimeList, fetchUserAnimeData } = useAuth();
+    const { userData, userAnimeList, fetchUserAnimeData } = useAuth();
     const [edittedAnimeForm, setEdittedAnimeForm] = useState<NewAnimeFormProps | null>(null);
     const [isNewAnime, setIsNewAnime] = useState(false);
 
@@ -28,7 +28,7 @@ function MyList() {
                 throw new Error(`[ERROR] Failed to delete anime. ${response.status}`);
             }
             console.log("Anime deleted successfully: ", response?.data);
-            fetchUserAnimeData();
+            fetchUserAnimeData(userData.userId);
         } catch (error) {
             console.error("Error deleting anime:", error);
         }
