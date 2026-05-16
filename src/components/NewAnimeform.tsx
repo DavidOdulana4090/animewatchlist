@@ -158,7 +158,7 @@ function NewAnimeForm({ id, title, status, progress, genres, rating, favourite ,
                     <label htmlFor="genres" className="form-label" style={{ "color": "#f5f5f5" }}>
                         Genres (comma separated):
                     </label>
-                    <input type="text" id="genres" defaultValue={genres} name="genres" style={{ "color": "#f5f5f5", "background": "transparent" }} />
+                    <input type="text" id="genres" defaultValue={genres ?? ""} name="genres" style={{ "color": "#f5f5f5", "background": "transparent" }} />
                 </div>
                 <div className="form-group">
                     <label htmlFor="rating" className="form-label" style={{ "color": "#f5f5f5" }}>

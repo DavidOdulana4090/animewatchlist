@@ -3,7 +3,7 @@ import { useAuth } from "../utils/AuthContext";
 import '../styles/LogoutPage.css'
 
 function LogOutPage() {
-    const { userData, userLogout } = useAuth();
+    const { userData } = useAuth();
     const [count, setCount] = useState(5);
 
     useEffect(() => {
