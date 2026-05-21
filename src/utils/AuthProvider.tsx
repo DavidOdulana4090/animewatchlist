@@ -40,16 +40,25 @@ export interface AuthContextType {
 	userLogout: () => Promise<any>;
     fetchUserAnimeData: (UserId: userData["userId"]) => Promise<void>;
     SetIsLoading(isLoading: boolean): void;
-    isLoading: Boolean
+    isLoading: Boolean;
+    theme: string;
+    handleTheme: (theme: string) => void
 }
 
 export const AuthProvider = ({ children }: any) => {
+    // Apply saved theme immediately before first paint
+    const savedTheme = localStorage.getItem("theme") ?? 'light';
+    const cssClass = savedTheme === 'dark' ? 'black' : 'white';
+    document.documentElement.classList.remove('white', 'black');
+    document.documentElement.classList.add(cssClass);
+
 	const [isUserLoggedIn, setisUserLoggedIn] = useState(() => {
 		return localStorage.getItem("token") ? true : false;
 	});
 	const [userData, setuserData] = useState<userData>({});
     const [userAnimeList, setUserAnimeList] = useState<AnimeListItem[]>([]);
-    const [isLoading, setIsLoading] = useState<Boolean>(false)
+    const [isLoading, setIsLoading] = useState<Boolean>(false);
+    const [theme, setTheme] = useState<string>(() => savedTheme);
 
 	const userLogin = async (email: string, password: string) => {
 		try {
@@ -205,7 +214,14 @@ export const AuthProvider = ({ children }: any) => {
         } finally {
             setIsLoading(false)
         }
-	};
+    };
+
+    const handleTheme = (theme: string) => {
+        if (theme == null) return;
+        setTheme(theme);
+        console.log(theme)
+        localStorage.setItem("theme", theme);
+    }
 
     useEffect(() => {
         // using 1 render / function to trigger fetching user profile then their anime data linked to it
@@ -220,7 +236,14 @@ export const AuthProvider = ({ children }: any) => {
         }
         bootApp();
 
-	}, [isUserLoggedIn]);
+    }, [isUserLoggedIn]);
+    
+    useEffect(() => {
+        const root = document.documentElement
+        root.classList.remove('white', 'black')
+        const cssClass = theme === 'dark' ? 'black' : 'white'
+        root.classList.add(cssClass)
+    }, [theme])
 
 
 	return (
@@ -233,7 +256,9 @@ export const AuthProvider = ({ children }: any) => {
 				userLogout,
 				fetchUserAnimeData,
                 SetIsLoading: setIsLoading,
-                isLoading
+                isLoading,
+                theme,
+                handleTheme,
 			}}
 		>
 			{isLoading ? <LoadingScreen /> : children}

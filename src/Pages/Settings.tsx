@@ -1,9 +1,13 @@
-import '../styles/Settings.css'
 import { useAuth } from '../utils/AuthContext';
+import '../styles/Settings.css'
 
 function Settings() {
-    const { userData } = useAuth();
+    const { userData, handleTheme } = useAuth();
     const avatarLetter = userData?.username ? userData.username.charAt(0).toUpperCase() : '?';
+
+    const onThemeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        handleTheme(e.target.value);
+    };
 
     return (
         <>
@@ -28,8 +32,24 @@ function Settings() {
                         </div>
                     </div>
                 </div>
+
+                <div className='container-settings'>
+                    <h1 className='section-heading'> PREFRENCES </h1>
+                    <div className='profile-details'>
+                        <div className='profile-field'>
+                            <span className='profile-field-label'>THEME</span>
+                            <div className='theme-toggle'>
+                                <input type="radio" name='theme' value='dark' id='theme-dark' onChange={onThemeChange} />
+                                <label htmlFor='theme-dark'>Dark</label>
+                                <input type="radio" name='theme' value='light' id='theme-light' onChange={onThemeChange} />
+                                <label htmlFor='theme-light'>Light</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-    </>  );
+        </>
+    );
 }
 
 export default Settings;

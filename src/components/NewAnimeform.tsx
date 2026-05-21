@@ -132,13 +132,13 @@ function NewAnimeForm({ id, title, status, progress, genres, rating, favourite ,
             <h1>Enter Details</h1>
             <form className="anime-form" ref={formref} onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label htmlFor="title" className="form-label" style={{ "color": "#f5f5f5" }}>
+                    <label htmlFor="title">
                         Title:
                     </label>
-                    <input type="text" id="title" name="title" required placeholder='Required Field' defaultValue={title} style={{ "color": "#f5f5f5", "background": "transparent" }} />
+                    <input type="text" id="title" name="title" required placeholder='Required Field' defaultValue={title} />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="status" className="form-label" style={{ "color": "#f5f5f5" }}>
+                    <label htmlFor="status">
                         Status:
                     </label>
                     <select id="status" defaultValue={status || "Planned"} name="status" required>
@@ -149,25 +149,25 @@ function NewAnimeForm({ id, title, status, progress, genres, rating, favourite ,
                     </select>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="progress" className="form-label" style={{ "color": "#f5f5f5" }}>
+                    <label htmlFor="progress">
                         Progress (%):
                     </label>
-                    <input type="number" id="progress" defaultValue={progress} name="progress" min="0" max="100" placeholder='1-100' style={{ "color": "#f5f5f5", "background": "transparent" }} />
+                    <input type="number" id="progress" defaultValue={progress} name="progress" min="0" max="100" placeholder='1-100' />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="genres" className="form-label" style={{ "color": "#f5f5f5" }}>
+                    <label htmlFor="genres">
                         Genres (comma separated):
                     </label>
-                    <input type="text" id="genres" defaultValue={genres ?? ""} name="genres" style={{ "color": "#f5f5f5", "background": "transparent" }} />
+                    <input type="text" id="genres" defaultValue={genres ?? ""} name="genres" />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="rating" className="form-label" style={{ "color": "#f5f5f5" }}>
+                    <label htmlFor="rating">
                         Rating:
                     </label>
-                    <input type="number" id="rating" defaultValue={rating} name="rating" min="1" max="10" step="0.1" placeholder='1.0-10' style={{ "color": "white" }} />
+                    <input type="number" id="rating" defaultValue={rating} name="rating" min="1" max="10" step="0.1" placeholder='1.0-10' />
                 </div>
                 <div className="form-group checkbox-group">
-                    <label htmlFor="favourite" className="form-label" style={{ "color": "#f5f5f5" }}>
+                    <label htmlFor="favourite">
                         Favourite:
                     </label>
                         <input type="checkbox" id="favourite" name="favourite" checked={checked} onChange={() => setChecked(!checked)} />

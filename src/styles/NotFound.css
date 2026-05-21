@@ -4,8 +4,8 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--card-bg);
+  color: var(--text);
   text-align: center;
   width: 100%;
 }
@@ -15,6 +15,7 @@
   font-weight: 700;
   margin: 0;
   opacity: 0.8;
+  color: var(--accent);
 }
 
 .not-found-title {
@@ -31,8 +32,8 @@
 .not-found-button {
   padding: 12px 30px;
   font-size: 16px;
-  background: white;
-  color: #667eea;
+  background: var(--accent);
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -42,5 +43,5 @@
 
 .not-found-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 15px var(--accent-glow);
 }

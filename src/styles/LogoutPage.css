@@ -5,22 +5,20 @@
     height: 100%;
     width: 100%;
     border: none;
-    background: linear-gradient(135deg, #0f0f1e 0%, #1a1a3e 100%);
-    
+    background: var(--bg);
     background-size: cover;
     overflow: hidden;
-    color: rgb(255, 255, 255);
+    color: var(--text);
 }
 
 .logout-page-main-content {
     display: flex;
-    border: solid 1px white;
+    border: solid 1px var(--card-border);
     justify-content: center;
     align-items: center;
     text-align: center;
     width: 80%;
     height: 80%;
-    
 }
 
 .logout-message {

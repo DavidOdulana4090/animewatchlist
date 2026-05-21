@@ -11,7 +11,8 @@
 .content-area {
     flex-grow: 1; 
     padding: 20px;
-    background-color: #0f1419;
+    background-color: var(--bg);
+    transition: background-color 0.25s ease;
 }
 
 aside {
@@ -20,19 +21,19 @@ aside {
     justify-content: flex-start;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(180deg, #0f1419 0%, #1a1f2e 50%, #162a3d 100%);
+    background: var(--card-bg);
+    border-right: 1px solid var(--card-border);
     padding: 20px 0;
     overflow-x: hidden; 
     overflow-y: auto;
     box-sizing: border-box;
     transition: all 0.3s ease;
-    border-right: 1px solid #2a3f54;
     gap: 8px;
 }
 
 .aside-styling .text {
     font-size: 1rem;
-    color: #b0bcc4;
+    color: var(--text-secondary);
     padding-left: 12px;
     font-weight: 500;
     letter-spacing: 0.3px;
@@ -50,26 +51,26 @@ aside button {
     background: transparent;
     border: none;
     transition: all 0.3s ease;
-    color: #8b95a5;
+    color: var(--label-color);
 }
 
 aside button:hover {
-    background: rgba(6, 182, 212, 0.1);
-    color: #06b6d4;
+    background: var(--hover-overlay);
+    color: var(--accent);
 }
 
 aside button:hover .text {
-    color: #06b6d4;
+    color: var(--accent);
 }
 
 aside button.active {
-    background: rgba(6, 182, 212, 0.15);
-    border-left: 3px solid #06b6d4;
+    background: var(--active-overlay);
+    border-left: 3px solid var(--accent);
     padding-left: 9px;
 }
 
 aside button.active .text {
-    color: #06b6d4;
+    color: var(--accent);
 }
 
 aside button svg {     
@@ -86,19 +87,20 @@ aside button svg {
 }
 
 .Logout-button:hover {
-    background: rgba(244, 63, 94, 0.1);
-    color: #f43f5e;
+    background: var(--pink-bg);
+    color: var(--pink);
 }
 
 .Logout-button:hover .text {
-    color: #f43f5e;
+    color: var(--pink);
 }
 
 .app-container {
     display: flex;      
     min-height: 100vh;   
     width: 100%;
-    background: #0f1419;
+    background: var(--bg);
+    transition: background-color 0.25s ease;
 }
 
 .aside-styling {
@@ -112,10 +114,11 @@ aside button svg {
 
 .main-content {
     flex-grow: 1;        
-    background: #0f1419;
+    background: var(--bg);
     overflow-y: auto;
     overflow-x: hidden;
     min-width: 0;
+    transition: background-color 0.25s ease;
 }
 
 .main-content::-webkit-scrollbar {
@@ -123,11 +126,11 @@ aside button svg {
 }
 
 .main-content::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--scrollbar-track);
 }
 
 .main-content::-webkit-scrollbar-thumb {
-    background: rgba(6, 182, 212, 0.3);
+    background: var(--scrollbar-thumb);
     border-radius: 4px;
 }
 
@@ -200,7 +203,7 @@ aside::-webkit-scrollbar-thumb:hover {
 
     aside button.active {
         border-left: none;
-        border-bottom: 3px solid #06b6d4;
+        border-bottom: 3px solid var(--accent);
         padding: 0;
     }
 }

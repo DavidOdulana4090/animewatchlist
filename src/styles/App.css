@@ -1,0 +1,68 @@
+:root,
+.white {
+  --bg: #f5f7fa;
+  --text: #1a1a2e;
+  --card-bg: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+  --card-border: #d0d8e8;
+  --card-shadow: rgba(0, 0, 0, 0.08);
+  --input-bg: rgba(0, 0, 0, 0.02);
+  --input-border: rgba(0, 0, 0, 0.08);
+  --label-color: #4b5563;
+  --accent-glow: rgba(6, 182, 212, 0.15);
+  --hero-bg: linear-gradient(135deg, #e8f4f8 0%, #dceeff 100%);
+  --hero-border: #b8d4e8;
+  --text-secondary: #4b5563;
+  --accent: #06b6d4;
+  --accent-hover: #0891b2;
+  --green: #10b981;
+  --green-bg: rgba(16, 185, 129, 0.1);
+  --purple: #6366f1;
+  --purple-bg: rgba(99, 102, 241, 0.1);
+  --violet: #8b5cf6;
+  --violet-bg: rgba(139, 92, 246, 0.1);
+  --pink: #f43f5e;
+  --pink-bg: rgba(244, 63, 94, 0.1);
+  --amber: #f59e0b;
+  --overlay: rgba(0, 0, 0, 0.04);
+  --hover-overlay: rgba(6, 182, 212, 0.06);
+  --active-overlay: rgba(6, 182, 212, 0.1);
+  --scrollbar-track: rgba(0, 0, 0, 0.04);
+  --scrollbar-thumb: rgba(6, 182, 212, 0.2);
+}
+
+.black {
+  --bg: #0f0f1e;
+  --text: #e2e8f0;
+  --card-bg: linear-gradient(135deg, #1a1f2e 0%, #162a3d 100%);
+  --card-border: #2a3f54;
+  --card-shadow: rgba(0, 0, 0, 0.4);
+  --input-bg: rgba(255, 255, 255, 0.03);
+  --input-border: rgba(255, 255, 255, 0.06);
+  --label-color: #8b95a5;
+  --accent-glow: rgba(6, 182, 212, 0.08);
+  --hero-bg: linear-gradient(135deg, #1a1f2e 0%, #162a3d 100%);
+  --hero-border: #2a3f54;
+  --text-secondary: #b0bcc4;
+  --accent: #06b6d4;
+  --accent-hover: #0891b2;
+  --green: #10b981;
+  --green-bg: rgba(16, 185, 129, 0.15);
+  --purple: #6366f1;
+  --purple-bg: rgba(99, 102, 241, 0.15);
+  --violet: #8b5cf6;
+  --violet-bg: rgba(139, 92, 246, 0.15);
+  --pink: #f43f5e;
+  --pink-bg: rgba(244, 63, 94, 0.15);
+  --amber: #f59e0b;
+  --overlay: rgba(255, 255, 255, 0.03);
+  --hover-overlay: rgba(6, 182, 212, 0.08);
+  --active-overlay: rgba(6, 182, 212, 0.12);
+  --scrollbar-track: rgba(255, 255, 255, 0.05);
+  --scrollbar-thumb: rgba(6, 182, 212, 0.3);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  transition: all 0.25s ease;
+}

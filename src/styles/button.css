@@ -1,9 +1,14 @@
-button {
-    box-sizing: border-box;
-}
-
 .comp-button {
-    background-color: #3b82f6;
+    background-color: var(--accent);
     color: white;
     border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.comp-button:hover {
+    background-color: var(--accent-hover);
 }

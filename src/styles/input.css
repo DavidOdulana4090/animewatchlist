@@ -1,17 +1,17 @@
 .input-field {
   padding: 10px;
   height: 40px;
-  border: 2px solid #0B2447;
-  border-top: none;
-  border-bottom: none;
+  border: 1px solid var(--card-border);
+  border-radius: 6px;
   font-size: 16px;
-  background: transparent;
+  background: var(--input-bg);
+  color: var(--text);
   outline: none;
-  box-shadow: 7px 7px 0px 0px #0B2447;
-  transition: all 0.5s;
+  transition: all 0.3s;
 }
 
 .input-field:focus {
-  box-shadow: none;
-  transition: all 0.5s;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-glow);
+  transition: all 0.3s;
 }

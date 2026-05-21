@@ -1,14 +1,9 @@
-* {
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale
-}
 .div-container-container {
     display: flex;
     height: 100%;
     width: 100%;
     border: none;
-    background: linear-gradient(135deg, #0f0f1e 0%, #1a1a3e 100%);
+    background: var(--bg);
     overflow: hidden;
 }
 
@@ -19,7 +14,7 @@
     height: 100%;
     padding: 40px;
     border: none;
-    background: linear-gradient(135deg, #0f0f1e 0%, #1a1a3e 100%);
+    background: var(--bg);
     gap: 40px;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -35,9 +30,9 @@
     overflow: hidden;
     padding: 40px;
     border-radius: 12px;
-    background: linear-gradient(135deg, #1a1f2e 0%, #162a3d 100%);
-    border: 1px solid #2a3f54;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    background: var(--hero-bg);
+    border: 1px solid var(--hero-border);
+    box-shadow: 0 4px 15px var(--card-shadow);
     overflow-y: visible;
 }
 
@@ -49,14 +44,14 @@
 .dashboard-heading {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--text);
     margin: 0;
     letter-spacing: 0.5px;
 }
 
 .hero-subtitle {
     font-size: 1.1rem;
-    color: #b0bcc4;
+    color: var(--text-secondary);
     margin: 15px 0 0 0;
     line-height: 1.6;
 }
@@ -70,8 +65,8 @@
 .stat-card {
     padding: 25px;
     border-radius: 10px;
-    border: 1px solid #2a3f54;
-    background: linear-gradient(135deg, #1a1f2e 0%, #162a3d 100%);
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
     text-align: center;
     transition: all 0.3s ease;
     cursor: pointer;
@@ -86,15 +81,15 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--overlay);
     transition: left 0.3s ease;
     z-index: 0;
 }
 
 .stat-card:hover {
     transform: translateY(-4px);
-    border-color: #3d5a7a;
-    box-shadow: 0 8px 20px rgba(61, 90, 122, 0.15);
+    border-color: var(--hero-border);
+    box-shadow: 0 8px 20px var(--card-shadow);
 }
 
 .stat-card:hover::before {
@@ -102,43 +97,43 @@
 }
 
 .stat-card.completed {
-    border-color: #10b981;
+    border-color: var(--green);
 }
 
 .stat-card.completed::before {
-    background: rgba(16, 185, 129, 0.05);
+    background: var(--green-bg);
 }
 
 .stat-card.watching {
-    border-color: #06b6d4;
+    border-color: var(--accent);
 }
 
 .stat-card.watching::before {
-    background: rgba(6, 182, 212, 0.05);
+    background: var(--hover-overlay);
 }
 
 .stat-card.planned {
-    border-color: #6366f1;
+    border-color: var(--purple);
 }
 
 .stat-card.planned::before {
-    background: rgba(99, 102, 241, 0.05);
+    background: var(--purple-bg);
 }
 
 .stat-card.dropped {
-    border-color: #8b5cf6;
+    border-color: var(--violet);
 }
 
 .stat-card.dropped::before {
-    background: rgba(139, 92, 246, 0.05);
+    background: var(--violet-bg);
 }
 
 .stat-card.favorite {
-    border-color: #f43f5e;
+    border-color: var(--pink);
 }
 
 .stat-card.favorite::before {
-    background: rgba(244, 63, 94, 0.05);
+    background: var(--pink-bg);
 }
 
 .stat-icon {
@@ -148,7 +143,7 @@
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--overlay);
   margin: 0 auto 12px auto;
   position: relative;
   z-index: 1;
@@ -162,7 +157,7 @@
 .stat-value {
     font-size: 2rem;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--text);
     margin: 10px 0;
     position: relative;
     z-index: 1;
@@ -170,7 +165,7 @@
 
 .stat-label {
     font-size: 0.85rem;
-    color: #8b95a5;
+    color: var(--label-color);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-weight: 600;
@@ -181,7 +176,7 @@
 .section-title {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--text);
     margin: 0 0 25px 0;
     letter-spacing: 0.3px;
     position: relative;
@@ -195,10 +190,9 @@
     left: 0;
     width: 100%;
     height: 3px;
-    background: #06b6d4;
+    background: var(--accent);
     border-radius: 2px;
 }
-
 
 .featured-section {
     margin-top: 10px;
@@ -213,12 +207,12 @@
 .featured-card {
     padding: 25px;
     border-radius: 10px;
-    background: linear-gradient(135deg, #1a1f2e 0%, #162a3d 100%);
-    border: 1px solid #2a3f54;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px var(--card-shadow);
 }
 
 .featured-card::before {
@@ -228,7 +222,7 @@
     right: -50%;
     width: 200px;
     height: 200px;
-    background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
     border-radius: 50%;
     transition: all 0.3s ease;
     z-index: 0;
@@ -236,8 +230,8 @@
 
 .featured-card:hover {
     transform: translateY(-6px);
-    border-color: #06b6d4;
-    box-shadow: 0 12px 28px rgba(6, 182, 212, 0.15);
+    border-color: var(--accent);
+    box-shadow: 0 12px 28px var(--accent-glow);
 }
 
 .featured-card:hover::before {
@@ -257,14 +251,14 @@
 
 .featured-header h3 {
     font-size: 1.3rem;
-    color: #ffffff;
+    color: var(--text);
     margin: 0;
     font-weight: 600;
     flex: 1;
 }
 
 .rating-badge {
-    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
     color: white;
     padding: 6px 12px;
     border-radius: 6px;
@@ -282,12 +276,12 @@
 
 .genre-tag {
     display: inline-block;
-    background: rgba(6, 182, 212, 0.1);
-    color: #06b6d4;
+    background: var(--hover-overlay);
+    color: var(--accent);
     padding: 5px 10px;
     border-radius: 6px;
     font-size: 0.8rem;
-    border: 1px solid #06b6d4;
+    border: 1px solid var(--accent);
     font-weight: 500;
     margin: auto 8px 8px 0;
 }
@@ -300,7 +294,7 @@
 .progress-bar {
     width: 100%;
     height: 6px;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--overlay);
     border-radius: 3px;
     overflow: hidden;
     margin-bottom: 8px;
@@ -309,7 +303,7 @@
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #06b6d4 0%, #0891b2 100%);
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent-hover) 100%);
     border-radius: 3px;
     transition: width 0.5s ease;
     box-shadow: none;
@@ -317,11 +311,10 @@
 
 .progress-text {
     font-size: 0.8rem;
-    color: #8b95a5;
+    color: var(--label-color);
     display: block;
     text-align: right;
 }
-
 
 .all-anime-section {
     margin-top: 20px;
@@ -336,28 +329,28 @@
 .anime-item {
     padding: 20px;
     border-radius: 10px;
-    background: linear-gradient(135deg, #1a1f2e 0%, #162a3d 100%);
-    border-left: 3px solid #06b6d4;
+    background: var(--card-bg);
+    border-left: 3px solid var(--accent);
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 8px var(--card-shadow);
 }
 
 .anime-item:hover {
     transform: translateX(6px);
-    box-shadow: 0 6px 16px rgba(6, 182, 212, 0.15);
-    border-left-color: #06b6d4;
+    box-shadow: 0 6px 16px var(--accent-glow);
+    border-left-color: var(--accent);
 }
 
 .anime-item.completed {
-    border-left-color: #10b981;
+    border-left-color: var(--green);
 }
 
 .anime-item.watching {
-    border-left-color: #06b6d4;
+    border-left-color: var(--accent);
 }
 
 .anime-item.planned {
-    border-left-color: #6366f1;
+    border-left-color: var(--purple);
 }
 
 .anime-item-header {
@@ -370,7 +363,7 @@
 
 .anime-title {
     font-size: 1.1rem;
-    color: #ffffff;
+    color: var(--text);
     margin: 0;
     font-weight: 600;
     flex: 1;
@@ -392,21 +385,21 @@
 }
 
 .status-badge.completed {
-    background: rgba(16, 185, 129, 0.15);
-    color: #10b981;
-    border-color: #10b981;
+    background: var(--green-bg);
+    color: var(--green);
+    border-color: var(--green);
 }
 
 .status-badge.watching {
-    background: rgba(6, 182, 212, 0.15);
-    color: #06b6d4;
-    border-color: #06b6d4;
+    background: var(--hover-overlay);
+    color: var(--accent);
+    border-color: var(--accent);
 }
 
 .status-badge.planned {
-    background: rgba(99, 102, 241, 0.15);
-    color: #6366f1;
-    border-color: #6366f1;
+    background: var(--purple-bg);
+    color: var(--purple);
+    border-color: var(--purple);
 }
 
 .anime-details {
@@ -423,17 +416,17 @@
 }
 
 .genre-label {
-    color: #8b95a5;
+    color: var(--label-color);
     font-size: 0.9rem;
     font-weight: 500;
     padding: 3px 8px;
-    background: rgba(6, 182, 212, 0.1);
+    background: var(--hover-overlay);
     border-radius: 4px;
-    border: 1px solid rgba(6, 182, 212, 0.2);
+    border: 1px solid var(--accent-glow);
 }
 
 .rating-label {
-    color: #f59e0b;
+    color: var(--amber);
     font-size: 0.9rem;
     font-weight: 700;
 }
@@ -451,7 +444,7 @@
 .mini-progress-bar {
     flex: 1;
     height: 5px;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--overlay);
     border-radius: 2.5px;
     overflow: hidden;
     border: none;
@@ -459,19 +452,18 @@
 
 .mini-progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #06b6d4 0%, #0891b2 100%);
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent-hover) 100%);
     border-radius: 2.5px;
     transition: width 0.5s ease;
 }
 
 .progress-percent {
     font-size: 0.8rem;
-    color: #8b95a5;
+    color: var(--label-color);
     font-weight: 600;
     min-width: 35px;
     text-align: right;
 }
-
 
 @keyframes float {
     0%, 100% {
@@ -481,7 +473,6 @@
         transform: translate(20px, -20px);
     }
 }
-
 
 @media (max-width: 768px) {
     .dashboard-container {
