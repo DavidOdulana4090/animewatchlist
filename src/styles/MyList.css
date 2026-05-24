@@ -130,14 +130,12 @@
     justify-content: space-between;
     align-items: flex-start;
     gap: 1rem;
-    border: solid;
 }
 
 .anime-card-header img {
     width: 70%;
     height: 15em;
     align-items:start;
-    border: solid;
 }
 
 .anime-title {

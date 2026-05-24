@@ -66,7 +66,7 @@ A clean and professional anime tracking application built with React and TypeScr
 ![Dashboard](public/image-1.png)
 
 ### My List
-![MyList](public/image-2.png)
+![MyList](public/imagelist.png)
 
 ### Add New Anime
 ![New Anime Form](public/image-3.png)
