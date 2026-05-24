@@ -16,6 +16,7 @@ export interface AnimeListItem {
     id?: number;
     title: string;
     status?: "Completed" | "Watching" | "Planned" | "Dropped" | null;
+    imageUrl? : string,
     progress: number; // percentage
     genres?: string[] | null;
     rating: number; 
@@ -215,6 +216,41 @@ export const AuthProvider = ({ children }: any) => {
             setIsLoading(false)
         }
     };
+
+    const Api = 'https://api.jikan.moe/v4';
+    const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+    const fetchAnime = async (title: string) => {
+    try {
+        const response = await axios.get(`${Api}/anime?q=${title}`);
+        const data = response.data.data;
+        const random = data[Math.floor(Math.random() * data.length)];
+        return {
+            image: random.images.jpg.image_url
+        };
+    } catch (error: any) {
+        console.log(`Error: ${error.message}`);
+    }
+};
+
+    useEffect(() => {
+        const getImages = async () => {
+            const updatedList: AnimeListItem[] = [];
+            
+            for (const anime of userAnimeList) {
+                const result = await fetchAnime(anime.title);
+                updatedList.push({ ...anime, imageUrl: result?.image });
+                await delay(400); 
+                console.log(result?.image)
+            }
+            
+            setUserAnimeList(updatedList);
+        };
+
+        if (userAnimeList.length > 0) {
+            getImages();
+        }
+}, [userAnimeList.length]); 
 
     const handleTheme = (theme: string) => {
         if (theme == null) return;

@@ -18,6 +18,7 @@ function MyList() {
         setIsNewAnime(true);
     }
 
+
     const handleAnimeDelete = async (anime: NewAnimeFormProps) => {
         // Implement delete functionality here
         console.log(`${anime.title} Anime deleted!`);
@@ -86,14 +87,19 @@ function MyList() {
                         {userAnimeList.map((anime, index) => (
                             <div key={index} className="anime-card">
                                 <div className="anime-card-header">
+                                    <img src={anime.imageUrl} alt={anime.title} />
                                     <h3 className="anime-title">{anime.title}</h3>
-                                    {anime.favourite && <span className="favourite-badge">Favourite</span>}
                                 </div>
                                 
                                 <div className="anime-card-body">
                                     <div className="card-row">
                                         <span className="label">Status:</span>
                                         <span className={`status ${anime.status?.toLowerCase()}`}>{anime.status}</span>
+                                    </div>
+
+                                    <div className="card-row">
+                                        <span className="label"> Favourite? </span>
+                                        {anime.favourite && <span className="favourite-badge">Favourite</span>}
                                     </div>
                                     
                                     <div className="card-row">

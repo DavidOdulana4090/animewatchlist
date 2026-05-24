@@ -123,16 +123,25 @@
 
 .anime-card-header {
     padding: 1.5rem;
+    flex-direction: column;
     background: var(--overlay);
     border-bottom: 1px solid var(--card-border);
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 1rem;
+    border: solid;
+}
+
+.anime-card-header img {
+    width: 70%;
+    height: 15em;
+    align-items:start;
+    border: solid;
 }
 
 .anime-title {
-    margin: 0;
+    margin: 0;;
     font-size: 1.3rem;
     font-weight: 600;
     color: var(--text);
@@ -141,7 +150,8 @@
 }
 
 .favourite-badge {
-    background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+    background: linear-gradient(135deg, #7ec784, #78ee5a);
+    align-items: end;
     color: white;
     padding: 0.4rem 0.8rem;
     border-radius: 20px;

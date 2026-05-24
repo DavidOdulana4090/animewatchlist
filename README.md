@@ -11,6 +11,7 @@ A clean and professional anime tracking application built with React and TypeScr
 - User login and account creation with password recovery
 - Beautiful UI that works on desktop, tablet, and mobile
 - Clean, modern interface with intuitive navigation
+- Using JulkanApi to add images for each of your saved anime
 
 ## Tech Stack
 
