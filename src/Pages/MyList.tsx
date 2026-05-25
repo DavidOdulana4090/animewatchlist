@@ -95,11 +95,7 @@ function MyList() {
                                     <div className="card-row">
                                         <span className="label">Status:</span>
                                         <span className={`status ${anime.status?.toLowerCase()}`}>{anime.status}</span>
-                                    </div>
-
-                                    <div className="card-row">
-                                        <span className="label"> Favourite? </span>
-                                        {anime.favourite && <span className="favourite-badge">Favourite</span>}
+                                         {anime.favourite && <span className="favourite-badge"> Favourite </span> }
                                     </div>
                                     
                                     <div className="card-row">
