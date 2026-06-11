@@ -6,7 +6,7 @@ import { useAuth } from "./AuthContext";
 
 export const AuthCallback = () => {
     const navigate = useNavigate();
-    const { isUserLoggedIn,userData, setuserData } = useAuth();
+    const { isUserLoggedIn,userData, setuserData, setisUserLoggedIn } = useAuth();
 
     useEffect(() => {
         const handleOAuthCallback = async () => {
@@ -30,6 +30,7 @@ export const AuthCallback = () => {
                             localStorage.setItem("token", response.data.token);                        
                             console.log("OAuth login successful:", response.data);
                             navigate("/dashboard", { replace: true });
+                            setisUserLoggedIn(true);
                             setuserData(response?.data)
                         } catch (error: any) {
                             console.error("Backend OAuth exchange failed:", error.response?.data || error.message);

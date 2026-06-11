@@ -49,6 +49,7 @@ export interface AuthContextType {
     setDashboardStatus: (dashboardStatus: string) => void;
     signInWithGoogle: (e: React.MouseEvent<HTMLButtonElement>) => void;
     setuserData: (userData: userData) => void;
+    setisUserLoggedIn: (isLoggedIn: boolean) => void;
 }
 
 export const AuthProvider = ({ children }: any) => {
@@ -168,6 +169,10 @@ export const AuthProvider = ({ children }: any) => {
 	const userLogout = async () => {
 		try {
 			setIsLoading(true);
+			
+			// Sign out from Supabase OAuth session
+			await supabase.auth.signOut();
+			
 			if (userData.email == null) {
 				return null;
 			}
@@ -199,7 +204,6 @@ export const AuthProvider = ({ children }: any) => {
 				token: null,
 			});
             localStorage.removeItem("token");
-            localStorage.removeItem("oa")
 		}
 	};
 
@@ -342,7 +346,8 @@ export const AuthProvider = ({ children }: any) => {
                 dashboardStatus,
                 setDashboardStatus,
                 signInWithGoogle,
-                setuserData
+                setuserData,
+                setisUserLoggedIn
 			}}
 		>
 			{isLoading ? <LoadingScreen /> : children}
