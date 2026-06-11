@@ -98,7 +98,7 @@
 .anime-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
+    gap: 1rem;
     width: 100%;
 }
 
@@ -110,8 +110,8 @@
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
-    height: 100%;
     box-shadow: 0 4px 15px var(--card-shadow);
+    min-height: fit-content;
 }
 
 .anime-card:hover {
@@ -134,7 +134,7 @@
 
 .anime-card-header img {
     width: max-content;
-    height: fit-content;
+    height: auto;
     align-self: center;
     object-fit: cover;
 }

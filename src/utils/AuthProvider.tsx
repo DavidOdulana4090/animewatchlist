@@ -44,6 +44,8 @@ export interface AuthContextType {
     isLoading: Boolean;
     theme: string;
     handleTheme: (theme: string) => void
+    dashboardStatus: string;
+    setDashboardStatus: (dashboardStatus: string) => void
 }
 
 export const AuthProvider = ({ children }: any) => {
@@ -60,6 +62,7 @@ export const AuthProvider = ({ children }: any) => {
     const [userAnimeList, setUserAnimeList] = useState<AnimeListItem[]>([]);
     const [isLoading, setIsLoading] = useState<Boolean>(false);
     const [theme, setTheme] = useState<string>(() => savedTheme);
+    const [dashboardStatus, setDashboardStatus] = useState("Watching");
 
 	const userLogin = async (email: string, password: string) => {
 		try {
@@ -295,6 +298,8 @@ export const AuthProvider = ({ children }: any) => {
                 isLoading,
                 theme,
                 handleTheme,
+                dashboardStatus,
+                setDashboardStatus
 			}}
 		>
 			{isLoading ? <LoadingScreen /> : children}

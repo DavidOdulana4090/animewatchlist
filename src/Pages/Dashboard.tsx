@@ -8,7 +8,7 @@ import { FcTodoList } from "react-icons/fc";
 import { Heart } from "lucide-react";
 
 function Dashboard() {
-    const { userData, userAnimeList } = useAuth();
+    const { userData, userAnimeList, dashboardStatus } = useAuth();
 
 	return (
 		<div className="div-container-container">
@@ -64,11 +64,11 @@ function Dashboard() {
 				</div>
 				{/* Featured Section */}
                 <div className="featured-section">
-                    {/* Customizable section display SOON */}
-					<h2 className="section-title"> WATCHING </h2>
+                    {/* Customizable section display */}
+					<h2 className="section-title"> {dashboardStatus} </h2>
 					<div className="featured-grid">
 						{userAnimeList
-							.filter((anime) => anime.status === "Watching")
+							.filter((anime) => anime.status === dashboardStatus)
 							.map((anime) => (
 								<div key={anime.id} className="featured-card">
 									<div className="featured-header">

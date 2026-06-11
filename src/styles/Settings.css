@@ -53,11 +53,11 @@
     align-self: flex-start;
     font-weight: 700;
     color: var(--text);
-    margin: 0 0 30px 0;
+    margin: 0 0 0px 0;
     letter-spacing: 0.5px;
     position: relative;
     z-index: 1;
-    padding-bottom: 12px;
+    padding-bottom: 0px;
 }
 
 .profile-avatar-section {
@@ -207,4 +207,21 @@
     .profile-field {
         padding: 12px 16px;
     }
+}
+
+.status-toggle {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    column-gap: 2em;
+    gap: 1em;
+    justify-items: start; 
+}
+
+.optional-field-description {
+    display: flex;
+    justify-content: start;
+    align-self: flex-start;
+    padding-bottom: 15px;
+    color: gray;
+    font-size: small;
 }
