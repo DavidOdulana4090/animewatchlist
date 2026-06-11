@@ -62,7 +62,9 @@ export const AuthProvider = ({ children }: any) => {
     const [userAnimeList, setUserAnimeList] = useState<AnimeListItem[]>([]);
     const [isLoading, setIsLoading] = useState<Boolean>(false);
     const [theme, setTheme] = useState<string>(() => savedTheme);
-    const [dashboardStatus, setDashboardStatus] = useState("Watching");
+    const [dashboardStatus, setDashboardStatus] = useState(() => {
+        return localStorage.getItem("status") || "Watching"
+    });
 
 	const userLogin = async (email: string, password: string) => {
 		try {

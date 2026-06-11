@@ -10,8 +10,10 @@ function Settings() {
         handleTheme(e.target.value);
     };
 
+    // set new status in auth to rerender and save in local storage
     const handleStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setDashboardStatus(e.target.value)
+        localStorage.setItem("status", e.target.value);
     }
 
     return (
