@@ -3,7 +3,7 @@ import { useAuth } from "../utils/AuthContext";
 import '../styles/LogoutPage.css'
 
 function LogOutPage() {
-    const { userData } = useAuth();
+    const { userData, userLogout } = useAuth();
     const [count, setCount] = useState(5);
 
     useEffect(() => {
@@ -14,7 +14,7 @@ function LogOutPage() {
 						return prevCount - 1;
                     }
                     console.log("Logging Out")
-                    // Logout function here wont put for now
+                    userLogout();
 					return prevCount;
                 });
                 

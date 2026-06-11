@@ -15,7 +15,7 @@
     border: solid 1px var(--card-border);
     background-color: var(--overlay);
     border-radius: 6px;
-    backdrop-filter: blur(8px);
+    backdrop-filter:initial;
 }
 
 .Login-container-container {
@@ -26,6 +26,8 @@
     align-items: center;
     background: var(--bg);
     background-size: cover;
+    background-image: url("/src/assets/bg-image.webp");
+    backdrop-filter: blur(9px);
 }
 
 .input-container {
@@ -111,4 +113,41 @@
     .Login-container {
         width: 58%;
     }
+}
+
+.google-login-button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px;
+    padding: 12px 16px !important;
+    background-color: #ffffff !important;
+    color: #3c4043 !important;
+    font-size: 16px;
+    font-weight: 500;
+    border: 1px solid #dadce0 !important;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+}
+
+.google-login-button svg {
+    color: inherit !important;
+}
+
+.google-login-button:hover {
+    background-color: #f8f9fa;
+    box-shadow: 0 1px 3px 1px rgba(60, 64, 67, 0.15), 0 1px 3px 0 rgba(60, 64, 67, 0.3);
+}
+
+.google-login-button:active {
+    background-color: #f1f3f4;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+}
+
+.google-login-button span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }

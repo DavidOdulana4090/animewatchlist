@@ -13,6 +13,7 @@ import Tags from '../Pages/MyList'
 import ContactMe from '../Pages/ContactMe';
 import Logout from '../Pages/Logoutpage'
 import NotFound from '../Pages/NotFound'
+import { AuthCallback } from '../utils/AuthCallback';
 
 function AppRoutes(){
     const { isUserLoggedIn } = useAuth();
@@ -58,6 +59,9 @@ function AppRoutes(){
             
             {/* 404 Not Found */}
             <Route path="*" element={<NotFound />} />
+
+            {/* Authentication Callback Page to Handle Rest of Google login */}
+            <Route path='/auth/Callback' element={<AuthCallback />} />
             
         </Routes>
     );

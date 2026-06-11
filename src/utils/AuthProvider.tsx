@@ -3,6 +3,7 @@ import { AuthContext } from "./AuthContext";
 import axios from "axios";
 import { useEffect } from "react";
 import LoadingScreen from "../components/LoadingScreen";
+import { supabase } from "../utils/SupabaseClient"
 
 interface userData {
 	email?: string | null;
@@ -45,7 +46,9 @@ export interface AuthContextType {
     theme: string;
     handleTheme: (theme: string) => void
     dashboardStatus: string;
-    setDashboardStatus: (dashboardStatus: string) => void
+    setDashboardStatus: (dashboardStatus: string) => void;
+    signInWithGoogle: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    setuserData: (userData: userData) => void;
 }
 
 export const AuthProvider = ({ children }: any) => {
@@ -195,7 +198,8 @@ export const AuthProvider = ({ children }: any) => {
 				userId: null,
 				token: null,
 			});
-			localStorage.removeItem("token");
+            localStorage.removeItem("token");
+            localStorage.removeItem("oa")
 		}
 	};
 
@@ -235,8 +239,43 @@ export const AuthProvider = ({ children }: any) => {
         };
     } catch (error: any) {
         console.log(`Error: ${error.message}`);
+    }};
+    
+    const signInWithGoogle = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        try {
+            e.preventDefault();
+            const reactApp = import.meta.env.VITE_REACT_APP_URL;
+            
+            if (!reactApp) {
+                console.error("VITE_REACT_APP_URL not configured");
+                alert("Google login is not properly configured. Please try regular login.");
+                return;
+            }
+
+            setIsLoading(true);
+            const { data, error } = await supabase.auth.signInWithOAuth({
+                provider: "google",
+                options: {
+                    redirectTo: `${reactApp}/auth/callback`,
+                },
+            });
+
+            if (error) {
+                console.error("Google OAuth error:", error.message);
+                alert(`Google login failed: ${error.message}`);
+                setIsLoading(false);
+                return;
+            }
+
+            // If successful, the user will be redirected to /auth/callback
+            console.log("Google OAuth initiated successfully");
+
+        } catch (error: any) {
+            console.error("Google login exception:", error.message);
+            alert("An error occurred during Google login. Please try again.");
+            setIsLoading(false);
+        }
     }
-};
 
     useEffect(() => {
         const getImages = async () => {
@@ -245,7 +284,7 @@ export const AuthProvider = ({ children }: any) => {
             for (const anime of userAnimeList) {
                 const result = await fetchAnime(anime.title);
                 updatedList.push({ ...anime, imageUrl: result?.image });
-                await delay(400); 
+                await delay(700); 
                 console.log(result?.image)
             }
             
@@ -285,7 +324,7 @@ export const AuthProvider = ({ children }: any) => {
         const cssClass = theme === 'dark' ? 'black' : 'white'
         root.classList.add(cssClass)
     }, [theme])
-
+    
 
 	return (
 		<AuthContext.Provider
@@ -301,7 +340,9 @@ export const AuthProvider = ({ children }: any) => {
                 theme,
                 handleTheme,
                 dashboardStatus,
-                setDashboardStatus
+                setDashboardStatus,
+                signInWithGoogle,
+                setuserData
 			}}
 		>
 			{isLoading ? <LoadingScreen /> : children}

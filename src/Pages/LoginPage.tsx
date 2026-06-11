@@ -7,12 +7,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useAuth } from "../utils/AuthContext";
+import { SiGoogle } from "react-icons/si";
 
 function LoginPage() {
 	const [showpassword, setShowPassword] = useState(false);
 	const emailRef = useRef<HTMLInputElement | null>(null);
 	const passwordRef = useRef<HTMLInputElement | null>(null);
-    const { userLogin } = useAuth();
+    const { userLogin, signInWithGoogle } = useAuth();
     const [isError, setisError] = useState(false);
     const navigate = useNavigate();
     const [errorMsg, setErrorMsg] = useState("");
@@ -92,7 +93,8 @@ function LoginPage() {
                         <p> {errorMsg} </p>
                     </div>
                     <br></br>
-                    
+                    <Button text="Continue with google" className="google-login-button" Icon={SiGoogle} iconSize={30} onClick={signInWithGoogle} />
+                    <br />
 					<Button text="login" onClick={clientLoginRequest} />
 					<br></br>
 					<Link to={"/forgot-password"} className="forgot-password">
