@@ -12,6 +12,7 @@ A clean and professional anime tracking application built with React and TypeScr
 - Beautiful UI that works on desktop, tablet, and mobile
 - Clean, modern interface with intuitive navigation
 - Using JulkanApi to add images for each of your saved anime
+- Supabase oauth for google account signup/login 
 
 ## Tech Stack
 
@@ -72,7 +73,7 @@ A clean and professional anime tracking application built with React and TypeScr
 ![New Anime Form](public/image-3.png)
 
 ### Login
-![Login Page](public/image-4.png)
+![Login Page](public/loginPAGE.png)
 
 ### Create Account
 ![Create Account](public/image-5.png)

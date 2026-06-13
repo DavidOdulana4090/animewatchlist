@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "./SupabaseClient";
 import axios from "axios";
 import { useAuth } from "./AuthContext";
+import LoadingScreen from "../components/LoadingScreen";
 
 export const AuthCallback = () => {
     const navigate = useNavigate();
@@ -52,11 +53,7 @@ export const AuthCallback = () => {
     }, [navigate]);
 
     return (
-        <div className="flex h-screen items-center justify-center bg-slate-950 text-teal-400 font-medium h-max w-max">
-            <div className="text-center space-y-3 h-max w-max">
-                <div className="animate-spin h-8 w-8 border-4 border-teal-500 border-t-transparent rounded-full mx-auto"></div>
-                <p className="text-sm tracking-wide text-slate-300">Completing secure handshake...</p>
-            </div>
-        </div>
+        <LoadingScreen text="Completing secure auth"/>
+
     );
 };

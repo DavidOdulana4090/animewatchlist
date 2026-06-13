@@ -5,11 +5,30 @@ import { PiTelevision } from "react-icons/pi";
 import { IoCheckmarkCircleSharp } from "react-icons/io5";
 import { GiVomiting } from "react-icons/gi";
 import { FcTodoList } from "react-icons/fc";
-import { Heart } from "lucide-react";
+import { Heart, HeartHandshake, HeartIcon, HeartPlusIcon, HeartPulseIcon, LucideIcon } from "lucide-react";
+import type { NewAnimeFormProps } from "../components/NewAnimeform";
 
 function Dashboard() {
     const { userData, userAnimeList, dashboardStatus } = useAuth();
 
+    const getIconFromStatus = (status: NewAnimeFormProps["status"]) => {
+        switch (status) {
+            case "Completed":
+                return <IoCheckmarkCircleSharp size={36} color="green"/> 
+                break
+            case "Watching":
+                return <PiTelevision size={36} color="cyan"/>
+                break
+            case "Planned":
+                return <FcTodoList size={36} color="white"/>
+                break
+            case "Dropped":
+                return <GiVomiting size={36} color="grey"/>
+                break
+            default:
+                return
+        }
+    }
 	return (
 		<div className="div-container-container">
 			<div className="dashboard-container">
@@ -71,15 +90,16 @@ function Dashboard() {
 							.filter((anime) => anime.status === dashboardStatus)
 							.map((anime) => (
 								<div key={anime.id} className="featured-card">
-									<div className="featured-header">
-										<h3>{anime.title}   <Icon Icon={PiTelevision} color="cyan" size={36}/> </h3>
+                                    <div className="featured-header">
+                                        <h3>{anime.title}  {getIconFromStatus(anime.status)} </h3>
 										<div className="rating-badge">Rating: {anime.rating}</div>
 									</div>
 									<div className="anime-meta">{anime?.genres && anime.genres.map && anime.genres.map((genre: string) => (
 										<span key={genre} className="genre-tag">
 											{genre}
 										</span>
-									))}</div>
+                                    ))}</div>
+                                    <span> {anime.favourite && <Icon Icon={HeartIcon} color="Red" size={20}/>} </span>
 									<div className="progress-section">
 										<div className="progress-bar">
 											<div
