@@ -7,7 +7,7 @@ import LoadingScreen from "../components/LoadingScreen";
 
 export const AuthCallback = () => {
     const navigate = useNavigate();
-    const { isUserLoggedIn,userData, setuserData, setisUserLoggedIn } = useAuth();
+    const { setuserData, setisUserLoggedIn } = useAuth();
 
     useEffect(() => {
         const handleOAuthCallback = async () => {

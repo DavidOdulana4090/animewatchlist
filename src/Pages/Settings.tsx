@@ -42,7 +42,7 @@ function Settings() {
 
                 <div className='container-settings'>
                     <h1 className='section-heading'> PREFRENCES </h1>
-                    <span className='optional-field-description'>  </span>
+                    <span className='optional-field-description'> Change your theme </span>
                     <div className='profile-details'>
                         <div className='profile-field'>
                             <span className='profile-field-label'>THEME</span>

@@ -249,18 +249,14 @@ export const AuthProvider = ({ children }: any) => {
         try {
             e.preventDefault();
             const reactApp = import.meta.env.VITE_REACT_APP_URL;
-            
-            if (!reactApp) {
-                console.error("VITE_REACT_APP_URL not configured");
-                alert("Google login is not properly configured. Please try regular login.");
-                return;
-            }
-
             setIsLoading(true);
             const { data, error } = await supabase.auth.signInWithOAuth({
                 provider: "google",
                 options: {
                     redirectTo: `${reactApp}/auth/callback`,
+                    queryParams: {
+                        prompt: 'select_account',
+                    },
                 },
             });
 
