@@ -1,10 +1,13 @@
 import { useAuth } from '../utils/AuthContext';
 import '../styles/Settings.css'
-import React from 'react';
+import React, { useRef } from 'react';
+import Button from '../components/Button';
+import { PenIcon } from 'lucide-react';
 
 function Settings() {
     const { userData, handleTheme , setDashboardStatus} = useAuth();
     const avatarLetter = userData?.username ? userData.username.charAt(0).toUpperCase() : '?';
+    const Allpref = useRef(null)
 
     const onThemeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         handleTheme(e.target.value);
@@ -16,26 +19,39 @@ function Settings() {
         localStorage.setItem("status", e.target.value);
     }
 
+    // Function to Change all p elements in Profile to Input to be edit not implemented
+    const toggleInput = () => {
+        if (Allpref.current) {
+            const pElements = document.querySelectorAll("p");
+
+            pElements.forEach((p, index) => {
+                console.log(`${index} of ${p.textContent}`)
+            })
+        }
+    }
+
     return (
         <>
-            <div className='div-container-settings'> 
+            <div className='div-container-settings' ref={Allpref}> 
                 <div className='container-settings'>
-                    <h1 className='section-heading'> PROFILE </h1>
-                    <span className='optional-field-description'> </span>
+                    <h1 className='section-heading'> PROFILE
+                       <span> <Button Icon={PenIcon} iconSize={23} className='edit-button-settings' onClick={toggleInput}/> </span>
+                    </h1>   
+                    <span className='optional-field-description'> Change your profile icon, username & more </span>
                     <div className='profile-avatar-section'>
-                        <div className='profile-avatar'>
+                        <p className='profile-avatar'>
                             {avatarLetter}
-                        </div>
+                        </p>
                     </div>
 
                     <div className='profile-details'>
                         <div className='profile-field'>
                             <span className='profile-field-label'>Username</span>
-                            <span className='profile-field-value'>{userData?.username || 'Not set'}</span>
+                            <p className='profile-field-value'>{userData?.username || 'Not set'}</p>
                         </div>
                         <div className='profile-field'>
                             <span className='profile-field-label'>Email</span>
-                            <span className='profile-field-value'>{userData?.email || 'Not set'}</span>
+                            <p className='profile-field-value'>{userData?.email || 'Not set'}</p>
                         </div>
                     </div>
                 </div>

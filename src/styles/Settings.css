@@ -50,7 +50,6 @@
 
 .section-heading {
     font-size: 1.6rem;
-    align-self: flex-start;
     font-weight: 700;
     color: var(--text);
     margin: 0 0 0px 0;
@@ -58,6 +57,11 @@
     position: relative;
     z-index: 1;
     padding-bottom: 0px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    align-self: stretch;
+    justify-content: space-between;
 }
 
 .profile-avatar-section {
@@ -182,6 +186,11 @@
         font-size: 1.5rem;
     }
 
+    .edit-button-settings {
+        width: 1.2em;
+        height: 1.2em;
+    }
+
     .profile-avatar {
         width: 90px;
         height: 90px;
@@ -196,6 +205,15 @@
 
     .container-settings {
         padding: 25px 18px;
+    }
+
+    .section-heading {
+        font-size: 1.3rem;
+    }
+
+    .edit-button-settings {
+        width: 1em;
+        height: 1em;
     }
 
     .profile-avatar {
@@ -224,4 +242,28 @@
     padding-bottom: 15px;
     color: gray;
     font-size: small;
+}
+
+.edit-button-settings {
+    width: 1em;
+    display: flex;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.edit-button-settings:hover {
+    background: rgba(6, 182, 212, 0.1);
+    border-color: #06b6d4;
+}
+
+
+.edit-button-settings svg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
